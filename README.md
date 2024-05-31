@@ -1,4 +1,4 @@
-# Managey - Project Portfolio 5 - Advanvced FRontend (React)
+# Managey - Project Portfolio 5 - Advanvced Frontend (React)
 
 Managey is an application that enables to organize activities in order to promotee productivity and effeciency. In its current iteration, users can create, view, edit, search, filter and delete tasks. A user can view their tasks as well as tasks assigned to them. Users are also able t comment on tasks in order to followup, ellaborate or find out more about a task. 
 
@@ -55,6 +55,7 @@ You can view the API repository here:
 ## Project goals 
 
 ## User Stories
+
 | **EPIC** | **User Story** |
 |----------|-----------------|
 | Authentication | As a user, I want to signup/create an account so as to access the application and its features |
@@ -65,6 +66,77 @@ You can view the API repository here:
 |  | As a user, i want to navigate easily through the pages |
 | |  As a logged out user, I can see sign-in/sign-up options in the navigation bar |
 
+## Strategy
 
+<details>
+<summary></summary>
+<img src= "", alt=""/>
+</details
+
+
+## Wireframes
+
+Wireframes were developed using Balsamiq 
+<details>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+## Logic flow
+
+Drawio was used to create the logic flow of the project
+
+## Typography
+
+Google fonts were implemented on the website, 'Montesserat and Robotto'
+
+## Colour theme
+
+The colour theme was developed using **coolors**
+<details>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+## Project management 
+
+### Agile
+
+- An Agile approach has been applied in the creation and planning of thi sapplication
+- Github projects was used to manage this project's development cycles. 
+- Github projects was usesd to track user stories and implement them based on the level of importance 
+- The following categories were created:
+    - Must have
+    - Should have
+    - Could have
+- Due to the scope and time limit of this project, some features were not impelemented , and therefore will be implemeneted as future features
+The link to the Github project is **[here](https://github.com/users/Njorogetracy/projects/7)**
+
+### CRUD 
+
+Data is handled with full CRUD functionality
+- Create: Users are able to create profiles, tasks and comments
+- Read: Users are able to view profiles, tasks and comments
+- Update: Users are able to update profiles, tasks and comments
+- Delete: Users are able to delete profiles, tasks and comments
+
+
+# Permissions
+
+
+# Features
+
+
+# Future Features
+
+# Technologies Used
+
+## Languages
+- HTML
+- CSS
+- Javascript
+## Frameworks and Tools
+
+## Libraries
 
 ## [Back To Top](#table-of-contents)
