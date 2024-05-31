@@ -71,8 +71,7 @@ You can view the API repository here:
 <details>
 <summary></summary>
 <img src= "", alt=""/>
-</details
-
+</details>
 
 ## Wireframes
 
