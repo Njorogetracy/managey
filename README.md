@@ -55,6 +55,16 @@ You can view the API repository here:
 ## Project goals 
 
 ## User Stories
+| **EPIC** | **User Story** |
+|----------|-----------------|
+| Authentication | As a user, I want to signup/create an account so as to access the application and its features |
+|  | As a user, I want to signin so I access the app and its funtionality as a logged in use |
+| | As a user, I can see if I am logged in or not |
+|  | As a user, I want to maintain logged in status until I logout |
+| Navigation | As a user I want to view the navigation bar so I can navigate with ease between different pages |
+|  | As a user, i want to navigate easily through the pages |
+| |  As a logged out user, I can see sign-in/sign-up options in the navigation bar |
+
 
 
 ## [Back To Top](#table-of-contents)
