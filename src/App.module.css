@@ -1,0 +1,35 @@
+.App {
+    font-family: "Montserrat", "Roboto", sans-serif;
+    color: #000000;
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: #0077FF;
+    transition: color ease-in-out 0.4s;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:hover i {
+    color: #4da0ff;
+}
+
+i {
+    color: #0077FF;
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
+i:hover {
+    color: #4da0ff;
+    cursor: pointer;
+    transition: color ease-in-out;
+}

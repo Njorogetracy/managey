@@ -3,10 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import managey from '../assets/managey.png'
+import styles from '../styles/NavBar.module.css'
 
 const NavBar = () => {
   return (
-    <Navbar expand="md" fixed="top">
+    <Navbar className={styles.NavBar} expand="lg" fixed="top">
       <Container>
         <Navbar.Brand>
           <img src={managey} alt="logo" height="50" />
@@ -15,13 +16,13 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left">
             <Nav.Link>
-              <i className="fa-solid fa-house">Home</i>
+              <i className="fa-solid fa-house"></i>Home
             </Nav.Link>
             <Nav.Link >
-              <i className="fa-solid fa-right-to-bracket">Login</i>
+              <i className="fa-solid fa-right-to-bracket"></i>Login
             </Nav.Link>
             <Nav.Link >
-              <i className="fa-solid fa-user-plus">Sign up</i>
+              <i className="fa-solid fa-user-plus"></i>Sign up
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
