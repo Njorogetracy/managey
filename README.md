@@ -140,7 +140,11 @@ Data is handled with full CRUD functionality
 
 
 # Front-End
-
+## React
+### Components
+There are various components that have been used throughout this application:
+- ```<NavBar/>``` This is a reusable component, used for navigation on the site. This component is used to display different icons based on users loggedin/out status. If a user is not logged in, they can see the home, login and sigup icons. However, if they are logged in they are able to see more icons except the login and signup.
+- ```<NotFound/>``` This is a component that displays a 404 error when the user clicks a button to a page that does not exist.
 
 # Backend API
 
