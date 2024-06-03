@@ -4,26 +4,29 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import managey from '../assets/managey.png'
 import styles from '../styles/NavBar.module.css'
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <Navbar className={styles.NavBar} expand="lg" fixed="top">
+    <Navbar className={styles.NavBar} expand="md" fixed="top">
       <Container>
-        <Navbar.Brand>
-          <img src={managey} alt="logo" height="50" />
-        </Navbar.Brand>
+        <NavLink to="/">
+          <Navbar.Brand>
+            <img src={managey} alt="logo" height="50" />
+          </Navbar.Brand>
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left">
-            <Nav.Link>
+            <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/home">
               <i className="fa-solid fa-house"></i>Home
-            </Nav.Link>
-            <Nav.Link >
+            </NavLink>
+            <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/login" >
               <i className="fa-solid fa-right-to-bracket"></i>Login
-            </Nav.Link>
-            <Nav.Link >
+            </NavLink>
+            <NavLink className={styles.NavLink} activeclassname={styles.Active} to="signup" >
               <i className="fa-solid fa-user-plus"></i>Sign up
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
