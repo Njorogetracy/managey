@@ -138,4 +138,34 @@ Data is handled with full CRUD functionality
 
 ## Libraries
 
+
+# Front-End
+
+
+# Backend API
+
+
+# Validation
+
+# Testing
+
+# Bug Fixes
+<details>
+<summary>
+Switch model is not exported from react-router-dom error. I used the Switch model in and got an error. This error was resolved by using "routes"; react v6 changed the names from "switch" to "routes"
+</summary>
+<img src= "", alt=""/>
+</details>
+
+
+# Deployment
+
+
+# Credits
+## Code Used
+- [Implementing a page not found](https://www.geeksforgeeks.org/how-to-setup-404-page-in-react-routing/)
+
+
+# Acknowledgements
+
 ## [Back To Top](#table-of-contents)
