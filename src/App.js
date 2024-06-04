@@ -14,7 +14,7 @@ function App() {
           <NavBar />
           <Container className={styles.Main}>
             <Routes>
-              <Route exact path="/home" element={<h1>Home</h1>} />
+              <Route exact path="/" element={<h1>Home</h1>} />
               <Route exact path="/login" element={<LoginForm />} />
               <Route exact path="/signup" element={<SignUpForm />} />
               <Route path="*" element={<NotFound />} />

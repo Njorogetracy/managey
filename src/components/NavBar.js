@@ -5,11 +5,22 @@ import Navbar from 'react-bootstrap/Navbar';
 import managey from '../assets/managey.png'
 import styles from '../styles/NavBar.module.css'
 import { NavLink } from "react-router-dom";
-import { useCurrentUser } from "../contexts/CurrentUserContext";
+import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 import Avatar from "./Avatar";
+import axios from "axios";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
+
+  const handleSignOut = async () => {
+    try {
+        await axios.post("dj-rest-auth/logout/")
+        setCurrentUser(null)
+    } catch (error) {
+        console.log(error);
+    }
+};
 
   const addTaskIcon = (
     <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/task/create" >
@@ -35,7 +46,7 @@ const NavBar = () => {
       >
         <i className="fa-solid fa-envelope"></i>Contact
       </NavLink>
-      <NavLink className={styles.NavLink} to="/">
+      <NavLink className={styles.NavLink} to="/" onClick={handleSignOut} >
         <i className="fa-solid fa-sign-out-alt"></i>Log out
       </NavLink>
       <NavLink
