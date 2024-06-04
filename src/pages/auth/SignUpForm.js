@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/SignUpform.module.css";
 import appStyles from "../../App.module.css";
@@ -15,7 +15,7 @@ const SignUpForm = () => {
     })
     const {username, password1, password2} = signUpData;
     const [errors, setErrors] = useState({});
-    const history = useNavigate();
+    const navigate= useNavigate();
 
     const handleChange = (e) => {
         setSignUpData({
@@ -28,7 +28,7 @@ const SignUpForm = () => {
         event.preventDefault();
         try {
             await axios.post("/dj-rest-auth/registration/", signUpData);
-            Navigate('/login')
+            navigate('/login');
         }catch(err){
             setErrors(err.response?.data);
             console.log(err)
@@ -59,13 +59,22 @@ const SignUpForm = () => {
                              onChange={handleChange}
                             />
                         </Form.Group>
+                        {errors.password1?.map((message, idx) =>
+                            <Alert variant="warning" key={idx}>{message}</Alert>
+                        )}
                         <Form.Group className="mb-3" controlId="password2">
                             <Form.Label className="d-none" > Confirm Password</Form.Label>
                             <Form.Control type="password" placeholder="Confirm Password" name="password2" value={password2} onChange={handleChange} />
                         </Form.Group>
+                        {errors.password2?.map((message, idx) =>
+                            <Alert variant="warning" key={idx}>{message}</Alert>
+                        )}
                         <Button variant="primary" type="submit">
                             Sign Up
                         </Button>
+                        {errors.non_field_errors?.map((message, idx) =>
+                            <Alert variant="warning" key={idx}>{message}</Alert>
+                        )}
                     </Form>
 
                 </Container>
