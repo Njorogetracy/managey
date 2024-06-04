@@ -10,17 +10,17 @@ import LoginForm from './pages/auth/LoginForm';
 function App() {
 
   return (
-        <div className={styles.App}>
-          <NavBar />
-          <Container className={styles.Main}>
-            <Routes>
-              <Route exact path="/" element={<h1>Home</h1>} />
-              <Route exact path="/login" element={<LoginForm />} />
-              <Route exact path="/signup" element={<SignUpForm />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Container>
-        </div>
+      <div className={styles.App}>
+        <NavBar />
+        <Container className={styles.Main}>
+          <Routes>
+            <Route exact path="/" element={<h1>Home</h1>} />
+            <Route exact path="/login" element={<LoginForm />} />
+            <Route exact path="/signup" element={<SignUpForm />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Container>
+      </div>
   );
 }
 
