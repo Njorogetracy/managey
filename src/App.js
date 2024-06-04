@@ -3,6 +3,8 @@ import styles from './App.module.css';
 import NavBar from './components/NavBar';
 import NotFound from './components/NotFound';
 import { Container } from 'react-bootstrap';
+import "./api/axiosDefaults";
+import SignUpForm from './pages/auth/SignUpForm';
 
 function App() {
   return (
@@ -12,7 +14,7 @@ function App() {
       <Routes>
         <Route exact path="/home" element={<h1>Home</h1>} />
         <Route exact path="/login" element={<h1>Login</h1> } />
-        <Route exact path="/signup" element={<h1>Sign up</h1> } />
+        <Route exact path="/signup" element={<SignUpForm/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
      </Container>
