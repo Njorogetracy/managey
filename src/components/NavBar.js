@@ -13,6 +13,7 @@ const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
+  /**Handles user logout and redirects to landing page */
   const handleSignOut = async () => {
     try {
         await axios.post("dj-rest-auth/logout/")
@@ -57,6 +58,8 @@ const NavBar = () => {
       </NavLink>
     </>
   )
+
+  /**Displays logo, signin and signup icons for looged out users */
   const loggedOutIcons = (
     <>
       <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/login" >
@@ -79,7 +82,7 @@ const NavBar = () => {
         {currentUser && addTaskIcon}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto text-left">
+          <Nav className="ms-auto text-right">
             <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/home">
               <i className="fa-solid fa-house"></i>Home
             </NavLink>

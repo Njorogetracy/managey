@@ -5,8 +5,36 @@
 
 .NavLink {
     padding: 5px;
+    text-decoration: none;
 }
 
 .Active i {
     color: #4da0ff;
 }
+
+.Active a {
+    color: #4da0ff;
+    transition: color ease-in-out 0.3s;
+}
+
+.Active a:hover {
+    color: #F6F6F7;
+    text-decoration: none;
+  }
+
+  .Active a:hover i {
+    color: #4da0ff;
+    transition: color ease-in-out 0.3s;
+    }
+
+i {
+    color: #0077ff;
+    font-size: 1.6rem;
+    padding: 7px;
+    vertical-align: middle;
+    }
+
+i:hover {
+    cursor: pointer;
+    transition: color ease-in-out 0.3s;
+    }
