@@ -124,6 +124,83 @@ Data is handled with full CRUD functionality
 
 
 # Features
+<details>
+<summary> Authentication </summary>
+<summary> Users have to be authenticated before logging in to be able to access any functionality in the website.</summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Login</summary>
+<summary>This feature allow users to login and view content relevant to their profiles. Users require authentication in order to login</summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Sign Up</summary>
+<summary>This feature allow new users to create an account</summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Home page</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Navigation Bar</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Profile</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Add Task</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Edit Task</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Delete Task</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Create Task Comment</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Edit Task Comment</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary>Delete Task Comment</summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
 
 
 # Future Features
@@ -141,15 +218,21 @@ Data is handled with full CRUD functionality
 
 # Front-End
 ## React
-### Components
+### Components:
 There are various components that have been used throughout this application:
 - ```<NavBar/>``` This is a reusable component, used for navigation on the site. This component is used to display different icons based on users loggedin/out status. If a user is not logged in, they can see the home, login and sigup icons. However, if they are logged in they are able to see more icons except the login and signup.
 - ```<NotFound/>``` This is a component that displays a 404 error when the user clicks a button to a page that does not exist.
+- ```<Avatar/>``` This is a reusable component used to display the users' profile picture.
+
+### pages:
+* Auth which has the following files:
+    - SignUpForm.js - Handles user account creation 
+    - LoginForm.js - Handles user login
+
 
 # Backend API
+The API for thos frontend was built using Django Rest Framework. See the repository [here](https://github.com/Njorogetracy/managey_drf)
 
-
-# Validation
 
 # Testing
 
@@ -158,6 +241,30 @@ There are various components that have been used throughout this application:
 <summary>
 Switch model is not exported from react-router-dom error. I used the Switch model in and got an error. This error was resolved by using "routes"; react v6 changed the names from "switch" to "routes"
 </summary>
+<img src= "docs/readme/bugs/switch-not-found.png", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
 <img src= "", alt=""/>
 </details>
 
