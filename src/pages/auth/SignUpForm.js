@@ -34,10 +34,12 @@ const SignUpForm = () => {
         try {
             await axios.post("/dj-rest-auth/registration/", signUpData);
             setShowModal(true);
+            console.log(showModal)
         } catch (err) {
             setErrors(err.response?.data);
         }
     };
+
 
     /**Handle modal close */
     const handleCloseModal = () => {
@@ -62,9 +64,6 @@ const SignUpForm = () => {
                                 <Modal.Footer>
                                   <Button variant="secondary" onClick={handleCloseModal}>
                                     Close
-                                  </Button>
-                                  <Button variant="primary" onClick={handleCloseModal}>
-                                    Save Changes
                                   </Button>
                                 </Modal.Footer>
                               </Modal>
