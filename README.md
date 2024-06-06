@@ -231,23 +231,24 @@ There are various components that have been used throughout this application:
 
 
 # Backend API
-The API for thos frontend was built using Django Rest Framework. See the repository [here](https://github.com/Njorogetracy/managey_drf)
+The API for this frontend was built using Django Rest Framework. See the repository [here](https://github.com/Njorogetracy/managey_drf)
 
 
 # Testing
 
 # Bug Fixes
 <details>
+<summary> Import Error </summary>
 <summary>
-Switch model is not exported from react-router-dom error. I used the Switch model in and got an error. This error was resolved by using "routes"; react v6 changed the names from "switch" to "routes"
+Switch model is not exported from react-router-dom error. I used the Switch model in and got an error. This error was resolved by importing "Routes". react v6 changed the names from "switch" to "routes"
 </summary>
 <img src= "docs/readme/bugs/switch-not-found.png", alt=""/>
 </details>
 
 <details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>login Error</summary>
+<summary>405 error, while trying to login. The error was due to an authentication request instead of a login request to the api, ```axios.post(dj-rest-auth/registration)```. I resolved the error by sending a login request ```axios.post(dj-rest-auth/login)``` </summary>
+<img src= "docs/readme/bugs/loginerror.png", alt=""/>
 </details>
 
 <details>
