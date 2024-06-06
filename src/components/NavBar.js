@@ -27,7 +27,7 @@ const NavBar = () => {
 };
 
   const addTaskIcon = (
-    <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/task/create" >
+    <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/tasks/create" >
       <i className="fa-solid fa-file-circle-plus"></i>Add task
     </NavLink>
   )
