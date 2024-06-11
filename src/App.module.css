@@ -54,3 +54,7 @@ i:hover {
 .Form {
     text-align: -webkit-center;
   }
+
+  .TextAlignCenter {
+    text-align: center;
+  }
