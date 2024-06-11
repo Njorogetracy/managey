@@ -242,13 +242,14 @@ The API for this frontend was built using Django Rest Framework. See the reposit
 <summary>
 Switch model is not exported from react-router-dom error. I used the Switch model in and got an error. This error was resolved by importing "Routes". react v6 changed the names from "switch" to "routes"
 </summary>
-<img src= "docs/readme/bugs/switch-not-found.png", alt=""/>
+<img src= "docs/readme/bugs/switch-not-found.png", alt="routes error"/>
 </details>
 
 <details>
 <summary>login Error</summary>
 <summary>405 error, while trying to login. The error was due to an authentication request instead of a login request to the api, ```axios.post(dj-rest-auth/registration)```. I resolved the error by sending a login request ```axios.post(dj-rest-auth/login)``` </summary>
-<img src= "docs/readme/bugs/loginerror.png", alt=""/>
+<img src= "docs/readme/bugs/loginerror.png", alt="loggin error"/>
+<img src= "docs/readme/bugs/username-login-fixed.png", alt="login successful"/>
 </details>
 
 <details>
@@ -267,6 +268,13 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 <summary></summary>
 <summary></summary>
 <img src= "", alt=""/>
+</details>
+
+<details>
+<summary>map error</summary>
+<summary>this error occurred while trying to map over the array of profiles returned from the api request. My handleChangeUser function, was setting `users` as an object rather than an array. The function was updating the users instead of the assigned_users. To resolves this,I added a new state `aasignedUsers` to keep track of the selected user. Inside the handleChange function, the selectedOptions variable, converts the data into an array and returns a list of the <options> element currently selected in the dropdownlist and the setAssignedUsers updates the assignedusers state with the new array of userIDs</summary>
+<img src= "docs/readme/bugs/mappingerror.png", alt="mapping error"/>
+<img src= "docs/readme/bugs/mapperrorresolve.png", alt="mapping error solved"/>
 </details>
 
 
