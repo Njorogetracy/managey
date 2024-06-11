@@ -284,7 +284,8 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 # Credits
 ## Code Used
 - [Implementing a page not found](https://www.geeksforgeeks.org/how-to-setup-404-page-in-react-routing/)
-
+- [mapping over an array of objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
+- [mapping over children](https://react.dev/reference/react/Children#children-map)
 
 # Acknowledgements
 

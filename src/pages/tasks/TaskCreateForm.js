@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Col, Button, Alert, } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Form, Col, Button, Alert } from 'react-bootstrap';
 import formStyles from '../../styles/TaskCreateEditForm.css'
 import appStyles from "../../App.module.css";
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +26,7 @@ function TaskCreateForm() {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [assignedUsers, setAssignedUsers] = useState([]);
+    const imageInput = useRef(null);
     const [errors, setErrors] = useState({});
 
     /**Handles changes to the input fields */
@@ -46,28 +47,47 @@ function TaskCreateForm() {
     useEffect(() => {
         axios.get(`/profiles/`)
             .then(response => {
-                console.log('Response data', response.data);
                 if (typeof response.data === 'object' && !Array.isArray(response.data)) {
-                    // Extract the array of user profiles from the dictionary
                     const profiles = response.data.results || [];
-                    // Update the users state with the extracted profiles
                     setUsers(profiles);
                 } else {
-                    // If response data is not a dictionary, handle error
-                    console.error('Invalid response data format');
-                    setUsers([]); // Set users to an empty array
+                    setUsers([]);
                 }
             })
             .catch(error => {
-                console.log(error, 'error fetching profiles')
+                console.log(error)
                 setUsers([])
             })
     }, []);
+
+
+    /**Handles change to attachment field */
+    const handleChangeImage = (event) => {
+        if (event.target.files.length) {
+            setTaskData({
+                ...taskData,
+                attachment: (event.target.files[0]),
+            });
+        }
+    };
+
 
     /**Handles form submission */
     const handleSubmitForm = async (e) => {
         e.preventDefault()
         const formData = new FormData();
+
+        /**Validation for required fields */
+        let validationErrors = {};
+        if (!title) validationErrors.title = ['Title is required.'];
+        if (!description) validationErrors.description = ['Description is required.'];
+        if (assignedUsers.length === 0) validationErrors.assigned_users = ['At least one assigned user is required.'];
+        if (!due_date) validationErrors.due_date = ['Due date is required.'];
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
 
         formData.append('title', title)
         formData.append('description', description)
@@ -79,8 +99,12 @@ function TaskCreateForm() {
         formData.append('due_date', due_date)
 
         try {
-            const { data } = await axiosReq.post('/tasks/', formData);
-            navigate(`/tasks/${data.id}`)
+            await axiosReq.post('/tasks/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            navigate(`/tasks/`);
         } catch (err) {
             console.log(err)
             if (err.response?.status !== 401) {
@@ -120,14 +144,14 @@ function TaskCreateForm() {
                         return (
                             <option key={user.id} value={user.id}>
                                 {user.owner}
-                                {/* Log each user ID to console for debugging */}
-                                {console.log('User ID:', user.owner)}
                             </option>
                         );
-
                     })}
                 </Form.Control>
             </Form.Group>
+            {errors.assigned_users?.map((message, idx) =>
+                <Alert variant='warning' key={idx}>{message}</Alert>
+            )}
             <Form.Group>
                 <Form.Label>Priority</Form.Label>
                 <Form.Select aria-label="priority" onChange={handleFormChange} value={priority}>
@@ -136,6 +160,9 @@ function TaskCreateForm() {
                     <option value="high">High</option>
                 </Form.Select>
             </Form.Group>
+            {errors.priority?.map((message, idx) =>
+                <Alert variant='warning' key={idx}>{message}</Alert>
+            )}
             <Form.Group>
                 <Form.Label>State</Form.Label>
                 <Form.Select aria-label="sate" onChange={handleFormChange} value={state}>
@@ -145,40 +172,53 @@ function TaskCreateForm() {
                     <option value="3">Completed</option>
                 </Form.Select>
             </Form.Group>
+            {errors.state?.map((message, idx) =>
+                <Alert variant='warning' key={idx}>{message}</Alert>
+            )}
             <Form.Group>
-                <Form.Label>Attach Image</Form.Label>
+                <Form.Label htmlFor="image-upload">Attach Image</Form.Label>
                 <Form.Control
-                    name="attchment"
+                    name="attachment"
+                    id="image-upload"
                     type="file"
                     aria-label="attachment"
-                    onChange={handleFormChange}
-                    value={attachment}
+                    onChange={handleChangeImage}
+                    accept='image/*'
+                    ref={imageInput}
                 ></Form.Control>
             </Form.Group>
+            {errors.attachment?.map((message, idx) =>
+                <Alert variant='warning' key={idx}>{message}</Alert>
+            )}
             <Form.Group>
                 <Form.Label>Due date</Form.Label>
 
                 <Form.Control
                     name="due_date"
-                    type="date"
+                    type="datetime-local"
                     aria-label="due_date"
                     onChange={handleFormChange}
                     value={due_date}
                 ></Form.Control>
             </Form.Group>
+            {errors.due_date?.map((message, idx) =>
+                <Alert variant='warning' key={idx}>{message}</Alert>
+            )}
             <Form.Group >
                 <Form.Label>Overdue</Form.Label>
                 <Form.Check type='switch' aria-label='overdue' name='overdue' value={overdue} onChange={handleFormChange} />
             </Form.Group>
+            {errors.overdue?.map((message, idx) =>
+                <Alert variant='warning' key={idx}>{message}</Alert>
+            )}
             <Button type="submit" value="Submit">Create</Button>
             <Button>Cancel</Button>
-
         </div>
     );
 
     /**returns the task create form */
     return (
-        <Form onSubmit={handleSubmitForm} >
+        <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
             <div >
                 <Col md={5} lg={4} >
                     <div className=" d-flex flex-column justify-content-center" >
