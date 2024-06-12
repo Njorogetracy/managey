@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Form, Col, Button, Alert } from 'react-bootstrap';
 import formStyles from '../../styles/TaskCreateEditForm.css'
 import appStyles from "../../App.module.css";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import axios from 'axios';
 
@@ -24,10 +24,16 @@ function TaskCreateForm() {
 
     const { title, description, overdue, priority, state, attachment, due_date } = taskData;
     const navigate = useNavigate();
+    const location = useLocation();
     const [users, setUsers] = useState([]);
     const [assignedUsers, setAssignedUsers] = useState([]);
     const imageInput = useRef(null);
     const [errors, setErrors] = useState({});
+
+    /**Redirect users to previous page */
+    const handleGoBack = () => {
+        navigate(location.state?.from || '/*')
+    }
 
     /**Handles changes to the input fields */
     const handleFormChange = (e) => {
@@ -220,7 +226,9 @@ function TaskCreateForm() {
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
             <Button type="submit" value="Submit">Create</Button>
-            <Button>Cancel</Button>
+            <Button onClick={handleGoBack}>
+                Cancel
+            </Button>
         </div>
     );
 
