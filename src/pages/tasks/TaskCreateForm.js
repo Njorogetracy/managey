@@ -14,7 +14,7 @@ function TaskCreateForm() {
     const [taskData, setTaskData] = useState({
         title: "",
         description: "",
-        assigned_users: [],
+        assigned_users:[],
         overdue: "",
         priority: "",
         state: "",
@@ -22,7 +22,7 @@ function TaskCreateForm() {
         due_date: "",
     });
 
-    const { title, description, assigned_users, overdue, priority, state, attachment, due_date } = taskData;
+    const { title, description, overdue, priority, state, attachment, due_date } = taskData;
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [assignedUsers, setAssignedUsers] = useState([]);
@@ -39,7 +39,7 @@ function TaskCreateForm() {
 
     /**Handles changes to the assigned users selection */
     const handleChangeUser = (event) => {
-        const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+        const selectedOptions = Array.from(event.target.selectedOptions, option => parseInt(option.value, 10));
         setAssignedUsers(selectedOptions);
     };
 
@@ -91,12 +91,20 @@ function TaskCreateForm() {
 
         formData.append('title', title)
         formData.append('description', description)
-        formData.append('assigned_users', assigned_users)
         formData.append('overdue', overdue)
         formData.append('priority', priority)
         formData.append('state', state)
         formData.append('attachment', attachment)
         formData.append('due_date', due_date)
+        // formData.append('assigned_users', JSON.stringify(assignedUsers));
+        assignedUsers.forEach(userId => {
+            formData.append('assigned_users', userId);
+        });
+
+        //for debugging
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
 
         try {
             await axiosReq.post('/tasks/', formData, {
@@ -138,14 +146,14 @@ function TaskCreateForm() {
                     value={assignedUsers}
                     onChange={handleChangeUser}
                 >
-                    <option >Select a User</option>
-                    {users.map((user) => {
-                        /* Mapping over the users array to render options */
+                    <option value='' >Select a User</option>
+                    {users && users.map((user) => {
                         return (
+                            user && (
                             <option key={user.id} value={user.id}>
                                 {user.owner}
                             </option>
-                        );
+                        ));
                     })}
                 </Form.Control>
             </Form.Group>

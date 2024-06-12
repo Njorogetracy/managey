@@ -34,7 +34,6 @@ const SignUpForm = () => {
         try {
             await axios.post("/dj-rest-auth/registration/", signUpData);
             setShowModal(true);
-            console.log(showModal)
         } catch (err) {
             setErrors(err.response?.data);
         }
