@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/" element={
             <TasksList
              message='No results found adjust search keyword'
-             filter={`owner__username=&{profile_id}&`}
+             filter={`owner__username=${profile_id}&`}
             />} />
           <Route exact path="/tasks" element={<TasksList message='No results found adjust keyword' />} />
           <Route exact path="/profiles" element={
