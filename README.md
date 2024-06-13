@@ -202,8 +202,39 @@ Data is handled with full CRUD functionality
 <img src= "", alt=""/>
 </details>
 
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
 
 # Future Features
+- Boards to display related user  tasks 
+- Labels for tasks 
+- Authenticated forgot password
+- Collaborate on tasks 
+- Displau number of users on a task
+- Task reminders
+- Integration with google calendar API
 
 # Technologies Used
 
@@ -211,10 +242,24 @@ Data is handled with full CRUD functionality
 - HTML
 - CSS
 - Javascript
+
 ## Frameworks and Tools
+- Bootstrap: A front-end framework for developing responsive and mobile-first websites.
+- react-bootstrap: Integration of Bootstrap with React, offering Bootstrap components as React components.
 
 ## Libraries
+- React: This library is used for building the user interface components 
+- Axios: A Promise-based HTTP client for making HTTP requests from node.js or XMLHttpRequests from the browser
 
+## Other programs and libraries
+- Google Fonts - for the font family.
+- Font Awesome - to add icons throughout the site.
+- GitPod - to creat my html files & styling sheet before pushing the project to Github.
+- Visual Studio - For all Development work
+- Favicon - to provide the code & image for the icon in the tab bar.
+- Balsamiq Wireframe - to create Wireframes for the site layout.
+- Cloudinary - used to host static and media files
+- ElephantSQL - used to host postgres database used in proje
 
 # Front-End
 ## React
@@ -279,7 +324,19 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 
 
 # Deployment
+The Site was deployed using Heroku Hosting Platform.
 
+## React Deployment 
+- Add a Procfile to the root of the project with the following content: web: serve -s build
+- Add your deployed API URL to the axios requests in the project
+- Run npm run build to create a production build of the project
+
+## Heroku Deployment 
+- Create a new project on Heroku
+- Connect Github Repo
+- In settings, configure Environment Variables lilke Database URL, Cloudinary URL etc..
+- In Deploy, configure your automatic deploys or not.
+- Deploy App
 
 # Credits
 ## Code Used
@@ -287,7 +344,9 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 - [mapping over an array of objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
 - [mapping over children](https://react.dev/reference/react/Children#children-map)
 - [React Router v6 Preview](https://reacttraining.com/blog/react-router-v6-pre)
-- [REact useNavigate hook](https://www.geeksforgeeks.org/replacement-of-usehistory-hook-in-react/)
+- [React useNavigate hook](https://www.geeksforgeeks.org/replacement-of-usehistory-hook-in-react/)
+- [UseNavigate hook](https://stackoverflow.com/questions/31079081/how-to-programmatically-navigate-using-react-router)
+- [Float nav items right](https://stackoverflow.com/questions/42311292/react-bootstrap-navbar-how-to-right-align-a-navbar-item)
 
 # Acknowledgements
 

@@ -8,7 +8,7 @@ function Taskpage() {
     const { id } = useParams()
     const [task, setTask] = useState({ results: [] });
 
-    /**Fetch tasks */
+    /**Fetch task  by id */
     useEffect(() => {
         const handleMount = async () => {
             try {
