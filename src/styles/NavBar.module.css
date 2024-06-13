@@ -20,12 +20,12 @@
 .Active a:hover {
     color: #F6F6F7;
     text-decoration: none;
-  }
+}
 
-  .Active a:hover i {
-    color: #4da0ff;
-    transition: color ease-in-out 0.3s;
-    }
+.Active a:hover i {
+color: #4da0ff;
+transition: color ease-in-out 0.3s;
+}
 
 i {
     color: #0077ff;

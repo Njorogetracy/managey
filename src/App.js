@@ -7,7 +7,7 @@ import "./api/axiosDefaults";
 import SignUpForm from './pages/auth/SignUpForm';
 import LoginForm from './pages/auth/LoginForm';
 import TaskCreateForm from './pages/tasks/TaskCreateForm';
-import Taskpage from './pages/tasks/Taskpage';
+import TaskPage from './pages/tasks/Taskpage';
 import { ToastContainer } from "react-toastify";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/signup" element={<SignUpForm />} />
             <Route exact path="/tasks/create" element={<TaskCreateForm/>} />
-            <Route exact path="/tasks/:id" element={<Taskpage/>} />
+            <Route exact path="/tasks/:id" element={<TaskPage/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
