@@ -1,11 +1,13 @@
-import React from 'react'
-import { useCurrentUser } from '../../contexts/CurrentUserContext'
+import React from 'react';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import { Card, Button, } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import cardStyles from '../../styles/Task.module.css'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import cardStyles from '../../styles/Task.module.css';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/NavBar.module.css'
 import { DropDown } from '../../components/DropDown';
+import { axiosRes } from '../../api/axiosDefaults';
+import { toast } from 'react-toastify';
 
 const Task = (props) => {
     const {
@@ -49,11 +51,27 @@ const Task = (props) => {
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
     const navigate = useNavigate();
+    const location = useLocation();
 
     /**Handle task edit and redirect to edit task page */
     const handleEdit = () => {
         navigate(`/tasks/${id}/edit`)
     }
+
+    /**Handles task deletion */
+    const handleDelete = async () => {
+        try {
+            await axiosRes.delete(`/tasks/${id}`)
+            toast.success("Task deleted", {
+                position: 'top-right',
+                autoClose: 3000,
+            });
+            navigate('/')
+        } catch (error) {
+            console.log('error deleting task', error)
+        }
+    }
+
 
     /**Returns task with all fields populated by the backend. The tasks can be updated and deleted */
     return (
@@ -69,7 +87,7 @@ const Task = (props) => {
                         <small className={cardStyles.mute}>Created at: {created_at}</small>
                     </Card.Text>
                     <span></span>
-                    {is_owner && taskPage && <DropDown handleEdit={handleEdit}/> }
+                    {is_owner && taskPage && <DropDown handleEdit={handleEdit} handleDelete={handleDelete} />}
                 </div>
                 <div>
                     <Link to={`/profiles/${profile_id}`} className={`${cardStyles.links} `} >
@@ -115,7 +133,7 @@ const Task = (props) => {
                     </Card.Text>
                 </div>
                 <Card.Text className={cardStyles.overdue}>
-                <small className={cardStyles.mute}>Overdue: {overdue}</small>
+                    <small className={cardStyles.mute}>Overdue: {overdue}</small>
                 </Card.Text>
                 <Link to={`/tasks/${id}`} >
                     <i className="fa-solid fa-comments"></i>

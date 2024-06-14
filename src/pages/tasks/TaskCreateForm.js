@@ -5,6 +5,7 @@ import appStyles from "../../App.module.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
@@ -117,6 +118,10 @@ function TaskCreateForm() {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+            });
+            toast.success("Task created successfully", {
+                position: 'top-right',
+                autoClose: 3000,
             });
             navigate(`/tasks/`);
         } catch (err) {
