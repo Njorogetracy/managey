@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Form, Col, Button, Alert, Row, Container } from 'react-bootstrap';
-import formStyles from '../../styles/TaskCreateEditForm.css'
-import appStyles from "../../App.module.css";
 import { useLocation, useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import { axiosReq } from '../../api/axiosDefaults';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import styles from "../../styles/SignUpform.module.css";
+import btnStyles from '../../styles/Button.module.css'
+import { Form, Col, Button, Alert, Row } from 'react-bootstrap';
+import formStyles from '../../styles/TaskCreateEditForm.css';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -31,6 +37,13 @@ function TaskCreateForm() {
     const imageInput = useRef(null);
     const [errors, setErrors] = useState({});
 
+    /**Priority colour options */
+    const priorityOptions = [
+        { value: 'Low', label: 'Low', icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#FFD43B", }} /> },
+        { value: 'Medium', label: 'Medium', icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#e2763c", }} /> },
+        { value: 'High', label: 'High', icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#ee1111", }} /> },
+    ];
+
     /**Redirect users to previous page */
     const handleGoBack = () => {
         navigate(location.state?.from || '/')
@@ -50,6 +63,25 @@ function TaskCreateForm() {
         setAssignedUsers(selectedOptions);
     };
 
+    /**Handles change for the priority options */
+    const handlePriorityChange = selectedOption => {
+        setTaskData({
+            ...taskData,
+            priority: selectedOption.value,
+        });
+    };
+
+    /**Handles change to attachment field */
+    const handleChangeImage = (event) => {
+        if (event.target.files.length) {
+            setTaskData({
+                ...taskData,
+                attachment: (event.target.files[0]),
+            });
+        }
+    };
+
+
     /**Fetch all profiles from the API */
     useEffect(() => {
         axios.get(`/profiles/`)
@@ -66,17 +98,6 @@ function TaskCreateForm() {
                 setUsers([])
             })
     }, []);
-
-
-    /**Handles change to attachment field */
-    const handleChangeImage = (event) => {
-        if (event.target.files.length) {
-            setTaskData({
-                ...taskData,
-                attachment: (event.target.files[0]),
-            });
-        }
-    };
 
 
     /**Handles form submission */
@@ -133,21 +154,21 @@ function TaskCreateForm() {
     }
 
     const textFields = (
-        <div>
+        <div className="text-center">
             <Form.Group className='mb-3' >
                 <Form.Label className="d-none" >Title</Form.Label>
                 <Form.Control placeholder='Title' name='title' aria-label='title' value={title} onChange={handleFormChange} />
             </Form.Group>
-            {errors.title?.map((message, idx) =>
+            {errors.title?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
+            ))}
             <Form.Group className="mb-3" >
                 <Form.Label className="d-none">Task description</Form.Label>
                 <Form.Control placeholder='Task description' as="textarea" rows={6} aria-label='description' name='description' value={description} onChange={handleFormChange} />
             </Form.Group>
-            {errors.description?.map((message, idx) =>
+            {errors.description?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
+            ))}
             <Form.Group className="mb-3" >
                 <Form.Label className="d-none">Assigned to</Form.Label>
                 <Form.Control
@@ -168,20 +189,37 @@ function TaskCreateForm() {
                     })}
                 </Form.Control>
             </Form.Group>
-            {errors.assigned_users?.map((message, idx) =>
+            {errors.assigned_users?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
+            ))}
             <Form.Group className="mb-3">
                 <Form.Label className="d-none">Priority</Form.Label>
-                <Form.Select placeholder='priority' aria-label="priority" onChange={handleFormChange} value={priority}>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </Form.Select>
+                <Select
+                    value={priorityOptions.find(option => option.value === priority)}
+                    onChange={handlePriorityChange}
+                    options={priorityOptions}
+                    formatOptionLabel={option => (
+                        <div className={styles.OptionLabel}>
+                            {option.icon} {option.label}
+                        </div>
+                    )}
+                    classNamePrefix="react-select"
+                    placeholder="Select priority"
+                    styles={{
+                        control: provided => ({
+                            ...provided,
+                            textAlign: 'left',
+                        }),
+                        placeholder: provided => ({
+                            ...provided,
+                            textAlign: 'left',
+                        }),
+                    }}
+                />
             </Form.Group>
-            {errors.priority?.map((message, idx) =>
+            {errors.priority?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
+            ))}
             <Form.Group className="mb-3">
                 <Form.Label className="d-none">State</Form.Label>
                 <Form.Select placeholder='status' aria-label="sate" onChange={handleFormChange} value={state}>
@@ -191,11 +229,11 @@ function TaskCreateForm() {
                     <option value="3">Completed</option>
                 </Form.Select>
             </Form.Group>
-            {errors.state?.map((message, idx) =>
+            {errors.state?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
+            ))}
             <Form.Group className="mb-3">
-                <Form.Label htmlFor="image-upload">Attach Image</Form.Label>
+                <Form.Label className="d-none" htmlFor="image-upload">Attach Image</Form.Label>
                 <Form.Control
                     name="attachment"
                     id="image-upload"
@@ -206,12 +244,11 @@ function TaskCreateForm() {
                     ref={imageInput}
                 ></Form.Control>
             </Form.Group>
-            {errors.attachment?.map((message, idx) =>
+            {errors.attachment?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
+            ))}
             <Form.Group className="mb-3">
-                <Form.Label>Due date</Form.Label>
-
+                <Form.Label htmlFor='current-date' className="d-none">Due date</Form.Label>
                 <Form.Control
                     name="due_date"
                     type="datetime-local"
@@ -220,18 +257,18 @@ function TaskCreateForm() {
                     value={due_date}
                 ></Form.Control>
             </Form.Group>
-            {errors.due_date?.map((message, idx) =>
+            {errors.due_date?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
-            <Form.Group  className="mb-3">
+            ))}
+            <Form.Group className="mb-3">
                 <Form.Label>Overdue</Form.Label>
                 <Form.Check type='switch' aria-label='overdue' name='overdue' value={overdue} onChange={handleFormChange} />
             </Form.Group>
-            {errors.overdue?.map((message, idx) =>
+            {errors.overdue?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
-            )}
-            <Button type="submit" value="Submit">Create</Button>
-            <Button onClick={handleGoBack}>
+            ))}
+            <Button className={btnStyles.Button} type="submit" value="Submit">Create</Button>
+            <Button className={`${btnStyles.Button} ${btnStyles.Secondary}`} onClick={handleGoBack}>
                 Cancel
             </Button>
         </div>
@@ -239,14 +276,14 @@ function TaskCreateForm() {
 
     /**returns the task create form */
     return (
-        <Row className={formStyles.containerForm}>
-            <Col className="col-sm-6 mx-auto" md={6}>
-            <Container >
-                <h3>Create a New Task</h3>
-                <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
-                    <div className={appStyles.TextAlignCenter}>{textFields}</div>
-                </Form>
-            </Container>
+        <Row>
+            <Col className="col-sm-6 mx-auto" md={6} lg={6}>
+                <div className={`${styles.Form} p-5 `}>
+                    <h3>Create a New Task</h3>
+                    <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
+                        <div>{textFields}</div>
+                    </Form>
+                </div>
             </Col>
         </Row>
     )

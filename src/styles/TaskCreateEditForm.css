@@ -1,29 +1,21 @@
-.containerForm {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f5f5f5;
+.OptionLabel {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-family: "Roboto";
+    align-items:flex-start;
 }
 
-.cardBackground {
-    background-color: #f5f5f5; 
-    width: 25rem;
-    border: 1px solid gray;
-    border-radius: 15px;
-    box-shadow: 5px 8px 8px gray;
-    padding: 5px;
+.OptionLabel .fa-circle {
+    margin-right: 10px;
 }
 
-.Container {
-    background-color: #f5f5f5;
-    border: 1px solid gray;
-    border-radius: 15px;
-    box-shadow: 5px 10px 8px gray;
+.Low {
+    color: green;
 }
+
+.Medium {
+    color: orange;
+}
+
+.High {
+    color: red;
+}
+

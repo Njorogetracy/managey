@@ -1,0 +1,46 @@
+
+.Button {
+    display: inline-flex;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    min-width: 75px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+
+Button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.Button:hover {
+    background-color: #0056b3;
+    border-color: transparent;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+Button:focus {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.Secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.SecondaryButton:hover {
+    background-color: #5a6268;
+}
+
+.SecondaryButton:focus {
+    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.5);
+}
+
+
