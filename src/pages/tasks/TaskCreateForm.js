@@ -33,7 +33,7 @@ function TaskCreateForm() {
 
     /**Redirect users to previous page */
     const handleGoBack = () => {
-        navigate(location.state?.from || '/*')
+        navigate(location.state?.from || '/')
     }
 
     /**Handles changes to the input fields */
