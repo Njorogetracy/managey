@@ -20,7 +20,7 @@ export const DropDown = ({handleEdit, handleDelete}) => {
     <Dropdown className='ml-auto' drop='left'>
       <Dropdown.Toggle as={ThreeDots} >
       </Dropdown.Toggle>
-      <Dropdown.Menu className='text-center'>
+      <Dropdown.Menu className='text-center' popperConfig={{ strategy: "fixed" }}>
         <Dropdown.Item className={dropStyles.DropdownItem}
           onClick={handleEdit}
           aria-label='edit'
