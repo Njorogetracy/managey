@@ -11,6 +11,7 @@ import TaskPage from './pages/tasks/Taskpage';
 import { ToastContainer } from "react-toastify";
 import TasksList from './pages/tasks/TasksList';
 import { useCurrentUser } from './contexts/CurrentUserContext';
+import TaskEdit from './pages/tasks/TaskEdit';
 
 function App() {
   const currentUser = useCurrentUser;
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
+          <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>

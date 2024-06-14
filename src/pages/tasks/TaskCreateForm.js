@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Form, Col, Button, Alert } from 'react-bootstrap';
+import { Form, Col, Button, Alert, Row, Container } from 'react-bootstrap';
 import formStyles from '../../styles/TaskCreateEditForm.css'
 import appStyles from "../../App.module.css";
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ function TaskCreateForm() {
     const [taskData, setTaskData] = useState({
         title: "",
         description: "",
-        assigned_users:[],
+        assigned_users: [],
         overdue: "",
         priority: "",
         state: "",
@@ -133,23 +133,23 @@ function TaskCreateForm() {
     }
 
     const textFields = (
-        <div className={`${formStyles.div} text-center`}>
-            <Form.Group >
-                <Form.Label>Title</Form.Label>
-                <Form.Control name='title' aria-label='title' value={title} onChange={handleFormChange} />
+        <div>
+            <Form.Group className='mb-3' >
+                <Form.Label className="d-none" >Title</Form.Label>
+                <Form.Control placeholder='Title' name='title' aria-label='title' value={title} onChange={handleFormChange} />
             </Form.Group>
             {errors.title?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group >
-                <Form.Label>Task description</Form.Label>
-                <Form.Control as="textarea" rows={6} aria-label='description' name='description' value={description} onChange={handleFormChange} />
+            <Form.Group className="mb-3" >
+                <Form.Label className="d-none">Task description</Form.Label>
+                <Form.Control placeholder='Task description' as="textarea" rows={6} aria-label='description' name='description' value={description} onChange={handleFormChange} />
             </Form.Group>
             {errors.description?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group >
-                <Form.Label>Assigned to</Form.Label>
+            <Form.Group className="mb-3" >
+                <Form.Label className="d-none">Assigned to</Form.Label>
                 <Form.Control
                     as="select"
                     aria-label='assigned_user'
@@ -157,23 +157,23 @@ function TaskCreateForm() {
                     value={assignedUsers}
                     onChange={handleChangeUser}
                 >
-                    <option value='' >Select a User</option>
+                    <option value='' >Assign Task</option>
                     {users && users.map((user) => {
                         return (
                             user && (
-                            <option key={user.id} value={user.id}>
-                                {user.owner}
-                            </option>
-                        ));
+                                <option key={user.id} value={user.id}>
+                                    {user.owner}
+                                </option>
+                            ));
                     })}
                 </Form.Control>
             </Form.Group>
             {errors.assigned_users?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group>
-                <Form.Label>Priority</Form.Label>
-                <Form.Select aria-label="priority" onChange={handleFormChange} value={priority}>
+            <Form.Group className="mb-3">
+                <Form.Label className="d-none">Priority</Form.Label>
+                <Form.Select placeholder='priority' aria-label="priority" onChange={handleFormChange} value={priority}>
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
@@ -182,9 +182,9 @@ function TaskCreateForm() {
             {errors.priority?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group>
-                <Form.Label>State</Form.Label>
-                <Form.Select aria-label="sate" onChange={handleFormChange} value={state}>
+            <Form.Group className="mb-3">
+                <Form.Label className="d-none">State</Form.Label>
+                <Form.Select placeholder='status' aria-label="sate" onChange={handleFormChange} value={state}>
                     <option value="1">Not started</option>
                     <option value="2">To-do</option>
                     <option value="3">In-progress</option>
@@ -194,7 +194,7 @@ function TaskCreateForm() {
             {errors.state?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label htmlFor="image-upload">Attach Image</Form.Label>
                 <Form.Control
                     name="attachment"
@@ -209,7 +209,7 @@ function TaskCreateForm() {
             {errors.attachment?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Due date</Form.Label>
 
                 <Form.Control
@@ -223,7 +223,7 @@ function TaskCreateForm() {
             {errors.due_date?.map((message, idx) =>
                 <Alert variant='warning' key={idx}>{message}</Alert>
             )}
-            <Form.Group >
+            <Form.Group  className="mb-3">
                 <Form.Label>Overdue</Form.Label>
                 <Form.Check type='switch' aria-label='overdue' name='overdue' value={overdue} onChange={handleFormChange} />
             </Form.Group>
@@ -239,16 +239,16 @@ function TaskCreateForm() {
 
     /**returns the task create form */
     return (
-        <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
-            <div >
-                <Col md={5} lg={4} >
-                    <div className=" d-flex flex-column justify-content-center" >
-                        <h3 >Create Task</h3>
-                        <div className={appStyles.TextAlignCenter}>{textFields}</div>
-                    </div>
-                </Col>
-            </div>
-        </Form>
+        <Row className={formStyles.containerForm}>
+            <Col className="col-sm-6 mx-auto" md={6}>
+            <Container >
+                <h3>Create a New Task</h3>
+                <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
+                    <div className={appStyles.TextAlignCenter}>{textFields}</div>
+                </Form>
+            </Container>
+            </Col>
+        </Row>
     )
 }
 
