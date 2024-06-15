@@ -8,39 +8,41 @@ import { axiosRes } from '../../api/axiosDefaults';
 
 function CommentCreateForm(props) {
     const { task, setTask, setComments, profile_id, profile_image} = props;
-    const [comment, setComment] = useState('');
+    const [content, setContent] = useState('');
 
     /**handle change to input field */
     const handleChange = (e) => {
-        setComment(e.target.value);
+        setContent(e.target.value);
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    /**Handle comment submission */
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
             const {data} = await axiosRes.post('/comments/', {
-                comment,
+                content,
                 task,
             })
             setComments((prevComments) => ({
                 ...prevComments,
                 results: [data, ...prevComments.results],
             }));
-            setTask((prevPost) => ({
+            setTask((prevTask) => ({
                 results: [
                   {
-                    ...prevPost.results[0],
-                    comments_count: prevPost.results[0].comments_count + 1,
+                    ...prevTask.results[0],
+                    comments_count: (prevTask.results[0].comments_count || 0 )+ 1,
                   },
                 ],
             }));
-            setComment('')
+            setContent('')
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
         }    
     }
 
 
+    /**Returns comment form */
     return (
         <Form className={`${styles.Form} ml-auto `} onSubmit={handleSubmit}>
             <Form.Group>
@@ -52,7 +54,7 @@ function CommentCreateForm(props) {
                         placeholder='my comment...'
                         as='textarea'
                         rows={2}
-                        value={comment}
+                        value={content}
                         onChange={handleChange}
                         aria-label='comment box'
                     />
@@ -61,7 +63,7 @@ function CommentCreateForm(props) {
             <Button 
                 className={`${styles.Button} btn d-block ms-auto`}
                 type='submit'
-                disabled={!comment.trim()}
+                disabled={!content.trim()}
             >
                 Post
             </Button>
