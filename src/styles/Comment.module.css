@@ -1,0 +1,22 @@
+.Card {
+    background-color: #f5f5f5;
+    border: none;
+    border-radius: none;
+}
+
+.Link {
+    text-decoration: none;
+}
+
+.Owner {
+    font-weight: bold;
+    color: black;
+    margin-right: 8px;
+
+}
+
+.Date {
+    font-weight: lighter;
+    color: gray;
+    margin-right: 8px;
+}

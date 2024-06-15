@@ -44,11 +44,11 @@ function CommentCreateForm(props) {
 
     /**Returns comment form */
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form className="mt-2" onSubmit={handleSubmit}>
             <Form.Group>
                 <InputGroup>
                     <Link to={`/profiles/${profile_id}`} >
-                        <Avatar src={profile_image} />
+                        <Avatar src={profile_image} />{"  "}
                     </Link>
                     <Form.Control
                         placeholder='my comment...'

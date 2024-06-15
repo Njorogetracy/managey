@@ -6,6 +6,7 @@ import Task from './Task';
 import CommentCreateForm from '../comments/CommentCreateForm';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import styles from '../../styles/CommentCreate.module.css';
+import Comment from '../comments/Comment';
 
 function Taskpage() {
     const { id } = useParams()
@@ -42,12 +43,10 @@ function Taskpage() {
                     ) : null}
                     {comments.results.length ? (
                         comments.results.map(comment => (
-                            <p key={comment.id}>
-                                {comment.owner}: {comment.content}
-                            </p>
+                            <Comment key={comment.id} {...comment}/>
                         ))
                     ) : currentUser ? (
-                        <span>No comments yet</span>
+                        <span>No comments</span>
                     ) : (
                         <span>No comments...</span>
                     )}
