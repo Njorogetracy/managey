@@ -6,6 +6,7 @@ import { Card } from 'react-bootstrap';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import { DropDown } from '../../components/DropDown';
 import { axiosRes } from '../../api/axiosDefaults';
+import { toast } from 'react-toastify';
 
 const Comment = (props) => {
   const {
@@ -25,6 +26,10 @@ const Comment = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/comments/${id}`)
+      toast.success("Task deleted", {
+        position: 'top-right',
+        autoClose: 3000,
+      });
       setTask((prevTask) => ({
         results: [
           {
@@ -38,7 +43,7 @@ const Comment = (props) => {
         results: prevComments.results.filter((comment) => comment.id !== id),
       }));
     } catch (error) {
-
+      console.log(error)
     }
   }
 
