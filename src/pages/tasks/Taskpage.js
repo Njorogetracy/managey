@@ -3,10 +3,15 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import Task from './Task';
+import CommentCreateForm from '../comments/CommentCreateForm';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 function Taskpage() {
     const { id } = useParams()
     const [task, setTask] = useState({ results: [] });
+    const currentUser = useCurrentUser();
+    const profile_image = currentUser?.profile_image;
+    const [comments, setComments] = useState({results: []});
 
     /**Fetch task  by id */
     useEffect(() => {
@@ -25,15 +30,17 @@ function Taskpage() {
     }, [id])
 
     return (
-        <Container>
-            <Row>
+            <Row className="ms-auto">
                 <Col>
-                    <p>My tasks</p>
                     <Task {...task.results[0]} setTasks={setTask} taskPage />
-                    <Container>comments</Container>
+                    <Container >
+                        {currentUser ? (
+                            <CommentCreateForm profile_id={currentUser.profile_id} profileImage={profile_image} task={id} setTask={setTask} setComments={setComments} />
+                        ) :  comments.results.length ? ('Comments'
+                        ) : null}
+                    </Container>
                 </Col>
             </Row>
-        </Container>
     );
 }
 
