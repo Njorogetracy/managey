@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import { Card, Button, } from 'react-bootstrap';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
+import { Link,useNavigate } from 'react-router-dom';
 import cardStyles from '../../styles/Task.module.css';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/NavBar.module.css'
@@ -51,7 +51,6 @@ const Task = (props) => {
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
     const navigate = useNavigate();
-    const location = useLocation();
 
     /**Handle task edit and redirect to edit task page */
     const handleEdit = () => {
@@ -85,8 +84,7 @@ const Task = (props) => {
                 <div className={cardStyles.taskmeta}>
                     <Card.Text>
                         <small className={cardStyles.mute}>Created at: {created_at}</small>
-                    </Card.Text>
-                    <span></span>
+                    </Card.Text>   
                     {is_owner && taskPage && <DropDown handleEdit={handleEdit} handleDelete={handleDelete} />}
                 </div>
                 <div>

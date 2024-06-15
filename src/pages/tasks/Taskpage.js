@@ -43,7 +43,12 @@ function Taskpage() {
                     ) : null}
                     {comments.results.length ? (
                         comments.results.map(comment => (
-                            <Comment key={comment.id} {...comment}/>
+                            <Comment
+                                key={comment.id} 
+                                {...comment}
+                                setTask={setTask}
+                                setComments={setComments}
+                             />
                         ))
                     ) : currentUser ? (
                         <span>No comments</span>
