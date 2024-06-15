@@ -5,23 +5,25 @@ import { axiosReq } from '../../api/axiosDefaults';
 import Task from './Task';
 import CommentCreateForm from '../comments/CommentCreateForm';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import styles from '../../styles/CommentCreate.module.css';
 
 function Taskpage() {
     const { id } = useParams()
     const [task, setTask] = useState({ results: [] });
     const currentUser = useCurrentUser();
     const profile_image = currentUser?.profile_image;
-    const [comments, setComments] = useState({results: []});
+    const [comments, setComments] = useState({ results: [] });
 
     /**Fetch task  by id */
     useEffect(() => {
         const handleMount = async () => {
             try {
-                const [{ data: task }] = await Promise.all([
+                const [{ data: task }, { data: comments }] = await Promise.all([
                     axiosReq.get(`/tasks/${id}`),
+                    axiosReq.get(`/comments/?task=${id}`)
                 ]);
                 setTask({ results: [task] });
-                console.log('Task fetched:', task, 'at', new Date().toISOString());
+                setComments(comments)
             } catch (err) {
                 console.log(err, 'error while fetching tasks');
             }
@@ -30,17 +32,28 @@ function Taskpage() {
     }, [id])
 
     return (
-            <Row className="ms-auto">
-                <Col>
-                    <Task {...task.results[0]} setTasks={setTask} taskPage />
-                    <Container >
-                        {currentUser ? (
-                            <CommentCreateForm profile_id={currentUser.profile_id} profileImage={profile_image} task={id} setTask={setTask} setComments={setComments} />
-                        ) :  comments.results.length ? ('Comments'
-                        ) : null}
-                    </Container>
-                </Col>
-            </Row>
+        <Row className="ms-auto">
+            <Col>
+                <Task {...task.results[0]} setTasks={setTask} taskPage />
+                <Container className={`${styles.Form}`} >
+                    {currentUser ? (
+                        <CommentCreateForm profile_id={currentUser.profile_id} profileImage={profile_image} task={id} setTask={setTask} setComments={setComments} />
+                    ) : comments.results.length ? ('Comments'
+                    ) : null}
+                    {comments.results.length ? (
+                        comments.results.map(comment => (
+                            <p key={comment.id}>
+                                {comment.owner}: {comment.content}
+                            </p>
+                        ))
+                    ) : currentUser ? (
+                        <span>No comments yet</span>
+                    ) : (
+                        <span>No comments...</span>
+                    )}
+                </Container>
+            </Col>
+        </Row>
     );
 }
 

@@ -44,7 +44,7 @@ function CommentCreateForm(props) {
 
     /**Returns comment form */
     return (
-        <Form className={`${styles.Form} ml-auto `} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <InputGroup>
                     <Link to={`/profiles/${profile_id}`} >
