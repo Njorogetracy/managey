@@ -247,9 +247,11 @@ Data is handled with full CRUD functionality
 - Bootstrap: A front-end framework for developing responsive and mobile-first websites.
 - react-bootstrap: Integration of Bootstrap with React, offering Bootstrap components as React components.
 
-## Libraries
+## Libraries and packages
 - React: This library is used for building the user interface components 
 - Axios: A Promise-based HTTP client for making HTTP requests from node.js or XMLHttpRequests from the browser
+- React-Toastify: A package used to add notifications 
+- React-Select: A Select control for React
 
 ## Other programs and libraries
 - Google Fonts - for the font family.
@@ -259,7 +261,8 @@ Data is handled with full CRUD functionality
 - Favicon - to provide the code & image for the icon in the tab bar.
 - Balsamiq Wireframe - to create Wireframes for the site layout.
 - Cloudinary - used to host static and media files
-- ElephantSQL - used to host postgres database used in proje
+- ElephantSQL - used to host postgres database used in the project
+- Figma - Used to brainstorm the prooject ideas
 
 # Front-End
 ## React
@@ -339,7 +342,7 @@ The Site was deployed using Heroku Hosting Platform.
 - Deploy App
 
 # Credits
-## Code Used
+## Code Used and Content
 - [Implementing a page not found](https://www.geeksforgeeks.org/how-to-setup-404-page-in-react-routing/)
 - [mapping over an array of objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
 - [mapping over children](https://react.dev/reference/react/Children#children-map)
@@ -347,6 +350,8 @@ The Site was deployed using Heroku Hosting Platform.
 - [React useNavigate hook](https://www.geeksforgeeks.org/replacement-of-usehistory-hook-in-react/)
 - [UseNavigate hook](https://stackoverflow.com/questions/31079081/how-to-programmatically-navigate-using-react-router)
 - [Float nav items right](https://stackoverflow.com/questions/42311292/react-bootstrap-navbar-how-to-right-align-a-navbar-item)
+- [React Select styles](https://react-select.com/styles#the-styles-prop)
+- [Create app logo](https://logo.com/login?returnTo=%2Fdashboard%2Fyour-logo-files)
 
 # Acknowledgements
 

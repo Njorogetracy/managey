@@ -23,10 +23,10 @@ function TaskEdit() {
         priority: "",
         state: "",
         attachment: "",
-        // due_date: "",
+        due_date: "",
     });
 
-    const { title, description, overdue, priority, state, attachment, due_date } = taskData;
+    const { title, description, assigned_users, overdue, priority, state, attachment, due_date } = taskData;
     const navigate = useNavigate();
     const location = useLocation();
     const [users, setUsers] = useState([]);
@@ -40,9 +40,9 @@ function TaskEdit() {
         const handleEditTask = async () => {
             try {
                 const { data } = await axiosReq.get(`/tasks/${id}`)
-                const { title, description, overdue, priority, state, attachment, is_owner } = data;
+                const { title, description, overdue, priority, state, due_date, assigned_users, attachment, is_owner } = data;
 
-                is_owner ? setTaskData({ title, description, overdue, priority, state, attachment }) : navigate('/');
+                is_owner ? setTaskData({ title, description, overdue, priority, state, attachment, due_date, assigned_users, }) : navigate('/');
             } catch (error) {
                 console.log(error)
             }
@@ -140,11 +140,15 @@ function TaskEdit() {
             formData.append('attachment', imageInput.current.files[0]);
         }
 
-        formData.append('due_date', due_date)
+        if (due_date !== null && due_date !== "") {
+            formData.append("due_date", due_date);
+        }
 
-        assignedUsers.forEach(userId => {
-            formData.append('assigned_users', userId);
-        });
+        if (assignedUsers !== null && assigned_users !== "No one") {
+            assignedUsers.forEach(userId => {
+                formData.append('assigned_users', userId);
+            });
+        }
 
         //for debugging
         for (const [key, value] of formData.entries()) {
