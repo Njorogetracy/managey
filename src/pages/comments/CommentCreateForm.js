@@ -8,7 +8,7 @@ import { axiosRes } from '../../api/axiosDefaults';
 
 function CommentCreateForm(props) {
     const { task, setTask, setComments, profile_id, profile_image} = props;
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState("");
 
     /**handle change to input field */
     const handleChange = (e) => {
@@ -19,7 +19,7 @@ function CommentCreateForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const {data} = await axiosRes.post('/comments/', {
+            const {data} = await axiosRes.post("/comments/", {
                 content,
                 task,
             })
@@ -31,7 +31,7 @@ function CommentCreateForm(props) {
                 results: [
                   {
                     ...prevTask.results[0],
-                    comments_count: (prevTask.results[0].comments_count || 0 )+ 1,
+                    comments_count: (prevTask.results[0].comments_count || 0) + 1,
                   },
                 ],
             }));
@@ -63,7 +63,7 @@ function CommentCreateForm(props) {
             <Button 
                 className={`${styles.Button} btn d-block ms-auto`}
                 type='submit'
-                disabled={!content.trim()}
+                disabled={!content || !content.trim()}
             >
                 Post
             </Button>

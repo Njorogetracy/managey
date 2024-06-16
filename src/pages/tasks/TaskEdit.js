@@ -13,20 +13,6 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 function TaskEdit() {
-
-    /**Fetch task fields */
-    const [taskData, setTaskData] = useState({
-        title: "",
-        description: "",
-        assigned_users: [],
-        overdue: "",
-        priority: "",
-        state: "",
-        attachment: "",
-        due_date: "",
-    });
-
-    const { title, description, assigned_users, overdue, priority, state, attachment, due_date } = taskData;
     const navigate = useNavigate();
     const location = useLocation();
     const [users, setUsers] = useState([]);
@@ -35,14 +21,30 @@ function TaskEdit() {
     const [errors, setErrors] = useState({});
     const { id } = useParams();
 
-    /**Fetch posts to edit */
+
+     /**Fetch task fields */
+     const [taskData, setTaskData] = useState({
+        title: "",
+        description: "",
+        assigned_users: "null",
+        overdue: "",
+        priority: "low",
+        state: "",
+        attachment: null,
+        due_date: "",
+    });
+
+    const { title, description, assigned_users, overdue, priority, state, due_date } = taskData;
+
+    /**Fetch tasks to edit */
     useEffect(() => {
         const handleEditTask = async () => {
             try {
-                const { data } = await axiosReq.get(`/tasks/${id}`)
+                const { data } = await axiosReq.get(`/tasks/${id}/`)
                 const { title, description, overdue, priority, state, due_date, assigned_users, attachment, is_owner } = data;
+                const formattedDueDate = new Date(due_date).toISOString().slice(0, 16);
 
-                is_owner ? setTaskData({ title, description, overdue, priority, state, attachment, due_date, assigned_users, }) : navigate('/');
+                is_owner ? setTaskData({ title, description, overdue, priority, state, attachment, due_date:formattedDueDate, assigned_users, }) : navigate('/');
             } catch (error) {
                 console.log(error)
             }
@@ -64,10 +66,8 @@ function TaskEdit() {
 
     /**Handles changes to the input fields */
     const handleFormChange = (e) => {
-        setTaskData({
-            ...taskData,
-            [e.target.name]: e.target.value,
-        })
+        const { name, value } = e.target;
+        setTaskData((prev) => ({ ...prev, [name]: value }))
     }
 
     /**Handles changes to the assigned users selection */
@@ -137,7 +137,7 @@ function TaskEdit() {
         formData.append('state', state)
 
         if (imageInput?.current?.files[0]) {
-            formData.append('attachment', imageInput.current.files[0]);
+            formData.append("attachment", imageInput.current.files[0]);
         }
 
         if (due_date !== null && due_date !== "") {
@@ -199,7 +199,7 @@ function TaskEdit() {
                     value={assignedUsers}
                     onChange={handleChangeUser}
                 >
-                    <option value='' >Assign Task</option>
+                    <option value='' >Select a user</option>
                     {users && users.map((user) => {
                         return (
                             user && (

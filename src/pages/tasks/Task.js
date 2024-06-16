@@ -1,13 +1,15 @@
 import React from 'react';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import { Card } from 'react-bootstrap';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import cardStyles from '../../styles/Task.module.css';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/NavBar.module.css'
 import { DropDown } from '../../components/DropDown';
 import { axiosRes } from '../../api/axiosDefaults';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Task = (props) => {
     const {
@@ -28,6 +30,20 @@ const Task = (props) => {
         comments_count,
         taskPage,
     } = props;
+
+    /**Priority option colors */
+    const getPriorityColor = () => {
+        switch (priority) {
+            case 'Low':
+                return "#FFD43B";
+            case 'Medium':
+                return "#e2763c";
+            case 'High':
+                return "#ee1111";
+            default:
+                return "#000000";
+        }
+    };
 
     // console.log("TaskCard props:", {
     //     id,
@@ -84,7 +100,7 @@ const Task = (props) => {
                 <div className={cardStyles.taskmeta}>
                     <Card.Text>
                         <small className={cardStyles.mute}>Created at: {created_at}</small>
-                    </Card.Text>   
+                    </Card.Text>
                     {is_owner && taskPage && <DropDown handleEdit={handleEdit} handleDelete={handleDelete} />}
                 </div>
                 <div>
@@ -111,7 +127,9 @@ const Task = (props) => {
                         <small className={cardStyles.mute}>State: {state}</small>
                     </Card.Text>
                     <Card.Text className={cardStyles.priority}>
-                        <small className={cardStyles.mute}>Priority: {priority}</small>
+                        <div style={{ color: getPriorityColor()}}> 
+                            <FontAwesomeIcon icon={faCircle} /> {priority} priority
+                        </div>
                     </Card.Text>
                 </div>
                 <br />

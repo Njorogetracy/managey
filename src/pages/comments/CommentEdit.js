@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import styles from '../../styles/CommentCreate.module.css';
 import { axiosRes } from '../../api/axiosDefaults';
 
-function CommentEdit({ setComments, setEditComment, id, content } ) {
+function CommentEdit({ setComments, setEditComment, task, id, content }) {
     const [commentContent, setCommentContent] = useState(content);
 
     /**handle change to input field */
@@ -16,7 +16,7 @@ function CommentEdit({ setComments, setEditComment, id, content } ) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axiosRes.put(`/comments/${id}`, {
+            await axiosRes.put(`/comments/${id}/`, {
                 content: commentContent.trim(),
             });
             setComments((prevComments) => ({
@@ -34,6 +34,9 @@ function CommentEdit({ setComments, setEditComment, id, content } ) {
             setEditComment(false);
         } catch (error) {
             console.log(error.response.message)
+            if (error.response) {
+                console.error("Response data:", error.response.data); // Log response data for debugging
+            }
         }
     }
 
@@ -42,21 +45,21 @@ function CommentEdit({ setComments, setEditComment, id, content } ) {
     return (
         <Form className="mt-2" onSubmit={handleSubmit}>
             <Form.Group className="pr-1">
-                    <Form.Control
-                        as='textarea'
-                        rows={2}
-                        value={commentContent}
-                        onChange={handleChange}
-                    />
+                <Form.Control
+                    as='textarea'
+                    rows={2}
+                    value={commentContent}
+                    onChange={handleChange}
+                />
             </Form.Group>
             <div className='text-right'>
-                <button
+                <Button
                     className={`${styles.Button} btn d-block ms-auto`}
                     type='button'
                     onClick={() => setEditComment(false)}
                 >
                     Cancel
-                </button>
+                </Button>
                 <Button
                     className={`${styles.Button} btn d-block ms-auto`}
                     type='submit'

@@ -27,7 +27,7 @@ const Comment = (props) => {
 
   const handleDelete = async () => {
     try {
-      await axiosRes.delete(`/comments/${id}`)
+      await axiosRes.delete(`/comments/${id}/`)
       toast.success("Task deleted", {
         position: 'top-right',
         autoClose: 3000,
@@ -51,7 +51,7 @@ const Comment = (props) => {
 
   return (
 
-    <div>
+    <div >
       <hr />
       <Card className={styles.Card}>
         <Link className={styles.Link} to={`/profiles/${profile_id}`} >
@@ -62,12 +62,12 @@ const Comment = (props) => {
         <Card.Body className='align-self-center ml-2'>
           {editComment ? (
             <CommentEdit
-              setEditComment={setEditComment}
               id={id}
-              content={content}
-              setComments={setComments}
               profile_id = {profile_id}
+              content={content}
               profile_image = {profile_image}
+              setComments={setComments}
+              setEditComment={setEditComment}
             />
           ) : (
             <p>{content}</p>
