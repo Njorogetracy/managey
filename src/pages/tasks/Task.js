@@ -45,25 +45,6 @@ const Task = (props) => {
         }
     };
 
-    // console.log("TaskCard props:", {
-    //     id,
-    //     profile_id,
-    //     profile_image,
-    //     owner,
-    //     title, // Log title to check
-    //     updated_at,
-    //     assigned_users_usernames,
-    //     created_at,
-    //     priority,
-    //     description,
-    //     state,
-    //     overdue,
-    //     due_date,
-    //     assigned_users,
-    //     attachment,
-    //     comments_count,
-    //   });
-
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
     const navigate = useNavigate();
@@ -151,10 +132,11 @@ const Task = (props) => {
                 <Card.Text className={cardStyles.overdue}>
                     <small className={cardStyles.mute}>Overdue: {overdue}</small>
                 </Card.Text>
-                <Link to={`/tasks/${id}`} >
-                    <i className="fa-solid fa-comments"></i>
-                </Link>
+                <Card.Text>
+                    <i className="fa-solid fa-comments"></i>    
                 {comments_count}
+                </Card.Text>
+               
             </Card.Body>
         </Card>
     )

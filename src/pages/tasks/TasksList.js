@@ -6,6 +6,7 @@ import { Row, Col, Container, Button, Card, Form } from 'react-bootstrap';
 import NoResults from '../../assets/no-results.png';
 import Asset from '../../components/Asset.js';
 import listStyles from '../../styles/TaskListPage.module.css';
+import UserProfiles from '../profiles/UserProfiles.js';
 
 function TasksList({ message, filter = " " }) {
     const [tasks, setTasks] = useState({ results: [] });
@@ -53,7 +54,7 @@ function TasksList({ message, filter = " " }) {
         <Container className={listStyles.listpage}>
             <Row>
                 <Col>
-                    <p>search</p>
+                    <UserProfiles/>
                     <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i>
                     <Form
                         className={listStyles.SearchBar}
@@ -98,15 +99,15 @@ function TasksList({ message, filter = " " }) {
                 ) : (
                     <Container className="text-center my-5">
                         <Asset spinner />
-                    </Container>
+                    </Container> 
                 )}
             </Row>
             {tasks.results?.length > 5 && (
                 <Row className="mt-3">
                     <Col className="text-center">
-                        <Button variant="primary" onClick={() => navigate('/all-tasks')}>
+                        {/* <Button variant="primary" onClick={() => navigate('/all-tasks')}>
                             View All Tasks
-                        </Button>
+                        </Button> */}
                     </Col>
                 </Row>
             )}

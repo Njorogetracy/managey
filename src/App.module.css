@@ -2,11 +2,11 @@
     font-family: "Montserrat", "Roboto", sans-serif;
     color: #000000;
     background-color: #ffffff;
-    background-image: url("https://images.pexels.com/photos/9869075/pexels-photo-9869075.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    min-height: 100vh;
+    /* background-image: url("https://images.pexels.com/photos/9869075/pexels-photo-9869075.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
+    /* background-repeat: no-repeat; */
+    /* background-position: center;
+    background-size: cover; */
+   
 }
 
 
@@ -58,3 +58,10 @@ i:hover {
 .TextAlignCenter {
     text-align: center;
 }
+
+.Content {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid #dadadf;
+  }

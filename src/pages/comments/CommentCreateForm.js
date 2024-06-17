@@ -7,7 +7,7 @@ import Avatar from '../../components/Avatar';
 import { axiosRes } from '../../api/axiosDefaults';
 
 function CommentCreateForm(props) {
-    const { task, setTask, setComments, profile_id, profile_image} = props;
+    const { task, setTask, setComments, profile_id, profile_image } = props;
     const [content, setContent] = useState("");
 
     /**handle change to input field */
@@ -31,7 +31,7 @@ function CommentCreateForm(props) {
                 results: [
                   {
                     ...prevTask.results[0],
-                    comments_count: (prevTask.results[0].comments_count || 0) + 1,
+                    comments_count: (prevTask.results[0].comments_count ) + 1,
                   },
                 ],
             }));
@@ -47,8 +47,8 @@ function CommentCreateForm(props) {
         <Form className="mt-2" onSubmit={handleSubmit}>
             <Form.Group>
                 <InputGroup>
-                    <Link to={`/profiles/${profile_id}`} >
-                        <Avatar src={profile_image} />{"  "}
+                    <Link to={`/profiles/${profile_id}/`} >
+                        <Avatar src={profile_image} />
                     </Link>
                     <Form.Control
                         placeholder='my comment...'

@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import TasksList from './pages/tasks/TasksList';
 import { useCurrentUser } from './contexts/CurrentUserContext';
 import TaskEdit from './pages/tasks/TaskEdit';
+import ProfilePage from './pages/profiles/ProfilePage';
 
 function App() {
   const currentUser = useCurrentUser;
@@ -28,15 +29,16 @@ function App() {
              filter={`owner__username=${profile_id}&`}
             />} />
           <Route exact path="/tasks" element={<TasksList message='No results found adjust keyword' />} />
-          <Route exact path="/profiles" element={
+          {/* <Route exact path="/profiles/:id" element={
             <TasksList
               message='No results found adjust keyword'
-            />} />
+            />} /> */}
           <Route exact path="/login" element={<LoginForm />} />
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
+          <Route exact path="/profiles/:id" element={ <ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>

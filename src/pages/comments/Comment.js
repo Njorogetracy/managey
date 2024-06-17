@@ -28,8 +28,9 @@ const Comment = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/comments/${id}/`)
-      toast.success("Task deleted", {
+      toast.success("Comment deleted", {
         position: 'top-right',
+        theme: 'colored',
         autoClose: 3000,
       });
       setTask((prevTask) => ({

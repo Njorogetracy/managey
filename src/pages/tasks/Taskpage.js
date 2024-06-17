@@ -7,6 +7,9 @@ import CommentCreateForm from '../comments/CommentCreateForm';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import styles from '../../styles/CommentCreate.module.css';
 import Comment from '../comments/Comment';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Asset from '../../components/Asset';
+import { fetchMoreData } from '../../utils/utils';
 
 function Taskpage() {
     const { id } = useParams()
@@ -33,7 +36,7 @@ function Taskpage() {
     }, [id])
 
     return (
-        <Row className="ms-auto">
+        <Row >
             <Col>
                 <Task {...task.results[0]} setTasks={setTask} taskPage />
                 <Container className={`${styles.Form}`} >
@@ -42,14 +45,21 @@ function Taskpage() {
                     ) : comments.results.length ? ('Comments'
                     ) : null}
                     {comments.results.length ? (
-                        comments.results.map(comment => (
-                            <Comment
-                                key={comment.id} 
-                                {...comment}
-                                setTask={setTask}
-                                setComments={setComments}
-                             />
-                        ))
+                        <InfiniteScroll
+                            children={comments.results.map(comment => (
+                                <Comment
+                                    key={comment.id}
+                                    {...comment}
+                                    setTask={setTask}
+                                    setComments={setComments}
+                                />
+                            ))
+                            }
+                            dataLength={comments.results.length}
+                            loader={<Asset spinner />}
+                            hasMore={!!comments.next}
+                            next={() => fetchMoreData(comments, setComments)}
+                        />
                     ) : currentUser ? (
                         <span>No comments</span>
                     ) : (

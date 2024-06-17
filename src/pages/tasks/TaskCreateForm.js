@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { axiosReq } from '../../api/axiosDefaults';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from "../../styles/SignUpform.module.css";
 import btnStyles from '../../styles/Button.module.css'
