@@ -11,12 +11,16 @@ const Profile = (props) => {
     <div>
       <div key={id} className='my-3 d-flex align-items-center'>
         <div>
+          {/* Link to the individual profile page */}
           <Link to={`/profiles/${id}/`}>
-            <Avatar src={image} height={55} />
+            {/* Avatar component displaying the profile image */}
+            <Avatar src={image} height={imageSize} />
           </Link>
         </div>
         <div className='mx-2'>
+          {/* Link to the individual profile page */}
           <Link to={`/profiles/${id}/`}>
+            {/* Displaying the owner's name */}
             <p><strong>{owner}</strong></p>
           </Link>
         </div>

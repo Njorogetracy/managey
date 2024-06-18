@@ -11,66 +11,95 @@ import { useParams } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import { Image } from "react-bootstrap";
+import { fetchMoreData } from "../../utils/utils";
+import NoResults from "../../assets/no-results.png";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Profile from "./Profile";
+import Task from "../tasks/Task";
 
 function ProfilePage() {
     const [hasLoaded, setHasLoaded] = useState(false);
     const currentUser = useCurrentUser();
     const { id } = useParams();
     const setProfileData = useSetProfileData();
+    const [profileTasks, setProfileTasks] = useState({ results: [] });
     const { pageProfile = { results: [] } } = useProfileData();
     const [profile] = pageProfile.results;
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [{ data: pageProfile }] = await Promise.all([
-                    axiosReq.get(`/profiles/${id}/`),
-                  ]);
-                  setProfileData((prevState) => ({
+                const { data: pageProfile } = await axiosReq.get(`/profiles/${id}/`);
+                setProfileData((prevState) => ({
                     ...prevState,
                     pageProfile: { results: [pageProfile] },
-                  }));
-                  setHasLoaded(true);
+                }));
+                setHasLoaded(true);
             } catch (error) {
-                console.log('Error fetching profiles', error)
+                console.log('Error fetching profiles', error);
             }
-        }
+        };
         fetchData();
-    }, [id, setProfileData])
+    }, [id, setProfileData]);
 
     const mainProfile = (
         <>
             <Row noGutters className="px-3 text-center">
                 <Col lg={3} className="text-lg-left">
-                    <Image src={profile?.image} />
+                    <Image src={profile?.image} roundedCircle className="img-fluid" />
                 </Col>
                 <Col lg={6}>
-                    <h3 className="m-2">{Profile?.owner}</h3>
+                    <h3 className="m-2">{profile?.owner}</h3>
+                    <p>{profile?.bio}</p>
                     <p>Profile stats</p>
                 </Col>
-                <Col lg={3} className="text-lg-right">
-                    <p>Follow button</p>
-                </Col>
-                <Col className="p-3">Profile content</Col>
             </Row>
         </>
     );
 
-    const mainProfilePosts = (
+    const mainProfileTasks = (
         <>
             <hr />
-            <p className="text-center">Profile owner's posts</p>
+            <p className="text-center">Profile owner's tasks</p>
+            {profileTasks.results.length ? (
+                <InfiniteScroll
+                    children={profileTasks.results.map((task) => (
+                        <Task key={task.id} {...task} setTasks={setProfileTasks} />
+                    ))}
+                    dataLength={profileTasks.results.length}
+                    loader={<Asset spinner />}
+                    hasMore={!!profileTasks.next}
+                    next={() => fetchMoreData(profileTasks, setProfileTasks)}
+                />
+            ) : (
+                <Asset
+                    src={NoResults}
+                    message={`No results found, ${profile?.owner} hasn't posted yet.`}
+                />
+            )}
             <hr />
         </>
     );
 
     return (
-        <Row>
-            <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-                <UserProfiles />
-            </Col>
-        </Row>
+        <Container>
+            <Row>
+                <Col lg={8} className="mx-auto p-0 p-lg-2">
+                    {hasLoaded ? (
+                        <>
+                            {mainProfile}
+                            {mainProfileTasks}
+                        </>
+                    ) : (
+                        <Asset spinner />
+                    )}
+                </Col>
+                <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
+                    <UserProfiles />
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

@@ -37,44 +37,53 @@ function UserProfiles() {
 
     return (
         <div>
-            {/* <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i> */}
-            <Form
-                className={listStyles.SearchBar}
-                onSubmit={(event) => event.preventDefault()}
-            >
-                <Form.Control
-                    value={searchUser}
-                    onChange={(event) => setSearchUser(event.target.value)}
-                    type="text"
-                    className="mr-sm-2"
-                    placeholder="Search users"
-                    aria-label="Search bar"
-                />
-            </Form>
-            <ul>
-                {hasLoaded ? (
-                    <>
-                        {Array.isArray(profileData) && profileData.length > 0 ? (
-                            profileData.map(profile => (
-                                // <Profile key={profile.id} setProfileData={setProfileData} />
-                                <p key={profile.id} value={profile.owner}>
-                                    <Link to={`/profiles/${profile.id}/`} >{profile.owner}</Link>
-                                </p>
-                            ))
-                         ) : (
+        {/* Search bar for filtering user profiles */}
+        <Form
+            className={listStyles.SearchBar}
+            onSubmit={(event) => event.preventDefault()}
+        >
+            <Form.Control
+                value={searchUser}
+                onChange={(event) => setSearchUser(event.target.value)}
+                type="text"
+                className="mr-sm-2"
+                placeholder="Search users"
+                aria-label="Search bar"
+            />
+        </Form>
+        {/* Display list of user profiles */}
+        <ul>
+            {hasLoaded ? (
+                <>
+                    {profileData.results.length > 0 ? (
+                        profileData.results.map(profile => (
+                            // Link each profile to its detail page
+                            <Profile
+                                    key={profile.id}
+                                    id={profile.id}
+                                    image={profile.image}
+                                    owner={profile.owner}
+                                    imageSize={55}
+                                />
+                            // <p key={profile.id}>
+                            //     <Link to={`/profiles/${profile.id}/`}>{profile.owner}</Link>
+                            // </p>
+                        ))
+                    ) : (
+                        // Display message if no results are found
                         <Container className="text-center my-5">
-                            {/* <Asset src={NoResults} message="No results"/> */}
+                            <Asset src={NoResults} message="No results" />
                         </Container>
                     )}
-                    </>
-                ):(
-                    <Container>
-                        <Asset spinner/>
-                    </Container>
-
-                )}
-            </ul>
-        </div>
+                </>
+            ) : (
+                // Display spinner while data is loading
+                <Container>
+                    <Asset spinner />
+                </Container>
+            )}
+        </ul>
+    </div>
     )
 }
 

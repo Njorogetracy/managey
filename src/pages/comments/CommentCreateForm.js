@@ -19,7 +19,7 @@ function CommentCreateForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const {data} = await axiosRes.post("/comments/", {
+            const { data } = await axiosRes.post("/comments/", {
                 content,
                 task,
             })
@@ -29,16 +29,16 @@ function CommentCreateForm(props) {
             }));
             setTask((prevTask) => ({
                 results: [
-                  {
-                    ...prevTask.results[0],
-                    comments_count: (prevTask.results[0].comments_count ) + 1,
-                  },
+                    {
+                        ...prevTask.results[0],
+                        comments_count: (prevTask.results[0].comments_count) + 1,
+                    },
                 ],
             }));
             setContent("");
         } catch (error) {
             console.log(error.response.data)
-        }    
+        }
     }
 
 
@@ -47,8 +47,8 @@ function CommentCreateForm(props) {
         <Form className="mt-2" onSubmit={handleSubmit}>
             <Form.Group>
                 <InputGroup>
-                    <Link to={`/profiles/${profile_id}/`} >
-                        <Avatar src={profile_image} />
+                    <Link to={`/profiles/${profile_id}/`}>
+                        <Avatar src={profile_image}  />
                     </Link>
                     <Form.Control
                         placeholder='my comment...'
@@ -60,7 +60,7 @@ function CommentCreateForm(props) {
                     />
                 </InputGroup>
             </Form.Group>
-            <Button 
+            <Button
                 className={`${styles.Button} btn d-block ms-auto`}
                 type='submit'
                 disabled={!content || !content.trim()}

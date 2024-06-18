@@ -15,6 +15,7 @@ export const ProfileDataProvider = ({ children }) => {
 
     const currentUser = useCurrentUser();
 
+
     /*
     Makes API request to the /profiles/ endpoint
     gets profile information

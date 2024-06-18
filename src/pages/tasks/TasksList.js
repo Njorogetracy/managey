@@ -54,7 +54,6 @@ function TasksList({ message, filter = " " }) {
         <Container className={listStyles.listpage}>
             <Row>
                 <Col>
-                    <UserProfiles/>
                     <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i>
                     <Form
                         className={listStyles.SearchBar}
