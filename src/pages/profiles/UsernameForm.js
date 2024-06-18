@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../../contexts/CurrentUserContext';
-import { Form, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Form, Row, Col, Button, Alert, Container } from 'react-bootstrap';
 import { axiosRes } from '../../api/axiosDefaults';
 import { toast } from 'react-toastify';
+import appStyles from "../../App.module.css";
+import styles from "../../styles/SignUpform.module.css";
 
 const UsernameForm = () => {
 
@@ -21,7 +23,7 @@ const UsernameForm = () => {
         if (currentUser?.profile_id?.toString() === id) {
             setUsername(currentUser.username);
         } else {
-            navigate('/home')
+            navigate('/')
         }
     }, [currentUser, navigate, id])
 
@@ -48,12 +50,13 @@ const UsernameForm = () => {
 
 
     return (
-        <Row className= "justify-content-md-center" >
-            <Col md={6}>
-                <h1 className="text-center">Edit Username</h1>
+        <Row className={styles.Row} >
+            <Col className="col-sm-6 mx-auto" md={6}>
+            <Container className={`${styles.Form} p-5 `}>
+                <h2 className={appStyles.Header}>Edit Username</h2>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="username">
-                        <Form.Label>New Username</Form.Label>
+                    <Form.Group className="mb-3"  controlId="username">
+                        <Form.Label>Change Username</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter your new username"
@@ -71,6 +74,7 @@ const UsernameForm = () => {
                         Save Username
                     </Button>
                 </Form>
+            </Container>
             </Col>
         </Row>
     )
