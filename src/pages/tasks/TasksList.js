@@ -6,7 +6,6 @@ import { Row, Col, Container, Button, Card, Form } from 'react-bootstrap';
 import NoResults from '../../assets/no-results.png';
 import Asset from '../../components/Asset.js';
 import listStyles from '../../styles/TaskListPage.module.css';
-import UserProfiles from '../profiles/UserProfiles.js';
 
 function TasksList({ message, filter = " " }) {
     const [tasks, setTasks] = useState({ results: [] });
@@ -64,7 +63,7 @@ function TasksList({ message, filter = " " }) {
                             onChange={(event) => setQuery(event.target.value)}
                             type="text"
                             className="mr-sm-2"
-                            placeholder="Search posts"
+                            placeholder="Search tasks"
                         />
                     </Form>
                 </Col>
@@ -72,7 +71,7 @@ function TasksList({ message, filter = " " }) {
             <Row>
                 {hasLoaded ? (
                     tasks.results?.length ? (
-                        tasks.results.slice(0, 5).map((task, index) => (
+                        tasks.results.map((task, index) => (
                             <Col key={task.id} md={6} lg={4} className="mb-4">
                                 <Card className={listStyles.taskcard}>
                                     <Card.Header className={listStyles.cardheader}>
@@ -98,18 +97,10 @@ function TasksList({ message, filter = " " }) {
                 ) : (
                     <Container className="text-center my-5">
                         <Asset spinner />
-                    </Container> 
+                    </Container>
                 )}
             </Row>
-            {tasks.results?.length > 5 && (
-                <Row className="mt-3">
-                    <Col className="text-center">
-                        {/* <Button variant="primary" onClick={() => navigate('/all-tasks')}>
-                            View All Tasks
-                        </Button> */}
-                    </Col>
-                </Row>
-            )}
+          
         </Container>
     )
 }

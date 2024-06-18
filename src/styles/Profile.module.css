@@ -1,3 +1,7 @@
 .WordBreak {
     word-break: break-all;
   }
+
+.Link {
+  text-decoration: none;
+}

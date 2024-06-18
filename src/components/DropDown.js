@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dropdown } from 'react-bootstrap';
 import dropStyles from '../styles/DropDown.module.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
@@ -14,7 +15,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   />
 ));
 
-
+/**Functional component for the dropdown with edit and delete options */
 export const DropDown = ({handleEdit, handleDelete}) => {
   return (
     <Dropdown className='ml-auto' drop='left'>
@@ -37,3 +38,34 @@ export const DropDown = ({handleEdit, handleDelete}) => {
     </Dropdown>
   )
 };
+
+export function ProfileEditDropdown({ id }) {
+  const navigate = useNavigate();
+  return (
+    <Dropdown className='ml-auto' drop='left'>
+      <Dropdown.Toggle as={ThreeDots} />
+      <Dropdown.Menu>
+        <Dropdown.Item
+          onClick={() => navigate(`/profiles/${id}/edit`)}
+          aria-label="edit-profile"
+        >
+          <i className="fas fa-edit" /> edit profile
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => navigate(`/profiles/${id}/edit/username`)}
+          aria-label="edit-username"
+        >
+          <i className="far fa-id-card" />
+          change username
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => navigate(`/profiles/${id}/edit/password`)}
+          aria-label="edit-password"
+        >
+          <i className="fas fa-key" />
+          change password
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+}

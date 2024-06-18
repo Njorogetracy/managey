@@ -57,7 +57,6 @@ function UserProfiles() {
                 <>
                     {profileData.results.length > 0 ? (
                         profileData.results.map(profile => (
-                            // Link each profile to its detail page
                             <Profile
                                     key={profile.id}
                                     id={profile.id}
@@ -65,19 +64,14 @@ function UserProfiles() {
                                     owner={profile.owner}
                                     imageSize={55}
                                 />
-                            // <p key={profile.id}>
-                            //     <Link to={`/profiles/${profile.id}/`}>{profile.owner}</Link>
-                            // </p>
                         ))
                     ) : (
-                        // Display message if no results are found
                         <Container className="text-center my-5">
                             <Asset src={NoResults} message="No results" />
                         </Container>
                     )}
                 </>
             ) : (
-                // Display spinner while data is loading
                 <Container>
                     <Asset spinner />
                 </Container>

@@ -13,6 +13,9 @@ import TasksList from './pages/tasks/TasksList';
 import { useCurrentUser } from './contexts/CurrentUserContext';
 import TaskEdit from './pages/tasks/TaskEdit';
 import ProfilePage from './pages/profiles/ProfilePage';
+import UsernameForm from "./pages/profiles/UsernameForm";
+import UserPasswordForm from "./pages/profiles/UserPasswordForm";
+import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 
 function App() {
   const currentUser = useCurrentUser;
@@ -39,6 +42,9 @@ function App() {
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
           <Route exact path="/profiles/:id" element={ <ProfilePage />} />
+          <Route exact path="/profiles/:id/edit/username" element={ <UsernameForm />} />
+          <Route exact path="/profiles/:id/edit/password" element={ <UserPasswordForm />} />
+          <Route exact path="/profiles/:id/edit" element={ <ProfileEditForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>

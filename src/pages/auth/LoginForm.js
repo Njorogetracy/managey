@@ -43,7 +43,7 @@ function LoginForm() {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate("/home")
+            navigate("/")
         } catch (err) {
             setErrors(err.response?.data || {});
             toast.error("Login failed. Please check your credentials and try again.", {
