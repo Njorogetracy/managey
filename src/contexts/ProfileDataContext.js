@@ -24,6 +24,7 @@ export const ProfileDataProvider = ({ children }) => {
     useEffect(() => {
         const handleMount = async () => {
             try {
+                console.log("Current user:", currentUser);
                 const { data } = await axiosReq.get(
                     "/profiles/?ordering=tasks_count"
                 );

@@ -31,7 +31,7 @@ const ProfileEditForm = () => {
     const handleMount = async () => {
       if (currentUser?.profile_id?.toString() === id) {
         try {
-          const { data } = await axiosReq.get(`profiles/${id}/`);
+          const { data } = await axiosReq.get(`/profiles/${id}/`);
           const { bio, image } = data;
           setProfileData({ bio, image })
         } catch (error) {

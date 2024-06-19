@@ -13,17 +13,14 @@ export const useRedirect = (userAuthStatus) => {
                 // Redirect based on authentication status
                 if (userAuthStatus === 'loggedIn') {
                     navigate("/");
-                } else if (userAuthStatus === 'loggedOut') {
-                    navigate("/"); 
                 }
             } catch (error) {
-                console.error('Error occurred during authentication check:', error);
-                navigate("/"); 
+                if (userAuthStatus === 'loggedOut') {
+                    navigate('/')
+                }
             }
         };
 
         handleMount();
     }, [navigate, userAuthStatus]);
-
-    return null;
 };

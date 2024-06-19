@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { Container, Button, } from "react-bootstrap";
+import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import Asset from "../../components/Asset";
 import btnStyles from "../../styles/Button.module.css";
 import UserProfiles from "./UserProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import { Image } from "react-bootstrap";
@@ -16,16 +14,20 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Task from "../tasks/Task";
 import { ProfileEditDropdown } from "../../components/DropDown";
 import appStyles from "../../App.module.css";
+import Avatar from "../../components/Avatar";
+import styles from "../../styles/ProfilePage.module.css"
 
 function ProfilePage() {
     const [hasLoaded, setHasLoaded] = useState(false);
-    const currentUser = useCurrentUser();
     const { id } = useParams();
     const setProfileData = useSetProfileData();
     const [profileTasks, setProfileTasks] = useState({ results: [], next: null });
     const { pageProfile = { results: [] } } = useProfileData();
     const [profile] = pageProfile.results;
+    const [tasksAssignedByCurrentUser, setTasksAssignedByCurrentUser] = useState({ results: [], next: null });
     const [showScroll, setShowScroll] = useState(false);
+    const navigate = useNavigate();
+    const currentUser = useCurrentUser();
 
     /**handle scroll */
     const handleScroll = () => {
@@ -55,17 +57,19 @@ function ProfilePage() {
             try {
                 const [
                     { data: pageProfile },
-                    { data: profileTasks },
+                    { data: taskData },
+                    { data: tasksAssignedByCurrentUser }
                 ] = await Promise.all([
                     axiosReq.get(`/profiles/${id}/`),
                     axiosReq.get(`/tasks/?owner__profile=${id}`),
-                    axiosReq.get(`/tasks/?assigned_users__profile=${id}&owner=${id}`),
+                    axiosReq.get(`/tasks/?assigned_users=${id}`),
                 ])
                 setProfileData((prevState) => ({
                     ...prevState,
                     pageProfile: { results: [pageProfile] },
                 }));
-                setProfileTasks(profileTasks);
+                setProfileTasks(taskData);
+                setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
                 setHasLoaded(true);
             } catch (error) {
                 console.log('Error fetching profiles', error);
@@ -76,28 +80,35 @@ function ProfilePage() {
 
     const mainProfile = (
         <>
-            <Row className="px-3 text-center">
-                <Col lg={3} md={6} className="text-lg-left">
-                    <Image src={profile?.image} roundedCircle className="img-fluid" />
-                </Col>
-                <Col lg={6} >
-                    <h3 className="m-2">{profile?.owner}</h3>
-                    {profile?.bio && <Col>{profile.bio}</Col>}
-                </Col>
-                <Col>
-                    {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
-                </Col>
-            </Row>
+           <Row className="px-3 text-center align-items-center">
+            {/* Avatar and Name */}
+            <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-lg-left">
+                <div className="d-flex flex-column align-items-center align-items-md-start">
+                    <Avatar src={profile?.image} height={150} roundedCircle className="img-fluid mb-2" />
+                    <h3 className="mb-0">{profile?.owner}</h3>
+                </div>
+            </Col>
+
+            {/* Bio */}
+            <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-center">
+                {profile?.bio && <p>{profile.bio}</p>}
+            </Col>
+
+            {/* Profile Edit Dropdown */}
+            <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-right">
+                {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
+            </Col>
+        </Row>
         </>
     );
 
     const mainProfileTasks = (
         <>
-            <hr />
-            {profile?.owner}  has a task count of {profile?.tasks_count}
+            <hr className={styles.hideHorizontalRule} />
             {profileTasks.results.length ? (
                 <InfiniteScroll
                     children={profileTasks.results.map((task) => (
+                        task.owner === profile.owner &&
                         <Task key={task.id} {...task} setTasks={setProfileTasks} />
                     ))}
                     dataLength={profileTasks.results.length}
@@ -106,19 +117,47 @@ function ProfilePage() {
                     next={() => fetchMoreData(profileTasks, setProfileTasks)}
                 />
             ) : (
+                <Container className="text-center my-5">
+                    {currentUser?.username === profile?.owner ? (
+                        <>
+                            <p>You have not created any tasks.</p>
+                            <Button variant="primary" onClick={() => navigate('/tasks/create')}>
+                                Create Task
+                            </Button>
+                        </>
+                    ) : (
+                        <Asset
+                            src={NoResults}
+                            message={`No results found, ${profile?.owner} has not created any tasks.`}
+                        />
+                    )}
+                </Container>
+            )}
+            <hr className={styles.hideHorizontalRule} />
+        </>
+    );
+
+    /* Returns all tasks currently assigned to viewed profiles user */
+    const mainTasksAssignedByCurrentUser = (
+        <>
+            <hr className={styles.hideHorizontalRule} />
+            {tasksAssignedByCurrentUser.results.length ? (
+                <InfiniteScroll
+                    children={tasksAssignedByCurrentUser.results.map((task) => (
+                        <Task key={task.id} {...task} setTasks={setTasksAssignedByCurrentUser} />
+                    ))}
+                    dataLength={tasksAssignedByCurrentUser.results.length}
+                    loader={<Asset spinner />}
+                    hasMore={!!tasksAssignedByCurrentUser.next}
+                    next={() => fetchMoreData(tasksAssignedByCurrentUser, setTasksAssignedByCurrentUser)}
+                />
+            ) : (
                 <Asset
                     src={NoResults}
-                    message={`No results found, ${profile?.owner} has no tasks.`}
+                    message={`No assigned tasks.`}
                 />
             )}
-            {/* {currentUser && currentUser.username === profile?.owner && (
-                <Link to="/tasks/create">
-                    <Button className={`${btnStyles.Button} ${btnStyles.Wide}`}>
-                        Create Task
-                    </Button>
-                </Link>
-            )} */}
-            <hr />
+            <hr className={styles.hideHorizontalRule} />
         </>
     );
 
@@ -130,12 +169,14 @@ function ProfilePage() {
                         <>
                             {mainProfile}
                             {mainProfileTasks}
+                            {mainTasksAssignedByCurrentUser}
+
                         </>
                     ) : (
                         <Asset spinner />
                     )}
                 </Col>
-                <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
+                <Col lg={4} className={`p-0 p-lg-2 ${window.innerWidth <= 768 ? 'd-none' : 'd-lg-block'}`}>
                     <UserProfiles />
                 </Col>
                 {showScroll && (

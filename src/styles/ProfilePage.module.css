@@ -3,7 +3,12 @@
     height: 120px;
     width: 120px;
     margin: 4px;
-  }
+}
+
+.hideHorizontalRule {
+  display: none;
+}
+
   
   @media screen and (max-width: 991px) {
     .ProfileImage {

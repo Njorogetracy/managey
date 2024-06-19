@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { axiosReq } from '../../api/axiosDefaults';
 import listStyles from '../../styles/TaskListPage.module.css';
-import { Form, Container } from 'react-bootstrap';
+import { Form, Container, Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import Asset from '../../components/Asset';
 import NoResults from '../../assets/no-results.png';
+import { Link } from 'react-router-dom';
 import Profile from './Profile';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
@@ -14,7 +15,7 @@ function UserProfiles() {
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
     const currentUser = useCurrentUser();
-    const filteredProfiles = profileData.results.filter(profile => profile.owner !== currentUser?.username);
+
 
     /**Fetch all user profiles */
     useEffect(() => {
@@ -38,30 +39,34 @@ function UserProfiles() {
         };
     }, [searchUser, pathname])
 
+    const filteredProfiles = profileData.results.filter(profile => profile.owner !== currentUser?.username);
+
     return (
         <div>
-        {/* Search bar for filtering user profiles */}
-        <Form
-            className={listStyles.SearchBar}
-            onSubmit={(event) => event.preventDefault()}
-        >
-            <Form.Control
-                value={searchUser}
-                onChange={(event) => setSearchUser(event.target.value)}
-                type="text"
-                className="mr-sm-2"
-                placeholder="Search users"
-                aria-label="Search bar"
-            />
-        </Form>
-        {/* Display list of user profiles */}
-       
+            {/* Search bar for filtering user profiles */}
+            <Form
+                className={listStyles.SearchBar}
+                onSubmit={(event) => event.preventDefault()}
+            >
+                <Form.Control
+                    value={searchUser}
+                    onChange={(event) => setSearchUser(event.target.value)}
+                    type="text"
+                    className="mr-sm-2"
+                    placeholder="Search users"
+                    aria-label="Search bar"
+                />
+            </Form>
+            {/* Display list of user profiles */}
+
             {hasLoaded ? (
                 <>
                     {filteredProfiles.length > 0 ? (
                         filteredProfiles.map(profile => (
                             <Profile
                                     key={profile.id}
+                                    {...profileData}
+                                    setProfileData={setProfileData}
                                     id={profile.id}
                                     image={profile.image}
                                     owner={profile.owner}
@@ -70,7 +75,7 @@ function UserProfiles() {
                         ))
                     ) : (
                         <Container className="text-center my-5">
-                            <Asset src={NoResults} message="No results" />
+                            <Asset src={NoResults} message="No user with that name exists" />
                         </Container>
                     )}
                 </>
@@ -79,8 +84,8 @@ function UserProfiles() {
                     <Asset spinner />
                 </Container>
             )}
-       
-    </div>
+
+        </div>
     )
 }
 

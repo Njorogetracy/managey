@@ -11,7 +11,6 @@ import appStyles from "../../App.module.css";
 import axios from "axios";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { toast } from "react-toastify";
-import { useRedirect } from "../../hooks/useRedirect";
 
 
 function LoginForm() {
@@ -24,7 +23,6 @@ function LoginForm() {
     const { username, password } = loginData;
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    useRedirect('loggedIn');
 
     /*
     Handles changes to input fields
@@ -46,7 +44,7 @@ function LoginForm() {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate("/tasks")
+            navigate("/")
         } catch (err) {
             setErrors(err.response?.data || {});
             toast.error("Login failed. Please check your credentials and try again.", {

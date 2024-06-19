@@ -8,6 +8,7 @@ const Profile = (props) => {
   const { id, image, owner, imageSize = 55 } = props;
 
   return (
+
     <div>
       <div key={id} className='my-3 d-flex align-items-center'>
         <div>
