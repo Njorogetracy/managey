@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {Container, Button,} from "react-bootstrap";
+import { Container, Button, } from "react-bootstrap";
 import Asset from "../../components/Asset";
-import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import UserProfiles from "./UserProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
@@ -14,36 +13,53 @@ import { Image } from "react-bootstrap";
 import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/no-results.png";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Profile from "./Profile";
 import Task from "../tasks/Task";
 import { ProfileEditDropdown } from "../../components/DropDown";
+import appStyles from "../../App.module.css";
 
 function ProfilePage() {
     const [hasLoaded, setHasLoaded] = useState(false);
     const currentUser = useCurrentUser();
     const { id } = useParams();
     const setProfileData = useSetProfileData();
-    const [profileTasks, setProfileTasks] = useState({ results: [] });
+    const [profileTasks, setProfileTasks] = useState({ results: [], next: null });
     const { pageProfile = { results: [] } } = useProfileData();
     const [profile] = pageProfile.results;
+    const [showScroll, setShowScroll] = useState(false);
+
+    /**handle scroll */
+    const handleScroll = () => {
+        if (window.scrollY > 300) {
+            setShowScroll(true);
+        } else {
+            setShowScroll(false);
+        }
+    };
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
 
-    /* 
-  Fetch all data for profile, tasks and
-  assigned to tasks from the API
-*/
+    /** Fetch all data for profile, tasks and
+  assigned to tasks from the API */
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const { data: pageProfile } = await axiosReq.get(`/profiles/${id}/`);
                 const [
                     { data: pageProfile },
                     { data: profileTasks },
                 ] = await Promise.all([
                     axiosReq.get(`/profiles/${id}/`),
                     axiosReq.get(`/tasks/?owner__profile=${id}`),
-                    axiosReq.get(`/tasks/?assigned_users=${id}&owner=${id}`),
-                    axiosReq.get(`/tasks/`),
+                    axiosReq.get(`/tasks/?assigned_users__profile=${id}&owner=${id}`),
                 ])
                 setProfileData((prevState) => ({
                     ...prevState,
@@ -61,16 +77,15 @@ function ProfilePage() {
     const mainProfile = (
         <>
             <Row className="px-3 text-center">
-                <Col lg={3} className="text-lg-left">
+                <Col lg={3} md={6} className="text-lg-left">
                     <Image src={profile?.image} roundedCircle className="img-fluid" />
                 </Col>
-                <Col lg={6}>
+                <Col lg={6} >
                     <h3 className="m-2">{profile?.owner}</h3>
-                    <p>{profile?.bio && <Col>{profile.bio}</Col>}</p>
-                    <p>Profile status</p>
+                    {profile?.bio && <Col>{profile.bio}</Col>}
                 </Col>
                 <Col>
-                {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
+                    {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
                 </Col>
             </Row>
         </>
@@ -79,8 +94,7 @@ function ProfilePage() {
     const mainProfileTasks = (
         <>
             <hr />
-            <p className="text-center">Profile owner's tasks</p>
-            {profile?.owner}  has a task count of {profile?.tasks_count}.
+            {profile?.owner}  has a task count of {profile?.tasks_count}
             {profileTasks.results.length ? (
                 <InfiniteScroll
                     children={profileTasks.results.map((task) => (
@@ -96,14 +110,14 @@ function ProfilePage() {
                     src={NoResults}
                     message={`No results found, ${profile?.owner} has no tasks.`}
                 />
-            )} 
-                {currentUser && currentUser.username === profile?.owner && (
+            )}
+            {/* {currentUser && currentUser.username === profile?.owner && (
                 <Link to="/tasks/create">
                     <Button className={`${btnStyles.Button} ${btnStyles.Wide}`}>
                         Create Task
                     </Button>
                 </Link>
-            )}
+            )} */}
             <hr />
         </>
     );
@@ -124,6 +138,15 @@ function ProfilePage() {
                 <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
                     <UserProfiles />
                 </Col>
+                {showScroll && (
+                    <Button
+                        onClick={scrollToTop}
+                        className={appStyles.BackToTopButton}
+                        variant="secondary"
+                    >
+                        Back to Top
+                    </Button>
+                )}
             </Row>
         </Container>
     );

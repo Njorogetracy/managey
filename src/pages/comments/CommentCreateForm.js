@@ -48,7 +48,7 @@ function CommentCreateForm(props) {
             <Form.Group>
                 <InputGroup>
                     <Link to={`/profiles/${profile_id}/`}>
-                        <Avatar src={profile_image}  />
+                        <Avatar src={profile_image} height={55} />
                     </Link>
                     <Form.Control
                         placeholder='my comment...'

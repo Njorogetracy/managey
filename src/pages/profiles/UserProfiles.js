@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { axiosReq } from '../../api/axiosDefaults';
 import listStyles from '../../styles/TaskListPage.module.css';
 import { Form, Container } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Asset from '../../components/Asset';
 import NoResults from '../../assets/no-results.png';
 import Profile from './Profile';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 function UserProfiles() {
     const [profileData, setProfileData] = useState({ results: [] })
     const [searchUser, setSearchUser] = useState("");
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
+    const currentUser = useCurrentUser();
+    const filteredProfiles = profileData.results.filter(profile => profile.owner !== currentUser?.username);
 
     /**Fetch all user profiles */
     useEffect(() => {
@@ -52,11 +55,11 @@ function UserProfiles() {
             />
         </Form>
         {/* Display list of user profiles */}
-        <ul>
+       
             {hasLoaded ? (
                 <>
-                    {profileData.results.length > 0 ? (
-                        profileData.results.map(profile => (
+                    {filteredProfiles.length > 0 ? (
+                        filteredProfiles.map(profile => (
                             <Profile
                                     key={profile.id}
                                     id={profile.id}
@@ -76,7 +79,7 @@ function UserProfiles() {
                     <Asset spinner />
                 </Container>
             )}
-        </ul>
+       
     </div>
     )
 }

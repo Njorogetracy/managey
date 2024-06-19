@@ -18,7 +18,7 @@ const UsernameForm = () => {
     const currentUser = useCurrentUser();
     const setCurrentUser = useSetCurrentUser();
 
-
+    /**Fetch currrent user username */
     useEffect(() => {
         if (currentUser?.profile_id?.toString() === id) {
             setUsername(currentUser.username);
@@ -48,7 +48,7 @@ const UsernameForm = () => {
         }
     };
 
-
+    /**return form with username infomation */
     return (
         <Row className={styles.Row} >
             <Col className="col-sm-6 mx-auto" md={6}>
@@ -56,7 +56,7 @@ const UsernameForm = () => {
                 <h2 className={appStyles.Header}>Edit Username</h2>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3"  controlId="username">
-                        <Form.Label>Change Username</Form.Label>
+                        <Form.Label className='d-none' >Change Username</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter your new username"
