@@ -21,6 +21,10 @@ const NavBar = () => {
     try {
         await axios.post("dj-rest-auth/logout/")
         setCurrentUser(null)
+        toast.success("Logout successful", {
+          position: 'top-right',
+          autoClose: 3000,
+      });
     } catch (error) {
         console.log(error);
     }
@@ -43,13 +47,6 @@ const NavBar = () => {
         activeclassname={styles.Active}
         to="/tasks/"
       ><i className="fas fa-list"></i>Tasks</NavLink>
-      <NavLink
-        className={styles.NavLink}
-        activeclassname={styles.Active}
-        to="/contact"
-      >
-        <i className="fa-solid fa-envelope"></i>Contact
-      </NavLink>
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut} >
         <i className="fa-solid fa-sign-out-alt"></i>Log out
       </NavLink>
@@ -68,7 +65,7 @@ const NavBar = () => {
       <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/login" >
         <i className="fa-solid fa-right-to-bracket"></i>Login
       </NavLink>
-      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="signup" >
+      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/signup" >
         <i className="fa-solid fa-user-plus"></i>Sign up
       </NavLink>
     </>
