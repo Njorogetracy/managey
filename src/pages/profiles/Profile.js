@@ -8,7 +8,7 @@ import styles from '../../styles/Profile.module.css';
  */
 const Profile = (props) => {
 
-  const { id, image, owner, imageSize = 55 } = props;
+  const { id, image, owner, imageSize = 55 } = props;  /* eslint-disable react/prop-types */ 
 
   return (
 

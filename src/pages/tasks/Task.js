@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import { Card } from 'react-bootstrap';
+import { Card, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import cardStyles from '../../styles/Task.module.css';
 import Avatar from '../../components/Avatar';
@@ -27,7 +27,6 @@ const Task = (props) => {
         title,
         description,
         state,
-        overdue,
         priority,
         assigned_users_usernames,
         attachment,
@@ -69,7 +68,7 @@ const Task = (props) => {
             });
             navigate('/')
         } catch (error) {
-            console.log('error deleting task', error)
+            console.log(error)
         }
     }
 
@@ -120,9 +119,9 @@ const Task = (props) => {
                         <small className={cardStyles.mute}>State: {state}</small>
                     </Card.Text>
                     <Card.Text className={cardStyles.priority}>
-                        <div style={{ color: getPriorityColor() }}>
+                        <Col style={{ color: getPriorityColor() }}>
                             <FontAwesomeIcon icon={faCircle} /> {priority} priority
-                        </div>
+                        </Col>
                     </Card.Text>
                 </div>
                 <div className={cardStyles.details}>
@@ -138,9 +137,6 @@ const Task = (props) => {
                     <Card.Text>
                         <small className={cardStyles.mute}>Updated at: {updated_at}</small>
                     </Card.Text>
-                    <Card.Text>
-                        <small className={cardStyles.mute}>Overdue: {overdue}</small>
-                    </Card.Text>
                 </div>
                 <Card.Text>
                     <i className="fa-solid fa-comments"></i>
@@ -149,6 +145,6 @@ const Task = (props) => {
             </Card.Body>
         </Card>
     )
-}
+};
 
 export default Task

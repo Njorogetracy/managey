@@ -9,6 +9,7 @@ import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContex
 import Avatar from "./Avatar";
 import axios from "axios";
 import useClicksOutside from "../hooks/useClicksOutside";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();

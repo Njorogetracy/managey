@@ -69,7 +69,6 @@ const Comment = (props) => {
             profile_image={profile_image}
             setComments={setComments}
             setEditComment={setEditComment}
-            handleCancelEdit={handleCancelEdit}
           />
         ) : (
           <p className={styles.Content}>{content}</p>

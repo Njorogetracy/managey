@@ -6,7 +6,6 @@ import axios from 'axios';
 import styles from "../../styles/SignUpform.module.css";
 import btnStyles from '../../styles/Button.module.css'
 import { Form, Col, Button, Alert, Row } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 

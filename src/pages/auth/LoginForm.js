@@ -9,18 +9,17 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/SignUpform.module.css";
 import appStyles from "../../App.module.css";
 import axios from "axios";
-import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { toast } from "react-toastify";
-import { useRedirect } from "../../hooks/useRedirect";
 
 /**Handles user login */
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
-    useRedirect('loggedIn')
+    const currentUser = useCurrentUser();
 
     const [loginData, setLoginData] = useState({
-        username: "",
-        password: "",
+        username: '',
+        password: '',
     });
     const { username, password } = loginData;
     const [errors, setErrors] = useState({});
@@ -40,13 +39,13 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post("/dj-rest-auth/login/", loginData)
+            const { data } = await axios.post('/dj-rest-auth/login/', loginData)
             setCurrentUser(data.user)
             toast.success("Login successful", {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate("/")
+            navigate('/')
         } catch (err) {
             setErrors(err.response?.data || {});
             toast.error("Login failed. Please check your credentials and try again.", {
@@ -55,6 +54,11 @@ function LoginForm() {
             });
         }
     };
+
+    // Redirect if user is already logged in
+    if (currentUser) {
+        navigate( "/tasks" );
+    }
 
     return (
         <Row className={styles.Row}>
@@ -90,7 +94,7 @@ function LoginForm() {
                         )}
                     </Form>
                     <Link className={styles.Link} to="/signup">
-                        Don't have an account? <span>Sign up now!</span>
+                        No account yet? <span>Sign up now!</span>
                     </Link>
                 </Container>
             </Col>

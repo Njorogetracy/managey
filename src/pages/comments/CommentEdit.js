@@ -5,7 +5,7 @@ import styles from '../../styles/CommentCreate.module.css';
 import { axiosRes } from '../../api/axiosDefaults';
 
 /**Handles comment updates */
-function CommentEdit({ setComments, setEditComment, id, content }) {
+function CommentEdit({ setComments, setEditComment, id, content, }) {
     const [commentContent, setCommentContent] = useState(content);
 
     /**handle change to input field */

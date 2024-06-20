@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useCurrentUser, useSetCurrentUser } from '../../contexts/CurrentUserContext'
+import { useCurrentUser } from '../../contexts/CurrentUserContext'
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import { Form, Col, Row, Container, Button, Alert, Image } from 'react-bootstrap';
 import appStyles from '../../App.module.css'
 import btnStyles from '../../styles/Button.module.css';
-import Asset from '../../components/Asset';
-import Upload from '../../assets/upload.png';
 
 /**This is a functional component that fetches user profile data,
  * It returns  a form for the user to update their profile information
@@ -15,7 +13,6 @@ import Upload from '../../assets/upload.png';
 const ProfileEditForm = () => {
 
   const currentUser = useCurrentUser();
-  const setCurrentUser = useSetCurrentUser();
   const { id } = useParams();
   const navigate = useNavigate();
   const imageFile = useRef(null);
@@ -63,6 +60,7 @@ const ProfileEditForm = () => {
 
     try {
       const { data } = await axiosReq.put(`/profiles/${id}/`, formData);
+      setProfileData(data)
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);

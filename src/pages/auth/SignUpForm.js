@@ -4,13 +4,11 @@ import styles from "../../styles/SignUpform.module.css";
 import appStyles from "../../App.module.css";
 import { Form, Button, Col, Row, Container, Alert, Modal } from "react-bootstrap";
 import axios from "axios";
-import { useRedirect } from "../../hooks/useRedirect";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 
 /**Function Handles user registration */
 const SignUpForm = () => {
-    useRedirect('loggedIn')
-
     const [signUpData, setSignUpData] = useState({
         username: "",
         password1: "",
@@ -20,6 +18,7 @@ const SignUpForm = () => {
     const [errors, setErrors] = useState({});
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
+    const currentUser = useCurrentUser();
     
 
     /*
@@ -49,6 +48,11 @@ const SignUpForm = () => {
         setShowModal(false);
         navigate("/login");
     };
+
+     // Redirect if user is already logged in
+     if (currentUser) {
+        navigate( "/login" );
+    }
 
     /**Returns signup form
      */

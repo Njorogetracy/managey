@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import Task from './Task';
-import { Row, Col, Container, Button, Card, Form } from 'react-bootstrap';
+import { Row, Col, Container, Button, Form } from 'react-bootstrap';
 import NoResults from '../../assets/no-results.png';
 import Asset from '../../components/Asset.js';
 import listStyles from '../../styles/TaskListPage.module.css';
@@ -14,7 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchMoreData } from '../../utils/utils.js';
 
 /**This function handles fetching and displaying all user tasks */
-function TasksList({ message, filter = " " }) {
+function TasksList({ filter = "" }) {   /* eslint-disable-line react/prop-types */
     const [tasks, setTasks] = useState({ results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ function TasksList({ message, filter = " " }) {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const { data } = await axiosReq.get(`/tasks/?${filter}search=${query}`)
+                const { data } = await axiosReq.get(`/tasks/?${filter}search=${query}`) /* eslint-disable-line react/prop-types */
                 setTasks(data)
                 setHasLoaded(true)
             } catch (error) {
@@ -50,7 +50,7 @@ function TasksList({ message, filter = " " }) {
         if (Array.isArray(tasks) && tasks.length > 10) {
             navigate('/tasks');
         }
-    }, [tasks, navigate]);
+    }, [tasks, pathname, query, currentUser, navigate]);
 
 
 
@@ -74,17 +74,13 @@ function TasksList({ message, filter = " " }) {
     }, []);
 
     return (
-        <Container className={listStyles.listpage}>
-            <Row>
-                <Col>
 
-                </Col>
-            </Row>
+        <Container className={listStyles.listpage}>
+            
             <Row>
                 {currentUser ? (
                     <>
                         <h2>Welcome, {currentUser.username}!</h2>
-
                         <Form
                             className={listStyles.SearchBar}
                             onSubmit={(event) => event.preventDefault()}
@@ -150,7 +146,7 @@ function TasksList({ message, filter = " " }) {
                 </Button>
             )}
         </Container >
-    )
-}
+    );;
+};;
 
 export default TasksList

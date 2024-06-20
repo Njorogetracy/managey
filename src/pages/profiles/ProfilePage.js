@@ -83,20 +83,20 @@ function ProfilePage() {
 
     const mainProfile = (
         <>
-           <Row className="px-3 text-center align-items-center">
-            <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-lg-left">
-                <div className="d-flex flex-column align-items-center align-items-md-start">
-                    <Avatar src={profile?.image} height={150} roundedCircle className="img-fluid mb-2" />
-                    <h3 className="mb-0">{profile?.owner}</h3>
-                </div>
-            </Col>
-            <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-center">
-                {profile?.bio && <p>{profile.bio}</p>}
-            </Col>
-            <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-right">
-                {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
-            </Col>
-        </Row>
+            <Row className="px-3 text-center align-items-center">
+                <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-lg-left">
+                    <div className="d-flex flex-column align-items-center align-items-md-start">
+                        <Avatar src={profile?.image} height={150} roundedCircle className="img-fluid mb-2" />
+                        <h3 className="mb-0">{profile?.owner}</h3>
+                    </div>
+                </Col>
+                <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-center">
+                    {profile?.bio && <p>{profile.bio}</p>}
+                </Col>
+                <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-right">
+                    {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
+                </Col>
+            </Row>
         </>
     );
 
@@ -105,15 +105,17 @@ function ProfilePage() {
             <hr className={styles.hideHorizontalRule} />
             {profileTasks.results.length ? (
                 <InfiniteScroll
-                    children={profileTasks.results.map((task) => (
-                        task.owner === profile.owner &&
-                        <Task key={task.id} {...task} setTasks={setProfileTasks} />
-                    ))}
                     dataLength={profileTasks.results.length}
                     loader={<Asset spinner />}
                     hasMore={!!profileTasks.next}
                     next={() => fetchMoreData(profileTasks, setProfileTasks)}
-                />
+                >
+                    {profileTasks.results.map((task) => (
+                        task.owner === profile.owner && (
+                            <Task key={task.id} {...task} setTasks={setProfileTasks} />
+                        )
+                    ))}
+                </InfiniteScroll>
             ) : (
                 <Container className="text-center my-5">
                     {currentUser?.username === profile?.owner ? (
@@ -141,14 +143,15 @@ function ProfilePage() {
             <hr className={styles.hideHorizontalRule} />
             {tasksAssignedByCurrentUser.results.length ? (
                 <InfiniteScroll
-                    children={tasksAssignedByCurrentUser.results.map((task) => (
-                        <Task key={task.id} {...task} setTasks={setTasksAssignedByCurrentUser} />
-                    ))}
                     dataLength={tasksAssignedByCurrentUser.results.length}
                     loader={<Asset spinner />}
                     hasMore={!!tasksAssignedByCurrentUser.next}
                     next={() => fetchMoreData(tasksAssignedByCurrentUser, setTasksAssignedByCurrentUser)}
-                />
+                >
+                    {tasksAssignedByCurrentUser.results.map((task) => (
+                        <Task key={task.id} {...task} setTasks={setTasksAssignedByCurrentUser} />
+                    ))}
+                </InfiniteScroll>
             ) : (
                 <Asset
                     src={NoResults}
@@ -157,6 +160,7 @@ function ProfilePage() {
             )}
             <hr className={styles.hideHorizontalRule} />
         </>
+
     );
 
     return (
@@ -179,14 +183,14 @@ function ProfilePage() {
                 </Col>
             </Row>
             {showScroll && (
-                    <Button
-                        onClick={scrollToTop}
-                        className={appStyles.BackToTopButton}
-                        variant="secondary"
-                    >
-                        Back to Top
-                    </Button>
-                )}
+                <Button
+                    onClick={scrollToTop}
+                    className={appStyles.BackToTopButton}
+                    variant="secondary"
+                >
+                    Back to Top
+                </Button>
+            )}
         </Container>
     );
 }

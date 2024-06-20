@@ -14,6 +14,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
     }}
   />
 ));
+ThreeDots.displayName = 'ThreeDots'; 
 
 /**Functional component for the dropdown with edit and delete options */
 export const DropDown = ({handleEdit, handleDelete}) => {

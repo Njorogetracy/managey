@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styles from './App.module.css';
 import NavBar from './components/NavBar';
@@ -18,6 +19,7 @@ import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import UserProfiles from './pages/profiles/UserProfiles';
 
+
 function App() {
   const currentUser = useCurrentUser;
   const profile_id = currentUser?.profile_id || "";
@@ -29,13 +31,13 @@ function App() {
         <Routes>
           <Route exact path="/tasks" element={
             <TasksList
-             message='No results found adjust search keyword'
-             filter={`owner__username=${profile_id}&`}
+              message='No results found adjust search keyword'
+              filter={`owner__username=${profile_id}&`}
             />} />
           <Route exact path="/tasks" element={
-            <TasksList 
-            message='No results found adjust keyword'
-            filter={`/tasks/?owner__username=${profile_id}&`}
+            <TasksList
+              message='No results found adjust keyword'
+              filter={`/tasks/?owner__username=${profile_id}&`}
             />} />
           <Route exact path="/login" element={<LoginForm />} />
           <Route exact path="/signup" element={<SignUpForm />} />
@@ -43,11 +45,11 @@ function App() {
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
-          <Route exact path="/profiles/:id" element={ <ProfilePage />} />
-          <Route exact path="/profiles/:id/edit/username" element={ <UsernameForm />} />
-          <Route exact path="/profiles/:id/edit/password" element={ <UserPasswordForm />} />
-          <Route exact path="/profiles/:id/edit" element={ <ProfileEditForm />} />
-          <Route exact path="/profiles" element={<UserProfiles message="Oops! It seems there are no users by that name"/>} />
+          <Route exact path="/profiles/:id" element={<ProfilePage />} />
+          <Route exact path="/profiles/:id/edit/username" element={<UsernameForm />} />
+          <Route exact path="/profiles/:id/edit/password" element={<UserPasswordForm />} />
+          <Route exact path="/profiles/:id/edit" element={<ProfileEditForm />} />
+          <Route exact path="/profiles" element={<UserProfiles message="Oops! It seems there are no users by that name" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>

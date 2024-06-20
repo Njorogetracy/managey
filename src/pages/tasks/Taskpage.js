@@ -34,37 +34,44 @@ function Taskpage() {
                 setTask({ results: [task] });
                 setComments(comments)
             } catch (err) {
-                console.log(err, 'error while fetching tasks');
+                console.log(err);
             }
         };
         handleMount();
     }, [id])
 
     return (
-        <Row >
+        <Row>
             <Col>
                 <Task {...task.results[0]} setTasks={setTask} taskPage />
-                <Container className={`${styles.Form}`} >
+                <Container className={`${styles.Form}`}>
                     {currentUser ? (
-                        <CommentCreateForm profile_id={currentUser.profile_id} profileImage={profile_image} task={id} setTask={setTask} setComments={setComments} />
-                    ) : comments.results.length ? ('Comments'
+                        <CommentCreateForm
+                            profile_id={currentUser.profile_id}
+                            profileImage={profile_image}
+                            task={id}
+                            setTask={setTask}
+                            setComments={setComments}
+                        />
+                    ) : comments.results.length ? (
+                        <div>Comments</div>
                     ) : null}
                     {comments.results.length ? (
                         <InfiniteScroll
-                            children={comments.results.map(comment => (
+                            dataLength={comments.results.length}
+                            loader={<Asset spinner />}
+                            hasMore={!!comments.next}
+                            next={() => fetchMoreData(comments, setComments)}
+                        >
+                            {comments.results.map((comment) => (
                                 <Comment
                                     key={comment.id}
                                     {...comment}
                                     setTask={setTask}
                                     setComments={setComments}
                                 />
-                            ))
-                            }
-                            dataLength={comments.results.length}
-                            loader={<Asset spinner />}
-                            hasMore={!!comments.next}
-                            next={() => fetchMoreData(comments, setComments)}
-                        />
+                            ))}
+                        </InfiniteScroll>
                     ) : currentUser ? (
                         <span>No comments</span>
                     ) : (

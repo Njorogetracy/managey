@@ -1,16 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { axiosReq } from '../../api/axiosDefaults';
 import axios from 'axios';
-import 'react-datepicker/dist/react-datepicker.css';
 import styles from "../../styles/SignUpform.module.css";
 import btnStyles from '../../styles/Button.module.css'
-import { Form, Col, Button, Alert, Row } from 'react-bootstrap';
-import formStyles from '../../styles/TaskCreateEditForm.css';
-import { toast } from 'react-toastify';
+import { Form, Col, Button, Alert, Row, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import { axiosReq } from '../../api/axiosDefaults';
 
 
 /**Handles creating of task */
@@ -21,18 +19,17 @@ function TaskCreateForm() {
         title: "",
         description: "",
         assigned_users: [],
-        overdue: "",
         priority: "",
         state: "",
         attachment: "",
         due_date: "",
     });
 
-    const { title, description, overdue, priority, state, attachment, due_date } = taskData;
+    const { title, description, priority, state, attachment, due_date } = taskData;
     const navigate = useNavigate();
     const location = useLocation();
     const [users, setUsers] = useState([]);
-    const [assignedUsers, setAssignedUsers] = useState([]);
+    const [assignedUser, setAssignedUser] = useState([]);
     const imageInput = useRef(null);
     const [errors, setErrors] = useState({});
 
@@ -59,14 +56,14 @@ function TaskCreateForm() {
     /**Handles changes to the assigned users selection */
     const handleChangeUser = (event) => {
         const selectedOptions = Array.from(event.target.selectedOptions, option => parseInt(option.value, 10));
-        setAssignedUsers(selectedOptions);
+        setAssignedUser(selectedOptions);
     };
 
     /**Handles change for the priority options */
     const handlePriorityChange = selectedOption => {
         setTaskData({
             ...taskData,
-            priority: selectedOption.value,
+            priority: selectedOption
         });
     };
 
@@ -108,7 +105,7 @@ function TaskCreateForm() {
         let validationErrors = {};
         if (!title) validationErrors.title = ['Title is required.'];
         if (!description) validationErrors.description = ['Description is required.'];
-        if (assignedUsers.length === 0) validationErrors.assigned_users = ['At least one assigned user is required.'];
+        if (assignedUser.length === 0) validationErrors.assigned_users = ['At least one assigned user is required.'];
         if (!due_date) validationErrors.due_date = ['Due date is required.'];
 
         if (Object.keys(validationErrors).length > 0) {
@@ -118,14 +115,31 @@ function TaskCreateForm() {
 
         formData.append('title', title)
         formData.append('description', description)
-        formData.append('overdue', overdue)
         formData.append('priority', priority)
         formData.append('state', state)
         formData.append('attachment', attachment)
         formData.append('due_date', due_date)
-        assignedUsers.forEach(userId => {
+        assignedUser.forEach(userId => {
             formData.append('assigned_users', userId);
         });
+
+        try {
+            await axiosReq.post('/tasks/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            toast.success("Task created successfully", {
+                position: 'top-right',
+                autoClose: 3000,
+            });
+            navigate(`/tasks/`);
+        } catch (err) {
+            console.log(err)
+            if (err.response?.status !== 401) {
+                setErrors(err.response?.data)
+            }
+        }
     }
 
     /**Task form fields */
@@ -151,7 +165,7 @@ function TaskCreateForm() {
                     as="select"
                     aria-label='assigned_user'
                     name='assigned_user'
-                    value={assignedUsers}
+                    value={assignedUser}
                     onChange={handleChangeUser}
                 >
                     <option value='' >Assign Task</option>
@@ -171,7 +185,7 @@ function TaskCreateForm() {
             <Form.Group className="mb-3">
                 <Form.Label className="d-none">Priority</Form.Label>
                 <Select
-                    value={priorityOptions.find(option => option.value === priority)}
+                    value={priority}
                     onChange={handlePriorityChange}
                     options={priorityOptions}
                     formatOptionLabel={option => (
@@ -236,13 +250,7 @@ function TaskCreateForm() {
             {errors.due_date?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
             ))}
-            <Form.Group className="mb-3">
-                <Form.Label>Overdue</Form.Label>
-                <Form.Check type='switch' aria-label='overdue' name='overdue' value={overdue} onChange={handleFormChange} />
-            </Form.Group>
-            {errors.overdue?.map((message, idx) => (
-                <Alert variant='warning' key={idx}>{message}</Alert>
-            ))}
+           
             <Button className={btnStyles.Button} type="submit" value="Submit">Create</Button>
             <Button className={`${btnStyles.Button} ${btnStyles.Secondary}`} onClick={handleGoBack}>
                 Cancel
@@ -254,12 +262,12 @@ function TaskCreateForm() {
     return (
         <Row>
             <Col className="col-sm-6 mx-auto" md={6} lg={6}>
-                <div className={`${styles.Form} p-5 `}>
+                <Container className={`${styles.Form} p-5 `}>
                     <h3>Create a New Task</h3>
                     <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
                         <div>{textFields}</div>
                     </Form>
-                </div>
+                </Container>
             </Col>
         </Row>
     )

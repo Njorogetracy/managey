@@ -42,7 +42,7 @@ const UsernameForm = () => {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate(`/profile/${id}`);
+            navigate(`/profiles/${id}/`);
         } catch (err) {
             console.log(err);
             setErrors(err.response?.data);
