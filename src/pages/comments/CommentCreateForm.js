@@ -6,6 +6,10 @@ import styles from '../../styles/CommentCreate.module.css';
 import Avatar from '../../components/Avatar';
 import { axiosRes } from '../../api/axiosDefaults';
 
+/**The functions to handle add comments
+ * updates the comment count to task and 
+ * displays the comments 
+ */
 function CommentCreateForm(props) {
     const { task, setTask, setComments, profile_id, profile_image } = props;
     const [content, setContent] = useState("");
@@ -31,7 +35,7 @@ function CommentCreateForm(props) {
                 results: [
                     {
                         ...prevTask.results[0],
-                        comments_count: (prevTask.results[0].comments_count) + 1,
+                        comments_count: (prevTask.results[0].comments_count || 0) + 1,
                     },
                 ],
             }));
@@ -48,7 +52,7 @@ function CommentCreateForm(props) {
             <Form.Group>
                 <InputGroup>
                     <Link to={`/profiles/${profile_id}/`}>
-                        <Avatar src={profile_image} height={55} />
+                        <Avatar src={profile_image}  height={55} />
                     </Link>
                     <Form.Control
                         placeholder='my comment...'
@@ -57,6 +61,8 @@ function CommentCreateForm(props) {
                         value={content}
                         onChange={handleChange}
                         aria-label='comment box'
+                        className="border-0 flex-grow-1" 
+                        style={{ minWidth: 0 }}
                     />
                 </InputGroup>
             </Form.Group>

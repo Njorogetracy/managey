@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import appStyles from "../../App.module.css";
 import styles from "../../styles/SignUpform.module.css";
 
+/**function handles the username update */
 const UsernameForm = () => {
 
     const [username, setUsername] = useState("");

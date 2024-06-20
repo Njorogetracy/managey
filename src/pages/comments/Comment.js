@@ -52,33 +52,34 @@ const Comment = (props) => {
 
   return (
 
-    <div >
-      <hr />
-      <Card className={styles.Card}>
-        <Link className={styles.Link} to={`/profiles/${profile_id}`} >
-          <Avatar src={profile_image} />
-          <span className={styles.Owner} >{owner}</span>
-          <span className={styles.Date}>{updated_at}</span>
-        </Link>
-        <Card.Body className='align-self-center ml-2'>
-          {editComment ? (
-            <CommentEdit
-              id={id}
-              profile_id = {profile_id}
-              content={content}
-              profile_image = {profile_image}
-              setComments={setComments}
-              setEditComment={setEditComment}
-            />
-          ) : (
-            <p>{content}</p>
-          )}
-        </Card.Body>
-        {is_owner && !editComment && (
-          <DropDown handleEdit={() => setEditComment(true)} handleDelete={handleDelete} />
+    <div className={styles.Comment}>
+    <hr className={styles.HorizontalRule} />
+    <Card className={styles.Card}>
+      <Link className={styles.ProfileLink} to={`/profiles/${profile_id}`}>
+        <Avatar src={profile_image} />
+        <span className={styles.Owner}>{owner}</span>
+        <span className={styles.Date}>{updated_at}</span>
+      </Link>
+      <Card.Body className={styles.CommentBody}>
+        {editComment ? (
+          <CommentEdit
+            id={id}
+            profile_id={profile_id}
+            content={content}
+            profile_image={profile_image}
+            setComments={setComments}
+            setEditComment={setEditComment}
+            handleCancelEdit={handleCancelEdit}
+          />
+        ) : (
+          <p className={styles.Content}>{content}</p>
         )}
-      </Card>
-    </div>
+      </Card.Body>
+      {is_owner && !editComment && (
+        <DropDown  handleEdit={() => setEditComment(true)} handleDelete={handleDelete} />
+      )}
+    </Card>
+  </div>
   )
 }
 

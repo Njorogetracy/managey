@@ -4,7 +4,8 @@ import { Form } from 'react-bootstrap';
 import styles from '../../styles/CommentCreate.module.css';
 import { axiosRes } from '../../api/axiosDefaults';
 
-function CommentEdit({ setComments, setEditComment, task, id, content }) {
+/**Handles comment updates */
+function CommentEdit({ setComments, setEditComment, id, content }) {
     const [commentContent, setCommentContent] = useState(content);
 
     /**handle change to input field */
@@ -35,7 +36,7 @@ function CommentEdit({ setComments, setEditComment, task, id, content }) {
         } catch (error) {
             console.log(error.response.message)
             if (error.response) {
-                console.error("Response data:", error.response.data); // Log response data for debugging
+                console.error(error.response.data);
             }
         }
     }

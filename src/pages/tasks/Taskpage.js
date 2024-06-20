@@ -11,6 +11,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Asset from '../../components/Asset';
 import { fetchMoreData } from '../../utils/utils';
 
+/**This function handles the user profile display,
+ * displays user profile,
+ * assigned tasks
+ * created tasks
+ */
 function Taskpage() {
     const { id } = useParams()
     const [task, setTask] = useState({ results: [] });

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { axiosReq } from '../../api/axiosDefaults';
 import listStyles from '../../styles/TaskListPage.module.css';
-import { Form, Container, Image } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import Asset from '../../components/Asset';
 import NoResults from '../../assets/no-results.png';
-import { Link } from 'react-router-dom';
 import Profile from './Profile';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
+/**Funvtion handles fetching all user profiles and user data */
 function UserProfiles() {
     const [profileData, setProfileData] = useState({ results: [] })
     const [searchUser, setSearchUser] = useState("");

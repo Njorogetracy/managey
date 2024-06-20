@@ -12,11 +12,11 @@ export const useRedirect = (userAuthStatus) => {
                 
                 // Redirect based on authentication status
                 if (userAuthStatus === 'loggedIn') {
-                    navigate("/");
+                    navigate('/tasks');
                 }
             } catch (error) {
                 if (userAuthStatus === 'loggedOut') {
-                    navigate('/')
+                    navigate('/tasks')
                 }
             }
         };

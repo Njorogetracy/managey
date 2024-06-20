@@ -11,7 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 
-
+/**This function handles fetching user created task data 
+ * handles task editing
+ */
 function TaskEdit() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -120,7 +122,7 @@ function TaskEdit() {
         /**Validation for required fields */
         let validationErrors = {};
         if (!title) validationErrors.title = ['Title is required.'];
-        // if (!description) validationErrors.description = ['Description is required.'];
+        if (!description) validationErrors.description = ['Description is required.'];
 
         if (assignedUsers.length === 0) validationErrors.assigned_users = ['At least one assigned user is required.'];
         if (!due_date) validationErrors.due_date = ['Due date is required.'];
@@ -148,29 +150,6 @@ function TaskEdit() {
             assignedUsers.forEach(userId => {
                 formData.append('assigned_users', userId);
             });
-        }
-
-        //for debugging
-        for (const [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
-
-        try {
-            await axiosReq.put(`/tasks/${id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            toast.success("Task updated", {
-                position: 'top-right',
-                autoClose: 3000,
-            });
-            navigate(`/tasks/${id}`);
-        } catch (err) {
-            console.log(err)
-            if (err.response?.status !== 401) {
-                setErrors(err.response?.data)
-            }
         }
     }
 

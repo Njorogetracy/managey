@@ -4,13 +4,18 @@ import { Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import cardStyles from '../../styles/Task.module.css';
 import Avatar from '../../components/Avatar';
-import styles from '../../styles/NavBar.module.css'
 import { DropDown } from '../../components/DropDown';
 import { axiosRes } from '../../api/axiosDefaults';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
+
+/**the function returns the created task
+ * users canview the task
+ * edit and delete task
+ * the comment count is updated each time a user adds or removes a task
+ */
 const Task = (props) => {
     const {
         id,
@@ -72,71 +77,75 @@ const Task = (props) => {
     /**Returns task with all fields populated by the backend. The tasks can be updated and deleted */
     return (
         <Card className={cardStyles.taskcard}>
-            <Card.Body className='align-items-center justify-content-between'>
-                <Link to={`/tasks/${id}`} className={`${cardStyles.links} ${cardStyles.title}`} >
-                    <Card.Title className={cardStyles.title}>
-                        {title}
-                    </Card.Title>
-                </Link>
+            <Card.Body className="align-items-center justify-content-between">
+                <div className={cardStyles.headerContainer}>
+                    <Link to={`/tasks/${id}`} className={`${cardStyles.links} ${cardStyles.title}`}>
+                        <Card.Title className={cardStyles.title}>
+                            {title}
+                        </Card.Title>
+                    </Link>
+                    {is_owner && taskPage && (
+                        <DropDown
+                            className={cardStyles.dropdownContainer}
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                        />
+                    )}
+                </div>
                 <div className={cardStyles.taskmeta}>
                     <Card.Text>
                         <small className={cardStyles.mute}>Created at: {created_at}</small>
                     </Card.Text>
-                    {is_owner && taskPage && <DropDown handleEdit={handleEdit} handleDelete={handleDelete} />}
                 </div>
-                <div>
-                    <Link to={`/profiles/${profile_id}`} className={`${cardStyles.links} `} >
-                        <Avatar src={profile_image} height={55} />{"  "}
-                        <span>{owner}</span>
+                <div className={cardStyles.taskowner}>
+                    <Link to={`/profiles/${profile_id}`} className={cardStyles.links}>
+                        <Avatar src={profile_image} height={55} />
+                        <span className={cardStyles.ownername}>{owner}</span>
                     </Link>
                 </div>
-                <br />
-                <div>
+                <div className={cardStyles.assigned}>
                     {assigned_users_usernames ? (
-                        <Link to={`/profiles/${assigned_users_usernames}`} className={`${cardStyles.assigned} ${cardStyles.links} `}>
+                        <Link to={`/profiles/${assigned_users_usernames}`} className={cardStyles.links}>
                             Assigned to: {assigned_users_usernames}
                         </Link>
                     ) : (
-                        <div className={styles.NavLink}>Assigned to: {assigned_users_usernames}</div>
+                        <div>Assigned to: {assigned_users_usernames}</div>
                     )}
                 </div>
-                <Card.Text className={cardStyles.footer}>
-                    <small className={cardStyles.mute}>Due: {due_date}</small>
-                </Card.Text>
-                <div>
+                <div className={cardStyles.footer}>
+                    <Card.Text>
+                        <small className={cardStyles.mute}>Due: {due_date}</small>
+                    </Card.Text>
                     <Card.Text className={cardStyles.state}>
                         <small className={cardStyles.mute}>State: {state}</small>
                     </Card.Text>
                     <Card.Text className={cardStyles.priority}>
-                        <div style={{ color: getPriorityColor()}}> 
+                        <div style={{ color: getPriorityColor() }}>
                             <FontAwesomeIcon icon={faCircle} /> {priority} priority
                         </div>
                     </Card.Text>
                 </div>
-                <br />
                 <div className={cardStyles.details}>
                     Details: {' '}
                     <span>{description}</span>
                 </div>
-                <br />
-                <Card.Body>
+                <div className={cardStyles.attachmentContainer}>
                     <Link to={`/tasks/${id}`} target="_blank" rel="noopener noreferrer">
-                        <Card.Img src={attachment} alt={title} />
+                        <Card.Img src={attachment} alt={title} className={cardStyles.attachment} />
                     </Link>
-                </Card.Body>
-                <div>
-                    <Card.Text className={cardStyles.updated}>
+                </div>
+                <div className={cardStyles.timestamps}>
+                    <Card.Text>
                         <small className={cardStyles.mute}>Updated at: {updated_at}</small>
                     </Card.Text>
+                    <Card.Text>
+                        <small className={cardStyles.mute}>Overdue: {overdue}</small>
+                    </Card.Text>
                 </div>
-                <Card.Text className={cardStyles.overdue}>
-                    <small className={cardStyles.mute}>Overdue: {overdue}</small>
-                </Card.Text>
                 <Card.Text>
-                    <i className="fa-solid fa-comments"></i>    
-                {comments_count}
+                    <i className="fa-solid fa-comments"></i>
+                    {comments_count}
                 </Card.Text>
-               
             </Card.Body>
         </Card>
     )

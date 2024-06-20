@@ -7,27 +7,20 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px #f5f5f5;
     transition: box-shadow 0.3s ease;
-    text-decoration: none;
     position: relative;
-}
-
-.expanded {
-    position: absolute;
-    z-index: 1000;
+    text-decoration: none;
 }
 
 .taskcard:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    text-decoration: none;
 }
 
 .cardheader {
     background-color: #f9f9f9;
     border-bottom: 1px solid #e0e0e0;
-    font-size: 2rem;
+    font-size: 1.5rem; /* Adjusted font size for better responsiveness */
     font-weight: 500;
     padding: 10px 15px;
-    text-decoration: none;
 }
 
 .cardbody {
@@ -56,25 +49,29 @@
     padding-left: 40px;
     margin-bottom: 16px;
 }
-  
+
 .SearchIcon {
     position: absolute;
     font-size: 1.2rem;
     padding: 9px;
     padding-left: 15px;
 }
-  
+
 .SearchIcon:hover {
     cursor: default;
     color: #cfced3;
 }
 
 @media (max-width: 768px) {
-    .task-card-header {
-        font-size: 1rem;
+    .cardheader {
+        font-size: 1.2rem;
     }
 
-    .task-card-body {
+    .cardbody {
         padding: 10px;
+    }
+
+    .listpage {
+        padding: 10px; /* Adjusted padding for mobile view */
     }
 }

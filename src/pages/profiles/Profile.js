@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/Profile.module.css';
 
+/**The funcction handles all the user profile information
+ * displays user avatar, name, and bio
+ */
 const Profile = (props) => {
 
   const { id, image, owner, imageSize = 55 } = props;

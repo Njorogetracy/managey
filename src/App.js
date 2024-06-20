@@ -39,6 +39,7 @@ function App() {
             />} />
           <Route exact path="/login" element={<LoginForm />} />
           <Route exact path="/signup" element={<SignUpForm />} />
+          <Route exact path="/" element={<TasksList />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />

@@ -8,6 +8,7 @@ import styles from "../../styles/SignUpform.module.css";
 import btnStyles from '../../styles/Button.module.css'
 
 
+/**function handles the use password update */
 const UserPasswordForm = () => {
 
     const navigate = useNavigate();

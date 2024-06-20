@@ -11,10 +11,12 @@ import appStyles from "../../App.module.css";
 import axios from "axios";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { toast } from "react-toastify";
+import { useRedirect } from "../../hooks/useRedirect";
 
-
+/**Handles user login */
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
+    useRedirect('loggedIn')
 
     const [loginData, setLoginData] = useState({
         username: "",

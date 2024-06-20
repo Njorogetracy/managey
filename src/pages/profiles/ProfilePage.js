@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, Button, Form, Col, Row } from "react-bootstrap";
+import { Container, Button, Col, Row } from "react-bootstrap";
 import Asset from "../../components/Asset";
-import btnStyles from "../../styles/Button.module.css";
 import UserProfiles from "./UserProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
-import { Image } from "react-bootstrap";
 import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/no-results.png";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -17,6 +15,11 @@ import appStyles from "../../App.module.css";
 import Avatar from "../../components/Avatar";
 import styles from "../../styles/ProfilePage.module.css"
 
+
+/**This funcion handles the profile information,
+ * the logged in users tasks
+ * the assigned users tasks
+ */
 function ProfilePage() {
     const [hasLoaded, setHasLoaded] = useState(false);
     const { id } = useParams();
@@ -72,7 +75,7 @@ function ProfilePage() {
                 setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
                 setHasLoaded(true);
             } catch (error) {
-                console.log('Error fetching profiles', error);
+                console.log(error);
             }
         };
         fetchData();
@@ -81,20 +84,15 @@ function ProfilePage() {
     const mainProfile = (
         <>
            <Row className="px-3 text-center align-items-center">
-            {/* Avatar and Name */}
             <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-lg-left">
                 <div className="d-flex flex-column align-items-center align-items-md-start">
                     <Avatar src={profile?.image} height={150} roundedCircle className="img-fluid mb-2" />
                     <h3 className="mb-0">{profile?.owner}</h3>
                 </div>
             </Col>
-
-            {/* Bio */}
             <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-center">
                 {profile?.bio && <p>{profile.bio}</p>}
             </Col>
-
-            {/* Profile Edit Dropdown */}
             <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-right">
                 {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
             </Col>
@@ -179,7 +177,8 @@ function ProfilePage() {
                 <Col lg={4} className={`p-0 p-lg-2 ${window.innerWidth <= 768 ? 'd-none' : 'd-lg-block'}`}>
                     <UserProfiles />
                 </Col>
-                {showScroll && (
+            </Row>
+            {showScroll && (
                     <Button
                         onClick={scrollToTop}
                         className={appStyles.BackToTopButton}
@@ -188,7 +187,6 @@ function ProfilePage() {
                         Back to Top
                     </Button>
                 )}
-            </Row>
         </Container>
     );
 }

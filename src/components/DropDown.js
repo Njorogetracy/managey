@@ -3,7 +3,7 @@ import { Dropdown } from 'react-bootstrap';
 import dropStyles from '../styles/DropDown.module.css';
 import { useNavigate } from 'react-router-dom';
 
-
+/**This reusable component handles the delete and edit icons */
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   <i
     className="fa-solid fa-ellipsis-vertical"

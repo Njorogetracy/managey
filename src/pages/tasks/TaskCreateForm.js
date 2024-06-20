@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 
-
+/**Handles creating of task */
 function TaskCreateForm() {
 
     /**Fetch task fields */
@@ -123,33 +123,9 @@ function TaskCreateForm() {
         formData.append('state', state)
         formData.append('attachment', attachment)
         formData.append('due_date', due_date)
-        // formData.append('assigned_users', JSON.stringify(assignedUsers));
         assignedUsers.forEach(userId => {
             formData.append('assigned_users', userId);
         });
-
-        //for debugging
-        for (const [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
-
-        try {
-            await axiosReq.post('/tasks/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            toast.success("Task created successfully", {
-                position: 'top-right',
-                autoClose: 3000,
-            });
-            navigate(`/tasks/`);
-        } catch (err) {
-            console.log(err)
-            if (err.response?.status !== 401) {
-                setErrors(err.response?.data)
-            }
-        }
     }
 
     /**Task form fields */

@@ -6,13 +6,21 @@ import { Row, Col, Container, Button, Card, Form } from 'react-bootstrap';
 import NoResults from '../../assets/no-results.png';
 import Asset from '../../components/Asset.js';
 import listStyles from '../../styles/TaskListPage.module.css';
+import styles from "../../styles/SignUpform.module.css";
+import appStyles from "../../App.module.css";
+import { useCurrentUser } from '../../contexts/CurrentUserContext.js';
+import { Link } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { fetchMoreData } from '../../utils/utils.js';
 
+/**This function handles fetching and displaying all user tasks */
 function TasksList({ message, filter = " " }) {
     const [tasks, setTasks] = useState({ results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
-    const [expandedTask, setExpandedTask] = useState(null);
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const currentUser = useCurrentUser();
+    const [showScroll, setShowScroll] = useState(false);
 
     const [query, setQuery] = useState('');
 
@@ -44,64 +52,104 @@ function TasksList({ message, filter = " " }) {
         }
     }, [tasks, navigate]);
 
-    /**Handles expand task to show task details */
-    const handleTaskClick = (index) => {
-        setExpandedTask(expandedTask === index ? null : index);
+
+
+    /**handle scroll */
+    const handleScroll = () => {
+        if (window.scrollY > 300) {
+            setShowScroll(true);
+        } else {
+            setShowScroll(false);
+        }
     };
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
         <Container className={listStyles.listpage}>
             <Row>
                 <Col>
-                    <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i>
-                    <Form
-                        className={listStyles.SearchBar}
-                        onSubmit={(event) => event.preventDefault()}
-                    >
-                        <Form.Control
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)}
-                            type="text"
-                            className="mr-sm-2"
-                            placeholder="Search tasks"
-                        />
-                    </Form>
+
                 </Col>
             </Row>
             <Row>
-                {hasLoaded ? (
-                    tasks.results?.length ? (
-                        tasks.results.map((task, index) => (
-                            <Col key={task.id} md={6} lg={4} className="mb-4">
-                                <Card className={listStyles.taskcard}>
-                                    <Card.Header className={listStyles.cardheader}>
-                                        <Button variant="link" onClick={() => handleTaskClick(index)}>
-                                            {task.title}
-                                        </Button>
-                                    </Card.Header>
-                                    {expandedTask === index && (
-                                        <Card.Body className={listStyles.cardbody}>
-                                            <div className={listStyles.expanded}>
-                                                <Task key={task.id} {...task} setTasks={setTasks} />
-                                            </div>
-                                        </Card.Body>
-                                    )}
-                                </Card>
-                            </Col>
-                        ))
-                    ) : (
-                        <Container className="text-center my-5">
-                            <Asset src={NoResults} message="No tasks available." />
-                        </Container>
-                    )
+                {currentUser ? (
+                    <>
+                        <h2>Welcome, {currentUser.username}!</h2>
+
+                        <Form
+                            className={listStyles.SearchBar}
+                            onSubmit={(event) => event.preventDefault()}
+                        > <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i>
+                            <Form.Control
+                                value={query}
+                                onChange={(event) => setQuery(event.target.value)}
+                                type="text"
+                                className="mr-sm-2"
+                                placeholder="Search tasks"
+                            />
+                        </Form>
+                        {hasLoaded ? (
+                            tasks.results.length ? (
+                                <InfiniteScroll
+                                    dataLength={tasks.results.length}
+                                    next={fetchMoreData}
+                                    hasMore={!!tasks.next}
+                                    loader={<Asset spinner />}
+                                    className={styles.taskList}
+                                >
+                                    {tasks.results.map((task) => (
+                                        <Task key={task.id} {...task} setTasks={setTasks} />
+                                    ))}
+                                </InfiniteScroll>
+                            ) : (
+                                <div className="text-center my-5">
+                                    <Asset src={NoResults} message="No tasks available." />
+                                </div>
+                            )
+                        ) : (
+                            <div className="text-center my-5">
+                                <Asset spinner />
+                            </div>
+                        )}
+                    </>
                 ) : (
-                    <Container className="text-center my-5">
-                        <Asset spinner />
+                    <Container className={`vh-100 d-flex justify-content-center align-items-center `}>
+                        <Row className={`justify-content-center w-100 ${styles.Row}`}>
+                            <Col className="col-sm-6 mx-auto" md={6}>
+                                <Container className={`${styles.Form} p-5 text-center`}>
+                                    <h2 className={appStyles.Header}>Welcome to Task Manager</h2>
+                                    <p>You need to login or create an account to view tasks.</p>
+                                    <Link to="/login" className="d-block mb-3">
+                                        <Button variant="primary" className="mr-2">Login</Button>
+                                    </Link>
+                                    <Link to="/signup" className="d-block">
+                                        <Button variant="secondary">Create Account</Button>
+                                    </Link>
+                                </Container>
+                            </Col>
+                        </Row>
                     </Container>
                 )}
             </Row>
-          
-        </Container>
+            {showScroll && (
+                <Button
+                    onClick={scrollToTop}
+                    className={appStyles.BackToTopButton}
+                    variant="secondary"
+                >
+                    Back to Top
+                </Button>
+            )}
+        </Container >
     )
 }
 

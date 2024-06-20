@@ -13,22 +13,22 @@ import useClicksOutside from "../hooks/useClicksOutside";
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-  
-  const {expanded, setExpanded, ref} = useClicksOutside();
+
+  const { expanded, setExpanded, ref } = useClicksOutside();
 
   /**Handles user logout and redirects to landing page */
   const handleSignOut = async () => {
     try {
-        await axios.post("dj-rest-auth/logout/")
-        setCurrentUser(null)
-        toast.success("Logout successful", {
-          position: 'top-right',
-          autoClose: 3000,
+      await axios.post("dj-rest-auth/logout/")
+      setCurrentUser(null)
+      toast.success("Logout successful", {
+        position: 'top-right',
+        autoClose: 3000,
       });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-};
+  };
 
   const addTaskIcon = (
     <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/tasks/create" >
@@ -42,6 +42,9 @@ const NavBar = () => {
 */
   const loggedInIcons = (
     <>
+      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/">
+        <i className="fa-solid fa-house"></i>Home
+      </NavLink>
       <NavLink
         className={styles.NavLink}
         activeclassname={styles.Active}
@@ -81,14 +84,11 @@ const NavBar = () => {
         </NavLink>
         {currentUser && addTaskIcon}
         <Navbar.Toggle
-         ref={ref}
-         onClick={()=> setExpanded(!expanded) }
-         aria-controls="basic-navbar-nav" />
+          ref={ref}
+          onClick={() => setExpanded(!expanded)}
+          aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto text-right">
-            <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/">
-              <i className="fa-solid fa-house"></i>Home
-            </NavLink>
             {currentUser ? loggedInIcons : loggedOutIcons}
           </Nav>
         </Navbar.Collapse>
