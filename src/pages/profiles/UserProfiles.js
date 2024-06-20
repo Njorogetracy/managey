@@ -22,11 +22,10 @@ function UserProfiles() {
         const fetchProfiles = async () => {
             try {
                 const { data } = await axiosReq.get(`/profiles/?search=${searchUser}`)
-                console.log(data)
                 setProfileData(data)
                 setHasLoaded(true)
             } catch (error) {
-                console.error('error fetching profiles', error)
+                console.error(error)
                 setProfileData([]);
             }
         }

@@ -63,7 +63,7 @@ function TaskCreateForm() {
     const handlePriorityChange = selectedOption => {
         setTaskData({
             ...taskData,
-            priority: selectedOption
+            priority: selectedOption.value
         });
     };
 
@@ -90,7 +90,7 @@ function TaskCreateForm() {
                 }
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
                 setUsers([])
             })
     }, []);
@@ -135,7 +135,7 @@ function TaskCreateForm() {
             });
             navigate(`/tasks/`);
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             if (err.response?.status !== 401) {
                 setErrors(err.response?.data)
             }
@@ -245,6 +245,7 @@ function TaskCreateForm() {
                     aria-label="due_date"
                     onChange={handleFormChange}
                     value={due_date}
+                    min={new Date().toISOString().slice(0, 16)}
                 ></Form.Control>
             </Form.Group>
             {errors.due_date?.map((message, idx) => (

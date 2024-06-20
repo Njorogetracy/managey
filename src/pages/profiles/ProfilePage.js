@@ -75,7 +75,7 @@ function ProfilePage() {
                 setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
                 setHasLoaded(true);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         };
         fetchData();

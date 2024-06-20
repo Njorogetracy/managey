@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, InputGroup } from 'react-bootstrap';
+import { Button, Image, InputGroup } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import styles from '../../styles/CommentCreate.module.css';
 import Avatar from '../../components/Avatar';
@@ -41,19 +41,16 @@ function CommentCreateForm(props) {
             }));
             setContent("");
         } catch (error) {
-            console.log(error.response.data)
+            // console.log(error.response.data)
         }
     }
 
 
     /**Returns comment form */
     return (
-        <Form className="mt-2" onSubmit={handleSubmit}>
+        <Form className="mt-2" style={{backgroundColor: '#f5f5f5'}} onSubmit={handleSubmit}>
             <Form.Group>
                 <InputGroup>
-                    <Link to={`/profiles/${profile_id}/`}>
-                        <Avatar src={profile_image}  height={55} />
-                    </Link>
                     <Form.Control
                         placeholder='my comment...'
                         as='textarea'
@@ -62,7 +59,7 @@ function CommentCreateForm(props) {
                         onChange={handleChange}
                         aria-label='comment box'
                         className="border-0 flex-grow-1" 
-                        style={{ minWidth: 0 }}
+                        style={{ minWidth: 0, backgroundColor: '#f5f5f5' }}
                     />
                 </InputGroup>
             </Form.Group>

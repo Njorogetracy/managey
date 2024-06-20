@@ -14,7 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchMoreData } from '../../utils/utils.js';
 
 /**This function handles fetching and displaying all user tasks */
-function TasksList({ filter = "" }) {   /* eslint-disable-line react/prop-types */
+function TasksList({ filter = "" }) {   
     const [tasks, setTasks] = useState({ results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
     const navigate = useNavigate();
@@ -28,11 +28,11 @@ function TasksList({ filter = "" }) {   /* eslint-disable-line react/prop-types 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const { data } = await axiosReq.get(`/tasks/?${filter}search=${query}`) /* eslint-disable-line react/prop-types */
+                const { data } = await axiosReq.get(`/tasks/?${filter}search=${query}`) 
                 setTasks(data)
                 setHasLoaded(true)
             } catch (error) {
-                console.log(error)
+                // console.log(error)
             }
         }
         setHasLoaded(false);

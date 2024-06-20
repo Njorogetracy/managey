@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -11,6 +11,7 @@ import appStyles from "../../App.module.css";
 import axios from "axios";
 import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { toast } from "react-toastify";
+import { setTokenTimestamp } from "../../utils/utils";
 
 /**Handles user login */
 function LoginForm() {
@@ -40,12 +41,13 @@ function LoginForm() {
         e.preventDefault();
         try {
             const { data } = await axios.post('/dj-rest-auth/login/', loginData)
-            setCurrentUser(data.user)
+            setCurrentUser(data.user);
+            setTokenTimestamp(data);
             toast.success("Login successful", {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate('/')
+            navigate('/tasks')
         } catch (err) {
             setErrors(err.response?.data || {});
             toast.error("Login failed. Please check your credentials and try again.", {
@@ -56,9 +58,11 @@ function LoginForm() {
     };
 
     // Redirect if user is already logged in
-    if (currentUser) {
-        navigate( "/tasks" );
-    }
+    useEffect(() => {
+        if (currentUser) {
+          navigate('/tasks');
+        }
+      }, [currentUser, navigate]);
 
     return (
         <Row className={styles.Row}>

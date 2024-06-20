@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/SignUpform.module.css";
 import appStyles from "../../App.module.css";
@@ -50,9 +50,11 @@ const SignUpForm = () => {
     };
 
      // Redirect if user is already logged in
-     if (currentUser) {
-        navigate( "/login" );
-    }
+     useEffect(() => {
+        if (currentUser) {
+          navigate('/login');
+        }
+      }, [currentUser, navigate]);
 
     /**Returns signup form
      */

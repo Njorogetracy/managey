@@ -34,7 +34,7 @@ function CommentEdit({ setComments, setEditComment, id, content, }) {
             }));
             setEditComment(false);
         } catch (error) {
-            console.log(error.response.message)
+            // console.log(error.response.message)
             if (error.response) {
                 console.error(error.response.data);
             }

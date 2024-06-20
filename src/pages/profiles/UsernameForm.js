@@ -44,7 +44,7 @@ const UsernameForm = () => {
             });
             navigate(`/profiles/${id}/`);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             setErrors(err.response?.data);
         }
     };

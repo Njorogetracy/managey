@@ -68,7 +68,7 @@ const Task = (props) => {
             });
             navigate('/')
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 
@@ -91,11 +91,9 @@ const Task = (props) => {
                         />
                     )}
                 </div>
-                <div className={cardStyles.taskmeta}>
-                    <Card.Text>
-                        <small className={cardStyles.mute}>Created at: {created_at}</small>
-                    </Card.Text>
-                </div>
+                <Card.Text className={cardStyles.taskmeta}>
+                    <small className={cardStyles.mute}>Created at: {created_at}</small>
+                </Card.Text>
                 <div className={cardStyles.taskowner}>
                     <Link to={`/profiles/${profile_id}`} className={cardStyles.links}>
                         <Avatar src={profile_image} height={55} />
@@ -124,20 +122,18 @@ const Task = (props) => {
                         </Col>
                     </Card.Text>
                 </div>
-                <div className={cardStyles.details}>
+                <Card.Text className={cardStyles.details}>
                     Details: {' '}
                     <span>{description}</span>
-                </div>
+                </Card.Text>
                 <div className={cardStyles.attachmentContainer}>
                     <Link to={`/tasks/${id}`} target="_blank" rel="noopener noreferrer">
                         <Card.Img src={attachment} alt={title} className={cardStyles.attachment} />
                     </Link>
                 </div>
-                <div className={cardStyles.timestamps}>
-                    <Card.Text>
-                        <small className={cardStyles.mute}>Updated at: {updated_at}</small>
-                    </Card.Text>
-                </div>
+                <Card.Text className={cardStyles.timestamps}>
+                    <small className={cardStyles.mute}>Updated at: {updated_at}</small>
+                </Card.Text>
                 <Card.Text>
                     <i className="fa-solid fa-comments"></i>
                     {comments_count}

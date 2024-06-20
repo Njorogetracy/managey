@@ -10,6 +10,7 @@ import Avatar from "./Avatar";
 import axios from "axios";
 import useClicksOutside from "../hooks/useClicksOutside";
 import { toast } from "react-toastify";
+import { removeTokenTimestamp } from "../utils/utils";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
@@ -22,12 +23,13 @@ const NavBar = () => {
     try {
       await axios.post("dj-rest-auth/logout/")
       setCurrentUser(null)
+      removeTokenTimestamp()
       toast.success("Logout successful", {
         position: 'top-right',
         autoClose: 3000,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -32,7 +32,7 @@ export const ProfileDataProvider = ({ children }) => {
                     listProfiles: data,
                 }));
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         };
 

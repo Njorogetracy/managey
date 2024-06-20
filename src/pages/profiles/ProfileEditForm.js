@@ -32,7 +32,7 @@ const ProfileEditForm = () => {
           const { bio, image } = data;
           setProfileData({ bio, image })
         } catch (error) {
-          console.log(error)
+          // console.log(error)
           navigate('/')
         }
       } else {
@@ -62,7 +62,7 @@ const ProfileEditForm = () => {
       const { data } = await axiosReq.put(`/profiles/${id}/`, formData);
       setProfileData(data)
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setErrors(err.response?.data);
     }
   };
@@ -88,7 +88,7 @@ const ProfileEditForm = () => {
       <Button className={`${btnStyles.Button} ${btnStyles.Secondary}`} onClick={() => navigate('/')}>
         Cancel
       </Button>
-      <Button className={btnStyles.Button} type="submit" >Save</Button>
+      <Button className={btnStyles.Button} type="submit" onClick={() => navigate(`/profiles/${id}`)} >Save</Button>
     </>
   );
 

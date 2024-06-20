@@ -34,17 +34,17 @@ function Taskpage() {
                 setTask({ results: [task] });
                 setComments(comments)
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         };
         handleMount();
     }, [id])
 
     return (
-        <Row>
+        <Row className={`${styles.Form}`}>
             <Col>
                 <Task {...task.results[0]} setTasks={setTask} taskPage />
-                <Container className={`${styles.Form}`}>
+                <Container >
                     {currentUser ? (
                         <CommentCreateForm
                             profile_id={currentUser.profile_id}

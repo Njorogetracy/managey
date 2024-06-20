@@ -27,11 +27,11 @@ function TaskEdit() {
      const [taskData, setTaskData] = useState({
         title: "",
         description: "",
-        assigned_users: "null",
+        assigned_users: "",
         overdue: "",
-        priority: "low",
+        priority: "",
         state: "",
-        attachment: null,
+        attachment: "",
         due_date: "",
     });
 
@@ -47,7 +47,7 @@ function TaskEdit() {
 
                 is_owner ? setTaskData({ title, description, overdue, priority, state, attachment, due_date:formattedDueDate, assigned_users, }) : navigate('/');
             } catch (error) {
-                console.log(error)
+                // console.log(error)
             }
         }
         handleEditTask();
@@ -108,7 +108,7 @@ function TaskEdit() {
                 }
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
                 setUsers([])
             })
     }, []);
@@ -254,6 +254,7 @@ function TaskEdit() {
                     aria-label="due_date"
                     onChange={handleFormChange}
                     value={due_date}
+                    min={new Date().toISOString().slice(0, 16)}
                 ></Form.Control>
             </Form.Group>
             {errors.due_date?.map((message, idx) => (
@@ -266,7 +267,7 @@ function TaskEdit() {
             {errors.overdue?.map((message, idx) => (
                 <Alert variant='warning' key={idx}>{message}</Alert>
             ))}
-            <Button className={btnStyles.Button} type="submit" value="Submit">Save</Button>
+            <Button className={btnStyles.Button} type="submit"  onClick={() => navigate('/tasks')} value="Submit">Save</Button>
             <Button className={`${btnStyles.Button} ${btnStyles.Secondary}`} onClick={handleGoBack}>
                 Cancel
             </Button>
