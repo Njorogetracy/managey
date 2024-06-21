@@ -65,7 +65,7 @@ You can view the API repository here: https://github.com/Njorogetracy/managey_dr
 |  | As a user, i want to navigate easily through the pages |
 | |  As a logged out user, I can see sign-in/sign-up options in the navigation bar |
 
-More Epics and  User strories can be found **[here](https://github.com/users/Njorogetracy/projects/7)**
+More Epics and  User strories can be found on the project board **[here](https://github.com/users/Njorogetracy/projects/7)**
 
 ## Strategy
 
@@ -254,13 +254,6 @@ Data is handled with full CRUD functionality
 <img src= "docs/readme/design/changename.png" />
 </details>
 
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "" />
-</details>
-
-
 # Future Features
 - Boards to display related user  tasks 
 - Labels for tasks 
@@ -272,6 +265,7 @@ Data is handled with full CRUD functionality
 - collaboration on tasks
 - stats on task progress
 - Add notifications
+- Password recovery
 
 # Technologies Used
 
@@ -318,7 +312,23 @@ There are various components that have been used throughout this application:
 - ```<NavBar/>``` This is a reusable component, used for navigation on the site. This component is used to display different icons based on users loggedin/out status. If a user is not logged in, they can see the home, login and sigup icons. However, if they are logged in they are able to see more icons except the login and signup.
 - ```<NotFound/>``` This is a component that displays a 404 error when the user clicks a button to a page that does not exist.
 - ```<Avatar/>``` This is a reusable component used to display the users' profile picture.
-- ```<DropDown />``` esuable component, used to display the three dots option button to display edit and delete
+- ```<DropDown />``` resuable component, used to display the three dots option button to display edit and delete
+- ```Asset.js``` a reusable component used to display a range of items due to being passed props.
+
+The following were created in the application
+- ```TaskCreateForm.js``` handles task creattion
+- ```TaskEdit.js``` Handles task edit
+- ```TaskList.js``` Returns a list of createed tasks
+-  ```Task.js``` returns the Task and all it related information
+- ```CommentCreateForm.js``` handles comment creation
+- ```CommentEdit.js``` handls comment edit and delete
+- ```Comment.js``` returns the comment information
+- ```Profile.js``` returns profile section
+- ```ProfileEditForm.js``` handles editing of the profile information such as avatar amd bio
+- ```ProfilePage.js``` returns all user profile information and tasks created and assigned
+- ```Username.js``` handles username update
+- ```UserPassword.js``` handles password update
+- ```UserProfiles.js``` returns a list of user profiles
 
 ### pages:
 * Auth which has the following files:
@@ -332,26 +342,6 @@ The API for this frontend was built using Django Rest Framework. See the reposit
 
 # Testing
 ## View Test.md
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-
 
 # Deployment
 The Site was deployed using Heroku Hosting Platform.
@@ -381,7 +371,10 @@ The Site was deployed using Heroku Hosting Platform.
 - [Create app logo](https://logo.com/login?returnTo=%2Fdashboard%2Fyour-logo-files)
 - [Proptypes issue](https://github.com/jsx-eslint/eslint-plugin-react/issues/498)
 - [Eslint configuration](https://github.com/jsx-eslint/eslint-plugin-react#configuration)
+- This project was adapted from Code institute momments walkthrough.
 
 # Acknowledgements
+- Code Institute
+- My mentor Marcel
 
 ## [Back To Top](#table-of-contents)

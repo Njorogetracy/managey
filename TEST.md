@@ -24,7 +24,7 @@ ALL Tests conducted in the website can be founf here:
   - **Testing** - Clicked on Login button.
   - **Result** - User navigated to the login form as expected.
   - **Bug** - After deployment, The user is successfully logged in but the unsuccessfull notification appears
-  - **Unresolved** - Not yest resolved
+  - **Unresolved** - This is a known issue but it is not yest resolved due to time constraint
 - **Element:** Logout Button
   - **Expected** - Clicking Logout button should log out the current user.
   - **Testing** - Logged in user and clicked Logout button.
@@ -84,6 +84,11 @@ ALL Tests conducted in the website can be founf here:
   - **Testing** - Clicked Delete button on a task.
   - **Result** - Task was deleted successfully.
   - **Fix** - No issues found.
+- **Element:** Search tasks
+  - **Expected** - search data to filter task by user
+  - **Testing** - Input data in search field
+  - **Result** - returns user tasks
+  - **Fix** - No issues found.
 
 **Task Form**
 
@@ -139,8 +144,9 @@ ALL Tests conducted in the website can be founf here:
   - **Expected** - Comment count should update each time comment is added
   - **Testing** - add comment and submit
   - **Bugs** - Comment count updates but returns a Nan value or ressets on a page that has previous comments.
-  - **Result** - Comment was deleted successfully.
-  - **Fix** - No issues found.
+   - **Fix** - Tried to fetch interger value using parseInt but the issue still persists
+  - **Result** - Comment can still update and the task count is updated in the overral task, however the issue is still present in the taskpage when adding comments.
+
 
 **5\. User Profile**
 
@@ -167,18 +173,17 @@ ALL Tests conducted in the website can be founf here:
   - **Expected** - User should be able to update their username and bio
   - **Testing** - Click edit profile
   - **Bug** - Changes are saved but avatar disappears when tryping bio
-  - **Result** - avatar is updated and bio is also updated
+  - **Result** - avatar is updated and bio are updated but avatar remains hidden while typing
   - **Fix** - Unresolved bug.
-
-
-# ESLint 
-<details>
-<summary>Running ESLint resulted in displaying errors in my build page and react/prop-types [PROP_NAME] is missing in props validation </summary>
-<summary> This is an issue with ESLint and it has been documented [here](https://github.com/jsx-eslint/eslint-plugin-react/issues/498) </summary>
-</details>
+- **Element:** Search users
+  - **Expected** - search for specific user profiles
+  - **Testing** - Input data in search field
+  - **Result** - returns user profile avatar and link to profile
+  - **Fix** - No issues found.
 
 
 # Bug Fixes
+
 <details>
 <summary> Import Error </summary>
 <summary>
@@ -206,8 +211,81 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 <img src= "docs/readme/bugs/mapperrorresolve.png", alt="mapping error solved"/>
 </details>
 
-# Validation:
 <details>
-<summary></summary>
+<summary>Comment avatar</summary>
+<summary>The comment avatar was not displaying the avatar corrrectly despite passing the source attribute, I ended up removing the avatar as the time did not allow to further debug the issue</summary>
+<img src= "docs/readme/bugs/commentAvatarerror.png" />
+</details>
+
+## Images to other unsresolved bugs:
+Due to time constraints some bugs are still present and not yet resolved:
+<details>
+<summary>Console error</summary>
+<summary>This error occured in the taskpage within the form, I adjusted the Divs in order to fulfil the dom nesting heirachy but the error still persists. due to time limitations I was not able to fully solve the issue</summary>
+<img src= "docs/readme/bugs/dom error.png" />
+</details>
+
+<details>
+<summary>Profile Edit</summary>
+<summary>After updating the avatar, updating the bio results in the avatar image hiding, leaving the change image button</summary>
+<img src= "docs/readme/bugs/profileuseredit.png" />
+</details>
+
+<details>
+<summary>Comment Count</summary>
+<summary>The comment count resets to one while adding new comments, even though the actual comment count is updated to match the existing number of comments when the task is displayed in the tasks lists</summary>
+<img src= "docs/readme/bugs/commencount.png" />
+</details>
+
+<details>
+<summary>Login</summary>
+<summary>After deployment of the project, I encoutered an bug while logging in, the notification shows failed login even though the loggin was a success</summary>
+<img src= "docs/readme/bugs/loginsuccessfail.png" />
+</details>
+
+
+# Validation:
+## WAVE
+<details>
+<summary>The link to the site was added to wave for accessibility testing and the following are the results</summary>
 <img src= "docs/readme/design/wave.png" />
+</details>
+
+
+# ESLint 
+<details>
+<summary>Running ESLint resulted in displaying errors in my build page and react/prop-types [PROP_NAME] is missing in props validation </summary>
+<summary>Despite having the rules in place the validation test still gave errors:
+"react/prop-types": "off" was used to suppress the errors relating to prop-types
+"react/no-children-prop": "off" was used to suppress the errors related to the Infinit Scroll component using children={}
+"react/display-name": "off" was used to suppress the need for a component display name
+</summary>
+<summary> This is an issue with ESLint and it has been documented [here](https://github.com/jsx-eslint/eslint-plugin-react/issues/498) </summary>
+</details>
+
+# Device Testing
+- The site was tested on the following devices
+* Windows 11 Home
+* Lenovo Thinkvision monitor T24
+
+# Browser compatibility 
+* The website was tested on the following web browsers:
+* Google Chrome 
+* Microsoft edge
+
+# Chrome Dev tools Lighthouse validation
+
+<details>
+<summary>Home</summary>
+<img src= "docs/readme/lighthouse/home.png" />
+</details>
+
+<details>
+<summary>Task Form</summary>
+<img src= "docs/readme/lighthouse/taskcreate.png" />
+</details>
+
+<details>
+<summary>User profile</summary>
+<img src= "docs/readme/lighthouse/user.png" />
 </details>
