@@ -2,9 +2,8 @@
 
 Managey is an application that enables to organize activities in order to promotee productivity and effeciency. In its current iteration, users can create, view, edit, search, filter and delete tasks. A user can view their tasks as well as tasks assigned to them. Users are also able t comment on tasks in order to followup, ellaborate or find out more about a task. 
 
-You can view the live site here:
-You can view the API here:
-You can view the API repository here:
+You can view the live site here: https://managey-a1b31600d931.herokuapp.com/
+You can view the API repository here: https://github.com/Njorogetracy/managey_drf
 
 # Table of Contents
 
@@ -66,24 +65,72 @@ You can view the API repository here:
 |  | As a user, i want to navigate easily through the pages |
 | |  As a logged out user, I can see sign-in/sign-up options in the navigation bar |
 
+More Epics and  User strories can be found **[here](https://github.com/users/Njorogetracy/projects/7)**
+
 ## Strategy
 
 <details>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>Initial strategy and brainstoriming was done on figma</summary>
+<img src= "docs/readme/design/strategy.png" />
 </details>
 
 ## Wireframes
 
 Wireframes were developed using Balsamiq 
 <details>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>Create task</summary>
+<img src= "docs/readme/wireframes/create task pg.png" />
 </details>
+
+<details>
+<summary>Created task</summary>
+<img src= "docs/readme/wireframes/created tasks_2.png" />
+</details>
+
+<details>
+<summary>Home</summary>
+<img src= "docs/readme/wireframes/home.png" />
+</details>
+
+<details>
+<summary>Landing page</summary>
+<img src= "docs/readme/wireframes/landingpg.png" />
+</details>
+
+<details>
+<summary>Login</summary>
+<img src= "docs/readme/wireframes/login.png" />
+</details>
+
+<details>
+<summary>Signup</summary>
+<img src= "docs/readme/wireframes/signup.png" />
+</details>
+
+<details>
+<summary>Start</summary>
+<img src= "docs/readme/wireframes/start-pg.png" />
+</details>
+
+<details>
+<summary>User Bio</summary>
+<img src= "docs/readme/wireframes/user .png" />
+</details>
+
+<details>
+<summary>User</summary>
+<img src= "docs/readme/wireframes/user profile.png" />
+</details>
+
+<details>
+<summary>Users</summary>
+<img src= "docs/readme/wireframes/users.png" />
+</details>
+
 
 ## Logic flow
 
-Drawio was used to create the logic flow of the project
+Drawio was used to create the logic flow of the project, I can be found in my backend repo [here](https://github.com/Njorogetracy/managey_drf)
 
 ## Typography
 
@@ -91,10 +138,9 @@ Google fonts were implemented on the website, 'Montesserat and Robotto'
 
 ## Colour theme
 
-The colour theme was developed using **coolors**
 <details>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>The colour theme was developed using coolors</summary>
+<img src= "docs/readme/design", alt="color pallette"/>
 </details>
 
 ## Project management 
@@ -124,103 +170,94 @@ Data is handled with full CRUD functionality
 <details>
 <summary> Authentication </summary>
 <summary> Users have to be authenticated before logging in to be able to access any functionality in the website.</summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/signup.png", alt="signup"/>
 </details>
 
 <details>
 <summary>Login</summary>
 <summary>This feature allow users to login and view content relevant to their profiles. Users require authentication in order to login</summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/login.png", alt="login"/>
 </details>
 
 <details>
 <summary>Sign Up</summary>
 <summary>This feature allow new users to create an account</summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/signup.png", alt="signup"/>
 </details>
 
 <details>
 <summary>Home page</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>users view a list of tasks after successful login</summary>
+<img src= "docs/readme/design/tasklist.png", alt="tasklist"/>
 </details>
 
 <details>
 <summary>Navigation Bar</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>Loggedout view</summary>
+<img src= "docs/readme/design/navbar.png", alt=""/>
 </details>
 
 <details>
 <summary>Profile</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>Use profile has user avatar, name and bio and list of tasks they created or are assigned to</summary>
+<img src= "docs/readme/design/userprofileandtasks.png", alt=""/>
 </details>
 
 <details>
 <summary>Add Task</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/createtask.png"/>
 </details>
 
 <details>
 <summary>Edit Task</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/editdeletetask.png"/>
 </details>
 
 <details>
 <summary>Delete Task</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/deletetask.png"/>
 </details>
 
 <details>
 <summary>Create Task Comment</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/createcomment.png"/>
 </details>
 
 <details>
 <summary>Edit Task Comment</summary>
-<summary></summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/editcommentdelete.png"/>
 </details>
 
 <details>
 <summary>Delete Task Comment</summary>
+<img src= "docs/readme/design/commentdeleted.png" />
+</details>
+
+<details>
+<summary>Profile Edit</summary>
+<img src= "docs/readme/design/edituserprofile.png"/>
+</details>
+
+<details>
+<summary>Edit username</summary>
+<img src= "docs/readme/design/usermanage.png"/>
+</details>
+
+<details>
+<summary>Username Form</summary>
 <summary></summary>
-<img src= "", alt=""/>
+<img src= "docs/readme/design/usernameform.png"/>
+</details>
+
+<details>
+<summary>Change Username</summary>
+<img src= "docs/readme/design/changename.png" />
 </details>
 
 <details>
 <summary></summary>
 <summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
+<img src= "" />
 </details>
 
 
@@ -251,6 +288,11 @@ Data is handled with full CRUD functionality
 - Axios: A Promise-based HTTP client for making HTTP requests from node.js or XMLHttpRequests from the browser
 - React-Toastify: A package used to add notifications 
 - React-Select: A Select control for React
+- React Router: Javascript framework for routing
+- React Infinite Scroll: React library to load components on the page
+- React scripts
+- React dom
+- jwt-decode
 
 ## Other programs and libraries
 - Google Fonts - for the font family.
@@ -262,6 +304,11 @@ Data is handled with full CRUD functionality
 - Cloudinary - used to host static and media files
 - ElephantSQL - used to host postgres database used in the project
 - Figma - Used to brainstorm the prooject ideas
+- Github - Hosting snf version control 
+- Microsoft Designer - create background images
+- ESLint - JS validation
+- Lighthouse - Performance validattion
+- Wave - Accessibility editor
 
 # Front-End
 ## React
@@ -300,21 +347,8 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 </details>
 
 <details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
-</details>
-
-<details>
-<summary></summary>
-<summary></summary>
-<img src= "", alt=""/>
+<summary>This error occured while tring to login after creating an account since it was making a request to the wrong API endpoint, the error was solved by adjusting the URL on the axios request</summary>
+<img src= "docs/readme/bugs/loginerror.png" />
 </details>
 
 <details>
@@ -323,6 +357,38 @@ Switch model is not exported from react-router-dom error. I used the Switch mode
 <img src= "docs/readme/bugs/mappingerror.png", alt="mapping error"/>
 <img src= "docs/readme/bugs/mapperrorresolve.png", alt="mapping error solved"/>
 </details>
+
+<details>
+<summary></summary>
+<img src= "" />
+</details>
+
+<details>
+<summary></summary>
+<img src= "" />
+</details>
+
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+<details>
+<summary></summary>
+<summary></summary>
+<img src= "", alt=""/>
+</details>
+
+
+## Unsolved bugs
 
 
 # Deployment
@@ -351,6 +417,8 @@ The Site was deployed using Heroku Hosting Platform.
 - [Float nav items right](https://stackoverflow.com/questions/42311292/react-bootstrap-navbar-how-to-right-align-a-navbar-item)
 - [React Select styles](https://react-select.com/styles#the-styles-prop)
 - [Create app logo](https://logo.com/login?returnTo=%2Fdashboard%2Fyour-logo-files)
+- [Proptypes issue](https://github.com/jsx-eslint/eslint-plugin-react/issues/498)
+- [Eslint configuration](https://github.com/jsx-eslint/eslint-plugin-react#configuration)
 
 # Acknowledgements
 
