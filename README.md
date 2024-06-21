@@ -120,9 +120,6 @@ Data is handled with full CRUD functionality
 - Delete: Users are able to delete profiles, tasks and comments
 
 
-# Permissions
-
-
 # Features
 <details>
 <summary> Authentication </summary>
@@ -232,9 +229,11 @@ Data is handled with full CRUD functionality
 - Labels for tasks 
 - Authenticated forgot password
 - Collaborate on tasks 
-- Displau number of users on a task
+- Display number of users on a task
 - Task reminders
 - Integration with google calendar API
+- collaboration on tasks
+- stats on task progress
 
 # Technologies Used
 
