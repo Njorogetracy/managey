@@ -36,29 +36,11 @@ function LoginForm() {
         });
     }
 
-    /** Handles form submit for Login page */
+    /** Handles form submit for Login page */    
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        // Basic validation to ensure both fields are filled
-        if (!username || !password) {
-            toast.error("Please enter both username and password.", {
-                position: 'top-right',
-                autoClose: 3000,
-            });
-            return;
-        }
-    
         try {
-            const { data } = await axios.post(
-                '/dj-rest-auth/login/', 
-                loginData, 
-                { 
-                    headers: { 
-                        'Content-Type': 'application/json' 
-                    }
-                }
-            );
+            const { data } = await axios.post('/dj-rest-auth/login/', loginData)
             setCurrentUser(data.user);
             setTokenTimestamp(data);
             toast.success("Login successful", {
@@ -74,26 +56,6 @@ function LoginForm() {
             });
         }
     };
-    
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const { data } = await axios.post('/dj-rest-auth/login/', loginData)
-    //         setCurrentUser(data.user);
-    //         setTokenTimestamp(data);
-    //         toast.success("Login successful", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //         navigate('/tasks')
-    //     } catch (err) {
-    //         setErrors(err.response?.data || {});
-    //         toast.error("Login failed. Please check your credentials and try again.", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //     }
-    // };
 
     // Redirect if user is already logged in
     useEffect(() => {
@@ -106,7 +68,7 @@ function LoginForm() {
         <Row className={styles.Row}>
             <Col className="col-sm-6 mx-auto" md={6}>
                 <Container className={`${styles.Form} p-5 `}>
-                    <h1 className={appStyles.Header}>Login...1</h1>
+                    <h1 className={appStyles.Header}>Login</h1>
                     <Form onSubmit={handleSubmit} >
                         <Form.Group className="mb-3" controlId="username">
                             <Form.Label className="d-none">Username</Form.Label>
