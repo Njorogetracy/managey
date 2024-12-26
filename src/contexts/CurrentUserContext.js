@@ -48,29 +48,46 @@ export const CurrentUserProvider = ({ children }) => {
     Redirects user to login page if refreshing of token fails
   */
     useMemo(() => {
+        // axiosReq.interceptors.request.use(
+        //     async (config) => {
+        //         if (shouldRefreshToken){
+        //             try {
+        //                 await axios.post("/dj-rest-auth/token/refresh/");
+        //             } catch (err) {
+        //                 setCurrentUser((prevCurrentUser) => {
+        //                     if (prevCurrentUser) {
+        //                         navigate("/login");
+        //                     }
+        //                     return null;
+        //                 });
+        //                 removeTokenTimestamp()
+        //                 return config;
+        //             }
+        //         }
+                
+        //         return config;
+        //     },
+        //     (err) => {
+        //         return Promise.reject(err);
+        //     }
+        // )
         axiosReq.interceptors.request.use(
             async (config) => {
-                if (shouldRefreshToken){
-                    try {
-                        await axios.post("/dj-rest-auth/token/refresh/");
-                    } catch (err) {
-                        setCurrentUser((prevCurrentUser) => {
-                            if (prevCurrentUser) {
-                                navigate("/login");
-                            }
-                            return null;
-                        });
-                        removeTokenTimestamp()
-                        return config;
-                    }
+              if (shouldRefreshToken()) {
+                console.log("Attempting to refresh token...");
+                try {
+                  const response = await axios.post("/dj-rest-auth/token/refresh/");
+                  console.log("Token refreshed:", response.data);
+                } catch (err) {
+                  console.error("Token refresh failed", err);
+                  setCurrentUser(null);
+                  navigate("/login");
                 }
-                
-                return config;
+              }
+              return config;
             },
-            (err) => {
-                return Promise.reject(err);
-            }
-        )
+            (err) => Promise.reject(err)
+          );
 
 
         axiosRes.interceptors.response.use(
