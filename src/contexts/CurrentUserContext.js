@@ -19,14 +19,25 @@ export const CurrentUserProvider = ({ children }) => {
   Make API request to get current user data
   */ 
     const handleMount = async () => {
-        try {
-            const { data } = await axiosRes.get("/dj-rest-auth/user/")
-            console.log("data", data)
-            setCurrentUser(data)
-        } catch (error) {
-            // console.log(error)
+        if (localStorage.getItem('access_token')) {
+            try {
+                const { data } = await axiosRes.get("/dj-rest-auth/user/")
+                setCurrentUser(data)
+            } catch (error) {
+                // console.log(error)
+            }
         }
     };
+
+    // const handleMount = async () => {
+    //     try {
+    //         const { data } = await axiosRes.get("/dj-rest-auth/user/")
+    //         console.log("data", data)
+    //         setCurrentUser(data)
+    //     } catch (error) {
+    //         // console.log(error)
+    //     }
+    // };
 
     useEffect(() => {
         handleMount()
