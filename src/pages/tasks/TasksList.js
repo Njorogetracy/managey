@@ -122,7 +122,7 @@ function TasksList({ filter = "" }) {
                         <Row className={`justify-content-center w-100 ${styles.Row}`}>
                             <Col className="col-sm-6 mx-auto" md={6}>
                                 <Container className={`${styles.Form} p-5 text-center`}>
-                                    <h2 className={appStyles.Header}>Welcome to Task Manager</h2>
+                                    <h2 className={appStyles.Header}>Welcome to Mangey...</h2>
                                     <p>You need to login or create an account to view tasks.</p>
                                     <Link to="/login" className="d-block mb-3">
                                         <Button variant="primary" className="mr-2">Login</Button>

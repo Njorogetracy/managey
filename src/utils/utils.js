@@ -1,5 +1,4 @@
 import { axiosReq } from "../api/axiosDefaults";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export const fetchMoreData = async (resource, setResource) => {
     try {
@@ -8,13 +7,13 @@ export const fetchMoreData = async (resource, setResource) => {
             ...prevResource,
             next: data.next,
             results: data.results.reduce((acc, cur) => {
-                return acc.some((accResult) => accResult.id === CurrentUserContext.id)
+                return acc.some((accResult) => accResult.id === cur.id)
                     ? acc
                     : [...acc, cur];
             }, prevResource.results),
         }));
     } catch (error) {
-        // console.log(error);
+        console.log(error);
     }
 }
 

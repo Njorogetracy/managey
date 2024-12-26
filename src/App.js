@@ -21,7 +21,7 @@ import UserProfiles from './pages/profiles/UserProfiles';
 
 
 function App() {
-  const currentUser = useCurrentUser;
+  const currentUser = useCurrentUser();
   const profile_id = currentUser?.profile_id || "";
 
   return (
@@ -29,6 +29,7 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Routes>
+        <Route path="/" element={currentUser ? <TasksList /> : <LoginForm />} />
           <Route exact path="/tasks" element={
             <TasksList
               message='No results found adjust search keyword'
