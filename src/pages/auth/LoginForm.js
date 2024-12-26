@@ -60,7 +60,7 @@ function LoginForm() {
     // Redirect if user is already logged in
     useEffect(() => {
         if (currentUser) {
-          navigate('/tasks');
+          navigate('/tasks/');
         }
       }, [currentUser, navigate]);
 
