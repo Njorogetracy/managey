@@ -106,7 +106,7 @@ function LoginForm() {
         <Row className={styles.Row}>
             <Col className="col-sm-6 mx-auto" md={6}>
                 <Container className={`${styles.Form} p-5 `}>
-                    <h1 className={appStyles.Header}>Login 1...</h1>
+                    <h1 className={appStyles.Header}>Login...</h1>
                     <Form onSubmit={handleSubmit} >
                         <Form.Group className="mb-3" controlId="username">
                             <Form.Label className="d-none">Username</Form.Label>
