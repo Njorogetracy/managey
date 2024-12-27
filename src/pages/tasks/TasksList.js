@@ -21,6 +21,10 @@ function TasksList({ filter = "" }) {
     const [showScroll, setShowScroll] = useState(false);
     const [query, setQuery] = useState('');
 
+    if (!currentUser) {
+        return <navigate to="/login" replace />;
+      }      
+
     useEffect(() => {
         const fetchTasks = async () => {
             try {
@@ -42,7 +46,7 @@ function TasksList({ filter = "" }) {
 
     useEffect(() => {
         if (Array.isArray(tasks) && tasks.length > 10) {
-            navigate('/tasks');
+            navigate('/tasks/');
         }
     }, [tasks, pathname, query, currentUser, navigate]);
 
