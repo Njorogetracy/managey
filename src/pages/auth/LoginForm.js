@@ -70,7 +70,7 @@ function LoginForm() {
             <Col className="col-sm-6 mx-auto" md={6}>
                 <Container className={`${styles.Form} p-5 `}>
                     <h1 className={appStyles.Header}>Login</h1>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="username">
                             <Form.Label className="d-none">Username</Form.Label>
                             <Form.Control type="text" placeholder="Username" name="username" value={username} onChange={handleChange} />
