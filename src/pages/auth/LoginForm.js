@@ -41,6 +41,8 @@ function LoginForm() {
         e.preventDefault();
         try {
             const { data } = await axios.post('/dj-rest-auth/login/', loginData)
+            localStorage.setItem('authToken', data.key);
+            axios.defaults.headers.common['Authorization'] = `Token ${data.key}`;
             setCurrentUser(data.user);
             setTokenTimestamp(data);
             toast.success("Login successful", {
@@ -49,40 +51,11 @@ function LoginForm() {
             });
             navigate('/tasks')
         } catch (err) {
+            console.error('Login error:', err);
             setErrors(err.response?.data || {});
-            toast.error("Login failed. Please check your credentials and try again.", {
-                position: 'top-right',
-                autoClose: 3000,
-            });
+            toast.error(err.response?.data?.non_field_errors?.[0] || "Login failed. Please try again.");        
         }
     };
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const { data } = await axios.post(
-    //             '/dj-rest-auth/login/', 
-    //             loginData,
-    //             {
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             }
-    //         );
-    //         setCurrentUser(data.user);
-    //         setTokenTimestamp(data);
-    //         toast.success("Login successful", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //         navigate('/tasks');
-    //     } catch (err) {
-    //         setErrors(err.response?.data || {});
-    //         toast.error("Login failed. Please check your credentials and try again.", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //     }
-    // };
     
 
     // Redirect if user is already logged in
@@ -97,7 +70,7 @@ function LoginForm() {
             <Col className="col-sm-6 mx-auto" md={6}>
                 <Container className={`${styles.Form} p-5 `}>
                     <h1 className={appStyles.Header}>Login</h1>
-                    <Form onSubmit={handleSubmit} >
+                    <Form>
                         <Form.Group className="mb-3" controlId="username">
                             <Form.Label className="d-none">Username</Form.Label>
                             <Form.Control type="text" placeholder="Username" name="username" value={username} onChange={handleChange} />
@@ -118,7 +91,7 @@ function LoginForm() {
                         {errors.password?.map((message, idx) =>
                             <Alert variant="warning" key={idx}>{message}</Alert>
                         )}
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" onSubmit={handleSubmit}>
                             Login
                         </Button>
                         {errors.non_field_errors?.map((message, idx) =>
