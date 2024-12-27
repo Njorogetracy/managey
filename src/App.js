@@ -1,24 +1,22 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import styles from './App.module.css';
+import { useCurrentUser } from './contexts/CurrentUserContext'; 
 import NavBar from './components/NavBar';
 import NotFound from './components/NotFound';
 import { Container } from 'react-bootstrap';
-import "./api/axiosDefaults";
 import SignUpForm from './pages/auth/SignUpForm';
 import LoginForm from './pages/auth/LoginForm';
 import TaskCreateForm from './pages/tasks/TaskCreateForm';
-import TaskPage from './pages/tasks/Taskpage';
-import { ToastContainer } from "react-toastify";
+import TaskPage from './pages/tasks/TaskPage';
 import TasksList from './pages/tasks/TasksList';
-import { useCurrentUser } from './contexts/CurrentUserContext';
 import TaskEdit from './pages/tasks/TaskEdit';
 import ProfilePage from './pages/profiles/ProfilePage';
 import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import UserProfiles from './pages/profiles/UserProfiles';
-import LandingPage from './pages/landing/landingPage';
+import LandingPage from './pages/landing/LandingPage';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -53,6 +51,7 @@ function App() {
           } />
 
           <Route exact path="/" element={<LandingPage />} />
+          <Route path="/tasks" element={<TasksList />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
