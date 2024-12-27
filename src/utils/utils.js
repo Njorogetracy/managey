@@ -19,9 +19,17 @@ export const fetchMoreData = async (resource, setResource) => {
 }
 
 export const setTokenTimestamp = (data) => {
-    const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
-    localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
-};
+    if (data?.refresh_token) {
+      try {
+        const refreshTokenTimestamp = jwtDecode(data.refresh_token).exp;
+        localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
+      } catch (error) {
+        console.error('Error decoding refresh token:', error);
+      }
+    } else {
+      console.warn('No refresh token found in data');
+    }
+};  
 
 export const shouldRefreshToken = () => {
     return !!localStorage.getItem("refreshTokenTimestamp");
