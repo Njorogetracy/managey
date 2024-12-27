@@ -59,28 +59,7 @@ function LoginForm() {
             setErrors(err.response?.data || {});
             toast.error(err.response?.data?.non_field_errors?.[0] || "Login failed. Please try again.");        
         }
-    };
-    
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const { data } = await axios.post('/dj-rest-auth/login/', loginData)
-    //         localStorage.setItem('authToken', data.key);
-    //         axios.defaults.headers.common['Authorization'] = `Token ${data.key}`;
-    //         setCurrentUser(data.user);
-    //         setTokenTimestamp(data);
-    //         toast.success("Login successful", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //         navigate('/tasks')
-    //     } catch (err) {
-    //         console.error('Login error:', err);
-    //         setErrors(err.response?.data || {});
-    //         toast.error(err.response?.data?.non_field_errors?.[0] || "Login failed. Please try again.");        
-    //     }
-    // };
-    
+    };    
 
     // Redirect if user is already logged in
     useEffect(() => {

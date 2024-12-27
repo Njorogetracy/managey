@@ -29,19 +29,13 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Routes>
-        <Route path="/" element={currentUser ? <TasksList /> : <LoginForm />} />
+        <Route exact path="/signup" element={<SignUpForm />} />
+        <Route exact path="/login" element={<LoginForm />} />
           <Route exact path="/tasks" element={
             <TasksList
               message='No results found adjust search keyword'
               filter={`owner__username=${profile_id}&`}
             />} />
-          <Route exact path="/tasks" element={
-            <TasksList
-              message='No results found adjust keyword'
-              filter={`/tasks/?owner__username=${profile_id}&`}
-            />} />
-          <Route exact path="/login" element={<LoginForm />} />
-          <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/" element={<TasksList />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
