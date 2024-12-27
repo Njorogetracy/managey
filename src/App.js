@@ -18,6 +18,7 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import UserProfiles from './pages/profiles/UserProfiles';
+import LandingPage from './pages/landing/landingPage';
 
 
 function App() {
@@ -40,7 +41,8 @@ function App() {
               message='No results found adjust search keyword'
               filter={`owner__username=${profile_id}&`}
             />} />
-          <Route exact path="/" element={<TasksList />} />
+          <Route path="/" element={currentUser ? <Navigate to="/tasks" /> : <LandingPage />} />
+          <Route path="/tasks" element={currentUser ? <TasksList /> : <Navigate to="/" />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
