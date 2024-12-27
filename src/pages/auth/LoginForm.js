@@ -36,41 +36,45 @@ function LoginForm() {
         });
     }
 
-    /** Handles form submit for Login page */  
+    /** Handles form submit for Login page */ 
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
     //     try {
-    //       const { data } = await axios.post('/dj-rest-auth/login/', loginData);
-    //       console.log("Login response:", data);
-    //       localStorage.setItem("token", data.key);
-    //       setCurrentUser(data.username);
-    //       setTokenTimestamp(() => Date.now());
-    //       axios.defaults.headers.common['Authorization'] = `Bearer ${data.access}`;
-    //       toast.success("Login successful", {
-    //         position: 'top-right',
-    //         autoClose: 3000,
-    //       });
-    //       navigate('/tasks');
+    //         const { data } = await axios.post('/dj-rest-auth/login/', loginData)
+    //         setCurrentUser(data.user);
+    //         setTokenTimestamp(data);
+    //         toast.success("Login successful", {
+    //             position: 'top-right',
+    //             autoClose: 3000,
+    //         });
+    //         navigate('/tasks')
     //     } catch (err) {
-    //       console.error("Login error:", err.response?.data);
-    //       setErrors(err.response?.data || {});
-    //       toast.error("Login failed. Please check your credentials and try again.", {
-    //         position: 'top-right',
-    //         autoClose: 3000,
-    //       });
+    //         setErrors(err.response?.data || {});
+    //         toast.error("Login failed. Please check your credentials and try again.", {
+    //             position: 'top-right',
+    //             autoClose: 3000,
+    //         });
     //     }
-    //   };  
+    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post('/dj-rest-auth/login/', loginData)
+            const { data } = await axios.post(
+                '/dj-rest-auth/login/', 
+                loginData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
             setCurrentUser(data.user);
             setTokenTimestamp(data);
             toast.success("Login successful", {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate('/tasks')
+            navigate('/tasks');
         } catch (err) {
             setErrors(err.response?.data || {});
             toast.error("Login failed. Please check your credentials and try again.", {
@@ -79,6 +83,7 @@ function LoginForm() {
             });
         }
     };
+    
 
     // Redirect if user is already logged in
     useEffect(() => {
