@@ -16,12 +16,12 @@ function TasksList({ filter = "" }) {
     const currentUser = useCurrentUser();
     const navigate = useNavigate();
     
-    if (!currentUser) {
-        useEffect(() => {
-            navigate('/login');
-        }, []);
-        return null;
-    }
+    // if (!currentUser) {
+    //     useEffect(() => {
+    //         navigate('/login');
+    //     }, []);
+    //     return null;
+    // }
     const [tasks, setTasks] = useState({ results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
