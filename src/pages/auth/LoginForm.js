@@ -37,44 +37,17 @@ function LoginForm() {
     }
 
     /** Handles form submit for Login page */ 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const { data } = await axios.post('/dj-rest-auth/login/', loginData)
-    //         setCurrentUser(data.user);
-    //         setTokenTimestamp(data);
-    //         toast.success("Login successful", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //         navigate('/tasks')
-    //     } catch (err) {
-    //         setErrors(err.response?.data || {});
-    //         toast.error("Login failed. Please check your credentials and try again.", {
-    //             position: 'top-right',
-    //             autoClose: 3000,
-    //         });
-    //     }
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(
-                '/dj-rest-auth/login/', 
-                loginData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+            const { data } = await axios.post('/dj-rest-auth/login/', loginData)
             setCurrentUser(data.user);
             setTokenTimestamp(data);
             toast.success("Login successful", {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate('/tasks');
+            navigate('/tasks')
         } catch (err) {
             setErrors(err.response?.data || {});
             toast.error("Login failed. Please check your credentials and try again.", {
@@ -83,6 +56,33 @@ function LoginForm() {
             });
         }
     };
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const { data } = await axios.post(
+    //             '/dj-rest-auth/login/', 
+    //             loginData,
+    //             {
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             }
+    //         );
+    //         setCurrentUser(data.user);
+    //         setTokenTimestamp(data);
+    //         toast.success("Login successful", {
+    //             position: 'top-right',
+    //             autoClose: 3000,
+    //         });
+    //         navigate('/tasks');
+    //     } catch (err) {
+    //         setErrors(err.response?.data || {});
+    //         toast.error("Login failed. Please check your credentials and try again.", {
+    //             position: 'top-right',
+    //             autoClose: 3000,
+    //         });
+    //     }
+    // };
     
 
     // Redirect if user is already logged in
