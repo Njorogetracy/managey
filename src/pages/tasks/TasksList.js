@@ -21,7 +21,6 @@ function TasksList({ filter = "" }) {
     const { pathname } = useLocation();
     const currentUser = useCurrentUser();
     const [showScroll, setShowScroll] = useState(false);
-
     const [query, setQuery] = useState('');
 
     /** Fetch all the tasks */
@@ -44,15 +43,12 @@ function TasksList({ filter = "" }) {
         };
     }, [filter, query, pathname]);
 
-
     /**Navigate to another page to view more tasks  */
     useEffect(() => {
         if (Array.isArray(tasks) && tasks.length > 10) {
             navigate('/tasks');
         }
     }, [tasks, pathname, query, currentUser, navigate]);
-
-
 
     /**handle scroll */
     const handleScroll = () => {
@@ -74,9 +70,7 @@ function TasksList({ filter = "" }) {
     }, []);
 
     return (
-
         <Container className={listStyles.listpage}>
-            
             <Row>
                 {currentUser ? (
                     <>
@@ -84,7 +78,8 @@ function TasksList({ filter = "" }) {
                         <Form
                             className={listStyles.SearchBar}
                             onSubmit={(event) => event.preventDefault()}
-                        > <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i>
+                        > 
+                            <i className={`fa-solid fa-magnifying-glass ${listStyles.SearchIcon}`}></i>
                             <Form.Control
                                 value={query}
                                 onChange={(event) => setQuery(event.target.value)}
@@ -118,6 +113,7 @@ function TasksList({ filter = "" }) {
                         )}
                     </>
                 ) : (
+                    // Show login/signup options when user is logged out
                     <Container className={`vh-100 d-flex justify-content-center align-items-center `}>
                         <Row className={`justify-content-center w-100 ${styles.Row}`}>
                             <Col className="col-sm-6 mx-auto" md={6}>
@@ -146,7 +142,7 @@ function TasksList({ filter = "" }) {
                 </Button>
             )}
         </Container >
-    );;
-};;
+    );
+};
 
-export default TasksList
+export default TasksList;
