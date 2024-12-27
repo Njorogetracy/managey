@@ -29,8 +29,12 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Routes>
-        <Route exact path="/signup" element={<SignUpForm />} />
-        <Route exact path="/login" element={<LoginForm />} />
+        {!currentUser && (
+          <>
+            <Route exact path="/signup" element={<SignUpForm />} />
+            <Route exact path="/login" element={<LoginForm />} />
+          </>
+        )}
           <Route exact path="/tasks" element={
             <TasksList
               message='No results found adjust search keyword'
