@@ -15,7 +15,7 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import UserProfiles from './pages/profiles/UserProfiles';
-import LandingPage from './pages/landing/LandingPage';
+import LandingPage from './pages/landing/landingPage';
 import { ToastContainer } from "react-toastify";
 
 function App() {
