@@ -17,6 +17,7 @@ import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import UserProfiles from './pages/profiles/UserProfiles';
 import LandingPage from './pages/landing/landingPage';
 import { ToastContainer } from "react-toastify";
+import styles from './App.module.css';
 
 function App() {
   const currentUser = useCurrentUser();
