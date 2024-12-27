@@ -28,31 +28,20 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Routes>
-          {!currentUser ? (
-            <>
-              <Route exact path="/signup" element={<SignUpForm />} />
-              <Route exact path="/login" element={<LoginForm />} />
-            </>
-          ) : (
-            <>
-              <Route path="/login" element={<Navigate to="/tasks" replace />} />
-              <Route path="/signup" element={<Navigate to="/tasks" replace />} />
-            </>
-          )}
-
+        <Route exact path="/signup" element={<SignUpForm />} />
+        <Route exact path="/login" element={<LoginForm />} />
+        {!currentUser && (
+          <>
+            <Route exact path="/signup" element={<SignUpForm />} />
+            <Route exact path="/login" element={<LoginForm />} />
+          </>
+        )}
           <Route exact path="/tasks" element={
-            currentUser ? (
-              <TasksList
-                message='No results found, adjust search keyword'
-                filter={`owner__username=${profile_id}&`}
-              />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          } />
-
-          <Route exact path="/" element={<LandingPage />} />
-          <Route path="/tasks" element={<TasksList />} />
+            <TasksList
+              message='No results found adjust search keyword'
+              filter={`owner__username=${profile_id}&`}
+            />} />
+          <Route exact path="/" element={<TasksList />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
@@ -61,7 +50,6 @@ function App() {
           <Route exact path="/profiles/:id/edit/password" element={<UserPasswordForm />} />
           <Route exact path="/profiles/:id/edit" element={<ProfileEditForm />} />
           <Route exact path="/profiles" element={<UserProfiles message="Oops! It seems there are no users by that name" />} />
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
