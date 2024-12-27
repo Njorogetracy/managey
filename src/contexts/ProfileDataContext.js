@@ -23,21 +23,38 @@ export const ProfileDataProvider = ({ children }) => {
   */
     useEffect(() => {
         const handleMount = async () => {
-            try {
-                const { data } = await axiosReq.get(
-                    "/profiles/?ordering=tasks_count"
-                );
-                setProfileData((prevState) => ({
-                    ...prevState,
-                    listProfiles: data,
-                }));
-            } catch (error) {
-                // console.log(error);
+            if (currentUser) {
+                try {
+                    const { data } = await axiosReq.get("/profiles/?ordering=tasks_count");
+                    setProfileData((prevState) => ({
+                        ...prevState,
+                        listProfiles: data,
+                    }));
+                } catch (error) {
+                    console.error("Error fetching profile data", error);
+                }
             }
         };
 
         handleMount();
-    }, [currentUser]);
+    }, [currentUser]); 
+    // useEffect(() => {
+    //     const handleMount = async () => {
+    //         try {
+    //             const { data } = await axiosReq.get(
+    //                 "/profiles/?ordering=tasks_count"
+    //             );
+    //             setProfileData((prevState) => ({
+    //                 ...prevState,
+    //                 listProfiles: data,
+    //             }));
+    //         } catch (error) {
+    //             // console.log(error);
+    //         }
+    //     };
+
+    //     handleMount();
+    // }, [currentUser]);
 
 
     return (
