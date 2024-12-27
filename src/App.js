@@ -41,8 +41,7 @@ function App() {
               message='No results found adjust search keyword'
               filter={`owner__username=${profile_id}&`}
             />} />
-          <Route path="/" element={currentUser ? <Navigate to="/tasks" /> : <LandingPage />} />
-          <Route path="/tasks" element={currentUser ? <TasksList /> : <Navigate to="/" />} />
+          <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />

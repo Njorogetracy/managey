@@ -12,18 +12,21 @@ import { useCurrentUser } from '../../contexts/CurrentUserContext.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchMoreData } from '../../utils/utils.js';
 
-function TasksList({ filter = "" }) {   
+function TasksList({ filter = "" }) { 
+    const currentUser = useCurrentUser();
+    const navigate = useNavigate();
+    
+    if (!currentUser) {
+        useEffect(() => {
+            navigate('/login');
+        }, []);
+        return null;
+    }
     const [tasks, setTasks] = useState({ results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
-    const navigate = useNavigate();
     const { pathname } = useLocation();
-    const currentUser = useCurrentUser();
     const [showScroll, setShowScroll] = useState(false);
-    const [query, setQuery] = useState('');
-
-    if (!currentUser) {
-        return <navigate to="/login" replace />;
-      }      
+    const [query, setQuery] = useState('');     
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -71,7 +74,7 @@ function TasksList({ filter = "" }) {
     return (
         <Container className={listStyles.listpage}>
             <Row>
-                <h2>Welcome, {currentUser?.username || 'Guest'}!</h2>
+                <h2>Welcome, {currentUser?.username}!</h2>
                 <Form
                     className={listStyles.SearchBar}
                     onSubmit={(event) => event.preventDefault()}
