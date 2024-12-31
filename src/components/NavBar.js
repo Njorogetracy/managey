@@ -12,6 +12,7 @@ import { removeTokenTimestamp } from "../utils/utils";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
+  console.log("current user:", currentUser)
   const setCurrentUser = useSetCurrentUser();
 
   const { expanded, setExpanded, ref } = useClicksOutside();
