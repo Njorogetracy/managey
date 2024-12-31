@@ -44,7 +44,10 @@ function LoginForm() {
             if (data.key) {
                 localStorage.setItem('authToken', data.key);
                 axios.defaults.headers.common['Authorization'] = `Token ${data.key}`;
-                setCurrentUser(data.user);
+
+                const userRes = await axios.get('/dj-rest-auth/user/');
+                setCurrentUser(userRes.data);
+                
                 setTokenTimestamp(data);
                 toast.success("Login successful", {
                     position: 'top-right',
