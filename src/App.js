@@ -28,6 +28,7 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Routes>
+        <Routes exact path="/" element={<LandingPage/>} />
         <Route exact path="/signup" element={<SignUpForm />} />
         <Route exact path="/login" element={<LoginForm />} />
         {!currentUser && (
@@ -41,7 +42,7 @@ function App() {
               message='No results found adjust search keyword'
               filter={`owner__username=${profile_id}&`}
             />} />
-          <Route exact path="/" element={<TasksList />} />
+          {/* <Route exact path="/" element={<TasksList />} /> */}
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
