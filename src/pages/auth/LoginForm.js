@@ -98,7 +98,7 @@ function LoginForm() {
         }
       } catch (err) {
         if (process.env.NODE_ENV === "development") {
-          console.error("Login error:", err);
+          console.log("%cLogin failed: 400 Bad Request", "color: orange; font-weight: bold");
         }
 
         setErrors(err.response?.data || {});
