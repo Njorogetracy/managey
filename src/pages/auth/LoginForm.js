@@ -13,6 +13,18 @@ import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserCon
 import { toast } from "react-toastify";
 import { setTokenTimestamp } from "../../utils/utils";
 
+const silentRequest = async (config) => {
+  try {
+    const response = await axios(config);
+    return response;
+  } catch (error) {
+    if (error.response?.status !== 400) {
+      console.error(error);
+    }
+    return Promise.reject(error); 
+  }
+};
+
 /**Handles user login */
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
@@ -79,7 +91,11 @@ function LoginForm() {
       }
 
       try {
-        const { data } = await axios.post("/dj-rest-auth/login/", loginData);
+        const { data } = await silentRequest({
+          method: "POST",
+          url: "/dj-rest-auth/login/",
+          data: loginData,
+        });
         if (data.key) {
           localStorage.setItem("authToken", data.key);
           axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
