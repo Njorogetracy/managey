@@ -13,7 +13,7 @@ const SignUpForm = () => {
         username: "",
         password1: "",
         password2: "",
-    })
+    });
     const { username, password1, password2 } = signUpData;
     const [errors, setErrors] = useState({});
     const [showModal, setShowModal] = useState(false);
@@ -59,66 +59,96 @@ const SignUpForm = () => {
     /**Returns signup form
      */
     return (
-        <Row className={styles.Row}>
-            <Col className="col-sm-6 mx-auto" md={6}>
-                    <Container className={`${styles.Form} p-5 `}>
-                        <h1 className={appStyles.Header}>Sign Up</h1>
-                        <Form onSubmit={handleSubmit}>
-                            {showModal && (
-                                <Modal show={showModal} onHide={handleCloseModal} centered={true}>
-                                <Modal.Header closeButton>
-                                  <Modal.Title>Successful</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>Account Created Successfully!</Modal.Body>
-                                <Modal.Footer>
-                                  <Button variant="secondary" onClick={handleCloseModal}>
-                                    Close
-                                  </Button>
-                                </Modal.Footer>
-                              </Modal>
-                            )}
-                            <Form.Group className="mb-3" controlId="username">
-                                <Form.Label className="d-none">Username</Form.Label>
-                                <Form.Control type="text" placeholder="Username" name="username" value={username} onChange={handleChange} />
-                            </Form.Group>
-                            {errors.username?.map((message, idx) =>
-                                <Alert variant="warning" key={idx}>{message}</Alert>
-                            )}
-
-                            <Form.Group className="mb-3" controlId="password1">
-                                <Form.Label className="d-none" >Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Password"
-                                    name="password1"
-                                    value={password1}
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            {errors.password1?.map((message, idx) =>
-                                <Alert variant="warning" key={idx}>{message}</Alert>
-                            )}
-                            <Form.Group className="mb-3" controlId="password2">
-                                <Form.Label className="d-none" > Confirm Password</Form.Label>
-                                <Form.Control type="password" placeholder="Confirm Password" name="password2" value={password2} onChange={handleChange} />
-                            </Form.Group>
-                            {errors.password2?.map((message, idx) =>
-                                <Alert variant="warning" key={idx}>{message}</Alert>
-                            )}
-                            <Button variant="primary" type="submit">
-                                Sign Up
-                            </Button>
-                            {errors.non_field_errors?.map((message, idx) =>
-                                <Alert variant="warning" key={idx}>{message}</Alert>
-                            )}
-                        </Form>
-                        <Link className={styles.Link} to="/login">
-                            Already have an account? <span>Login</span>
-                        </Link>
-                    </Container>
-            </Col>
+        <Row className="d-flex justify-content-center align-items-center min-vh-100">
+          <Col xs={12} md={8} lg={6}>
+            <Container className={`${styles.Form} shadow-lg p-5`}>
+              <h1 className={`${appStyles.Header} mb-4`}>Create an Account</h1>
+              <p className="mb-4 text-muted">Join us and organize your tasks effortlessly.</p>
+              <Form onSubmit={handleSubmit}>
+                {showModal && (
+                  <Modal show={showModal} onHide={handleCloseModal} centered>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Success</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Your account has been created successfully!</Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="primary" onClick={handleCloseModal}>
+                        Go to Login
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                )}
+                <Form.Group className="mb-3" controlId="username">
+                  <Form.Label className="text-start">Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter a unique username"
+                    name="username"
+                    value={username}
+                    onChange={handleChange}
+                    className="rounded-pill"
+                  />
+                </Form.Group>
+                {errors.username?.map((message, idx) => (
+                  <Alert variant="warning" key={idx}>
+                    {message}
+                  </Alert>
+                ))}
+    
+                <Form.Group className="mb-3" controlId="password1">
+                  <Form.Label className="text-start">Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter your password"
+                    name="password1"
+                    value={password1}
+                    onChange={handleChange}
+                    className="rounded-pill"
+                  />
+                </Form.Group>
+                {errors.password1?.map((message, idx) => (
+                  <Alert variant="warning" key={idx}>
+                    {message}
+                  </Alert>
+                ))}
+    
+                <Form.Group className="mb-4" controlId="password2">
+                  <Form.Label className="text-start">Confirm Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Re-enter your password"
+                    name="password2"
+                    value={password2}
+                    onChange={handleChange}
+                    className="rounded-pill"
+                  />
+                </Form.Group>
+                {errors.password2?.map((message, idx) => (
+                  <Alert variant="warning" key={idx}>
+                    {message}
+                  </Alert>
+                ))}
+    
+                <Button variant="primary" type="submit" className="w-100 rounded-pill py-2">
+                  Sign Up
+                </Button>
+    
+                {errors.non_field_errors?.map((message, idx) => (
+                  <Alert variant="danger" key={idx} className="mt-3">
+                    {message}
+                  </Alert>
+                ))}
+              </Form>
+              <div className="mt-4 text-center">
+                Already have an account?{" "}
+                <Link className={styles.Link} to="/login">
+                  <span className="text-primary fw-bold">Login</span>
+                </Link>
+              </div>
+            </Container>
+          </Col>
         </Row>
-    );
+      );
 };
 
 export default SignUpForm;

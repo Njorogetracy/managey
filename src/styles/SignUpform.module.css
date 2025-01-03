@@ -1,22 +1,25 @@
 .Form {
-    text-align: center;
-    background-color: #f5f5f5;
-    border: 1px solid gray;
-    border-radius: 15px;
-    box-shadow: 5px 10px 8px gray;
-    font-family: "Roboto";
+    background-color: #ffffff;
+    border-radius: 20px;
+    font-family: "Roboto", sans-serif;
 }
-
-.TopMargin {
-    margin-top: 20px !important;
-}
-
-.box {
-    background-color: #f5f5f5;
-    box-shadow: gray;
-}
-
+  
 .Link {
-    color: red;
+    color: #007bff;
+    text-decoration: none;
 }
-
+  
+.Link:hover {
+    text-decoration: underline;
+}
+  
+.alert-warning {
+    background-color: #fffae6;
+    border-color: #ffe69c;
+    color: #856404;
+}
+  
+.rounded-pill {
+    border-radius: 50px !important;
+}
+  
