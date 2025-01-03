@@ -198,26 +198,22 @@ function TaskCreateForm() {
 
             <Form.Group className="mb-4">
               <Form.Label>Assigned Users</Form.Label>
-              <Select
-                isMulti
-                value={users.filter((user) => assignedUser.includes(user.id))}
-                onChange={(selectedOptions) =>
-                  setAssignedUser(selectedOptions.map((option) => option.id))
-                }
-                options={users.map((user) => ({
-                  label: user.owner,
-                  value: user.id,
-                }))}
-                placeholder="Select users to assign"
-                classNamePrefix="react-select"
-                styles={{
-                  control: (provided) => ({
-                    ...provided,
-                    padding: "5px",
-                    borderRadius: "10px",
-                  }),
-                }}
-              />
+              <Form.Control
+                as="select"
+                multiple
+                aria-label="assigned_user"
+                onChange={handleChangeUser}
+                className={`${styles.InputField}`}
+              >
+                <option disabled value="">
+                  Assign Task
+                </option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.owner}
+                  </option>
+                ))}
+              </Form.Control>
               {errors.assigned_users?.map((message, idx) => (
                 <Alert key={idx} variant="danger">
                   {message}

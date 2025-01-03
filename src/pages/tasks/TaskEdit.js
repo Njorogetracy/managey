@@ -224,28 +224,14 @@ function TaskEdit() {
 
       <Form.Group className="mb-4">
         <Form.Label>Assigned Users</Form.Label>
-        <Select
-          isMulti
-          value={users.filter((user) => assignedUsers.includes(user.id))}
-          onChange={(selectedOptions) =>
-            setAssignedUsers(selectedOptions.map((option) => option.value))
-          }
-          options={users.map((user) => ({ label: user.owner, value: user.id }))}
-          placeholder="Select users to assign"
-          classNamePrefix="react-select"
-          styles={{
-            control: (provided) => ({
-              ...provided,
-              padding: "5px",
-              borderRadius: "10px",
-            }),
-          }}
-        />
-        {errors.assigned_users?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
+        <Form.Control as="select" multiple onChange={handleChangeUser}>
+          {users.map((user) => (
+            <option key={user.id} value={user.id} selected={assignedUsers.includes(user.id)}>
+              {user.owner}
+            </option>
+          ))}
+        </Form.Control>
+        {errors.assigned_users?.map((message, idx) => <Alert key={idx} variant='danger'>{message}</Alert>)}
       </Form.Group>
 
       <Form.Group className="mb-4">
