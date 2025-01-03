@@ -163,7 +163,6 @@ const SignUpForm = () => {
                   variant="primary" 
                   type="submit" 
                   className="w-100 rounded-pill py-2"
-                  disabled={Object.keys(errors).length > 0}
                 >
                   Sign Up
                 </Button>

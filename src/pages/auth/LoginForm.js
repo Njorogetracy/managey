@@ -37,32 +37,78 @@ function LoginForm() {
     }
 
     /** Handles form submit for Login page */ 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const { data } = await axios.post('/dj-rest-auth/login/', loginData);
-            if (data.key) {
-                localStorage.setItem('authToken', data.key);
-                axios.defaults.headers.common['Authorization'] = `Token ${data.key}`;
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const { data } = await axios.post('/dj-rest-auth/login/', loginData);
+    //         if (data.key) {
+    //             localStorage.setItem('authToken', data.key);
+    //             axios.defaults.headers.common['Authorization'] = `Token ${data.key}`;
 
-                const userRes = await axios.get('/dj-rest-auth/user/');
-                setCurrentUser(userRes.data);
+    //             const userRes = await axios.get('/dj-rest-auth/user/');
+    //             setCurrentUser(userRes.data);
                 
-                setTokenTimestamp(data);
-                toast.success("Login successful", {
-                    position: 'top-right',
-                    autoClose: 3000,
-                });
-                navigate('/tasks');
-            } else {
-                throw new Error('No authentication token received');
-            }
-        } catch (err) {
-            console.error('Login error:', err);
-            setErrors(err.response?.data || {});
-            toast.error(err.response?.data?.non_field_errors?.[0] || "Login failed. Please try again.");        
+    //             setTokenTimestamp(data);
+    //             toast.success("Login successful", {
+    //                 position: 'top-right',
+    //                 autoClose: 3000,
+    //             });
+    //             navigate('/tasks');
+    //         } else {
+    //             throw new Error('No authentication token received');
+    //         }
+    //     } catch (err) {
+    //         console.error('Login error:', err);
+    //         setErrors(err.response?.data || {});
+    //         toast.error(err.response?.data?.non_field_errors?.[0] || "Login failed. Please try again.");        
+    //     }
+    // };
+    
+    /** Handles form submit for Login page */
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      // Client-side validation
+      if (!username.trim() || !password.trim()) {
+        setErrors({
+          username: !username.trim() ? ["Username is required."] : [],
+          password: !password.trim() ? ["Password is required."] : [],
+        });
+        toast.error("Please fill in all required fields.");
+        return;
+      }
+
+      try {
+        const { data } = await axios.post("/dj-rest-auth/login/", loginData);
+        if (data.key) {
+          localStorage.setItem("authToken", data.key);
+          axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
+
+          const userRes = await axios.get("/dj-rest-auth/user/");
+          setCurrentUser(userRes.data);
+
+          setTokenTimestamp(data);
+          toast.success("Login successful", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          navigate("/tasks");
+        } else {
+          throw new Error("No authentication token received");
         }
-    };    
+      } catch (err) {
+        if (process.env.NODE_ENV === "development") {
+          console.error("Login error:", err);
+        }
+
+        setErrors(err.response?.data || {});
+        toast.error(
+          err.response?.data?.non_field_errors?.[0] ||
+            "Login failed. Please check your username and password."
+        );
+      }
+    };
+
 
     // Redirect if user is already logged in
     useEffect(() => {
