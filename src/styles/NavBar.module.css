@@ -1,5 +1,5 @@
 .NavBar {
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.5), rgba(0, 86, 179, 0.5));
   padding: 10px 20px;
   border-radius: 0 0 10px 10px;
   color: white;
