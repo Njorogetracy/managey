@@ -12,9 +12,7 @@ import { removeTokenTimestamp } from "../utils/utils";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
-  console.log("current user:", currentUser)
   const setCurrentUser = useSetCurrentUser();
-
   const { expanded, setExpanded, ref } = useClicksOutside();
 
   /**Handles user logout and redirects to landing page */
@@ -22,39 +20,34 @@ const NavBar = () => {
     try {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
-      removeTokenTimestamp(); 
+      removeTokenTimestamp();
       toast.success("Logout successful", {
-        position: 'top-right',
+        position: "top-right",
         autoClose: 3000,
       });
     } catch (error) {
       console.error(error);
       toast.error("Logout failed. Please try again.", {
-        position: 'top-right',
+        position: "top-right",
         autoClose: 3000,
       });
     }
   };
 
-  // "Add Task" button visible to logged-in users
-  const addTaskIcon = (
-    <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/tasks/create">
-      <i className="fa-solid fa-file-circle-plus"></i> Add Task
-    </NavLink>
-  );
-
   // navigation links for logged-in users
   const loggedInIcons = (
     <>
-      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/">
+      <NavLink className={styles.NavLink} to="/tasks/">
         <i className="fa-solid fa-house"></i> Home
       </NavLink>
-      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/tasks/">
-        <i className="fas fa-list"></i> Tasks
+      <NavLink className={styles.NavLink} to="/tasks/">
+        <i className="fas fa-tasks"></i> My Tasks
       </NavLink>
-      {addTaskIcon} 
+      <NavLink className={styles.NavLink} to="/tasks/create">
+        <i className="fa-solid fa-plus-circle"></i> Add Task
+      </NavLink>
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
-        <i className="fa-solid fa-sign-out-alt"></i> Log Out
+        <i className="fa-solid fa-sign-out-alt"></i> Logout
       </NavLink>
       <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
         <Avatar src={currentUser?.profile_image} text={currentUser?.username} height={40} />
@@ -65,33 +58,31 @@ const NavBar = () => {
   // navigation links for logged-out users
   const loggedOutIcons = (
     <>
-      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/login">
-        <i className="fa-solid fa-right-to-bracket"></i> Login
+      <NavLink className={styles.NavLink} to="/login">
+        <i className="fa-solid fa-sign-in-alt"></i> Login
       </NavLink>
-      <NavLink className={styles.NavLink} activeclassname={styles.Active} to="/signup">
+      <NavLink className={styles.NavLink} to="/signup">
         <i className="fa-solid fa-user-plus"></i> Sign Up
       </NavLink>
     </>
   );
 
   return (
-    <Navbar expanded={expanded} className={styles.NavBar} expand="md" fixed="top">
+    <Navbar expanded={expanded} className={`${styles.NavBar} shadow-sm`} expand="md" fixed="top">
       <Container>
-        <NavLink to="/">
-          <Navbar.Brand>
-            <img src={managey} alt="Managey Logo" height="50" />
+        <NavLink to={currentUser ? "/tasks/" : "/"}>
+          <Navbar.Brand className={styles.Brand}>
+            <img src={managey} alt="Managey Logo" height="50" className={styles.BrandLogo} />
+            <span className={styles.BrandText}>Managey</span>
           </Navbar.Brand>
         </NavLink>
-        {currentUser && addTaskIcon}
         <Navbar.Toggle
           ref={ref}
           onClick={() => setExpanded(!expanded)}
           aria-controls="basic-navbar-nav"
         />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto text-right">
-            {currentUser ? loggedInIcons : loggedOutIcons}
-          </Nav>
+          <Nav className="ms-auto text-center">{currentUser ? loggedInIcons : loggedOutIcons}</Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

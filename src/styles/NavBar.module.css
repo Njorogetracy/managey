@@ -1,40 +1,61 @@
 .NavBar {
-    background-color: #f5f5f5;
-    border: 1px solid #f5f5f5;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  color: white;
 }
 
 .NavLink {
-    padding: 5px;
-    text-decoration: none;
+  margin: 0 10px;
+  padding: 10px 15px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 8px;
 }
 
-.Active i {
-    color: #4da0ff;
+.NavLink:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #f1f1f1;
 }
 
-.Active a {
-    color: #4da0ff;
-    transition: color ease-in-out 0.3s;
+.Active {
+  background-color: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
 }
 
-.Active a:hover {
-    color: #F6F6F7;
-    text-decoration: none;
+.NavLink i {
+  margin-right: 8px;
 }
 
-.Active a:hover i {
-color: #4da0ff;
-transition: color ease-in-out 0.3s;
+.Brand {
+  display: flex;
+  align-items: center;
 }
 
-i {
-    color: #0077ff;
-    font-size: 1.6rem;
-    padding: 7px;
-    vertical-align: middle;
-    }
+.BrandLogo {
+  margin-right: 10px;
+}
 
-i:hover {
-    cursor: pointer;
-    transition: color ease-in-out 0.3s;
-    }
+.BrandText {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.Avatar {
+  border: 2px solid white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.Avatar:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.shadow-sm {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
