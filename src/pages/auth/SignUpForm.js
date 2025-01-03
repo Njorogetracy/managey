@@ -63,7 +63,6 @@ const SignUpForm = () => {
           <Col xs={12} md={8} lg={6}>
             <Container className={`${styles.Form} shadow-lg p-5`}>
               <h1 className={`${appStyles.Header} mb-4`}>Create an Account</h1>
-              <p className="mb-4 text-muted">Join us and organize your tasks effortlessly.</p>
               <Form onSubmit={handleSubmit}>
                 {showModal && (
                   <Modal show={showModal} onHide={handleCloseModal} centered>

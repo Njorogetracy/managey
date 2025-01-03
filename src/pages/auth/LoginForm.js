@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../../styles/SignUpform.module.css";
+import styles from "../../styles/LoginForm.module.css";
 import appStyles from "../../App.module.css";
 import axios from "axios";
 import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
@@ -71,46 +71,66 @@ function LoginForm() {
         }
       }, [currentUser, navigate]);
 
-    return (
-        <Row className={styles.Row}>
-            <Col className="col-sm-6 mx-auto" md={6}>
-                <Container className={`${styles.Form} p-5 `}>
-                    <h1 className={appStyles.Header}>Login</h1>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3" controlId="username">
-                            <Form.Label className="d-none">Username</Form.Label>
-                            <Form.Control type="text" placeholder="Username" name="username" value={username} onChange={handleChange} />
-                        </Form.Group>
-                        {errors.username?.map((message, idx) =>
-                            <Alert variant="warning" key={idx}>{message}</Alert>
-                        )}
-                        <Form.Group className="mb-3" controlId="password">
-                            <Form.Label className="d-none" >Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                name="password"
-                                value={password}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                        {errors.password?.map((message, idx) =>
-                            <Alert variant="warning" key={idx}>{message}</Alert>
-                        )}
-                        <Button variant="primary" type="submit" onSubmit={handleSubmit}>
-                            Login
-                        </Button>
-                        {errors.non_field_errors?.map((message, idx) =>
-                            <Alert variant="warning" key={idx}>{message}</Alert>
-                        )}
-                    </Form>
-                    <Link className={styles.Link} to="/signup">
-                        No account yet? <span>Sign up now!</span>
-                    </Link>
-                </Container>
-            </Col>
+      return (
+        <Row className="min-vh-100 d-flex justify-content-center align-items-center">
+          <Col xs={12} md={6} lg={5}>
+            <Container className={`${styles.FormContainer} shadow-lg p-5`}>
+              <h1 className={`${appStyles.Header} mb-4 text-center text-primary`}>Welcome Back!</h1>
+              <p className="text-muted text-center mb-4">Please log in to access your tasks.</p>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="username">
+                  <Form.Label className="text-start">Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your username"
+                    name="username"
+                    value={username}
+                    onChange={handleChange}
+                    className="rounded-pill"
+                  />
+                </Form.Group>
+                {errors.username?.map((message, idx) => (
+                  <Alert variant="warning" key={idx}>
+                    {message}
+                  </Alert>
+                ))}
+    
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label className="text-start">Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter your password"
+                    name="password"
+                    value={password}
+                    onChange={handleChange}
+                    className="rounded-pill"
+                  />
+                </Form.Group>
+                {errors.password?.map((message, idx) => (
+                  <Alert variant="warning" key={idx}>
+                    {message}
+                  </Alert>
+                ))}
+    
+                <Button variant="primary" type="submit" className="w-100 rounded-pill py-2">
+                  Login
+                </Button>
+                {errors.non_field_errors?.map((message, idx) => (
+                  <Alert variant="danger" key={idx} className="mt-3">
+                    {message}
+                  </Alert>
+                ))}
+              </Form>
+              <div className="text-center mt-4">
+                Don’t have an account?{" "}
+                <Link className={styles.Link} to="/signup">
+                  <span className="text-primary fw-bold">Sign Up</span>
+                </Link>
+              </div>
+            </Container>
+          </Col>
         </Row>
-    );
+      );
 }
 
 export default LoginForm;
