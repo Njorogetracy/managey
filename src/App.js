@@ -37,25 +37,11 @@ function App() {
               <Route exact path="/login" element={<LoginForm />} />
             </>
           )}
-          {/* <Route exact path="/tasks" element={
+          <Route exact path="/tasks" element={
             <TasksList
               message='No results found adjust search keyword'
               filter={`owner__username=${profile_id}&`}
-            />} /> */}
-          {/* <Route exact path="/" element={<TasksList />} /> */}
-          <Route
-            path="/tasks"
-            element={
-              profile_id ? (
-                <TasksList
-                  message="No results found, adjust search keyword"
-                  filter={`owner__username=${profile_id}&`}
-                />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
+            />} />
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
