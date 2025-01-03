@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { axiosReq } from "../../api/axiosDefaults";
 import axios from "axios";
-import styles from "../../styles/TaskEditForm.module.css";
+import styles from "../../styles/TaskCreateEditForm.css";
 import btnStyles from "../../styles/Button.module.css";
 import { Form, Col, Button, Alert, Row, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
