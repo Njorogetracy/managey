@@ -28,7 +28,7 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Routes>
-        <Routes exact path="/" element={<LandingPage/>} />
+        <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/signup" element={<SignUpForm />} />
         <Route exact path="/login" element={<LoginForm />} />
         {!currentUser && (
