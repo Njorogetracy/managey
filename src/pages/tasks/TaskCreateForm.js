@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import axios from 'axios';
-import styles from "../../styles/TaskCreateForm.module.css";
+import styles from "../../styles/TaskCreateEditForm.module.css";
 import btnStyles from '../../styles/Button.module.css';
 import { Form, Col, Button, Alert, Row, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

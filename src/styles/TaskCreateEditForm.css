@@ -1,21 +1,35 @@
-.OptionLabel {
-    display: flex;
-    align-items:flex-start;
+.Form {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.OptionLabel .fa-circle {
-    margin-right: 10px;
+.InputField {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
 }
 
-.Low {
-    color: green;
+.InputField:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-.Medium {
-    color: orange;
+.Alert {
+  margin-top: 5px;
+  font-size: 0.9rem;
 }
 
-.High {
-    color: red;
+.Button {
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  width: 45%;
 }
 
+.ButtonSecondary {
+  background-color: #6c757d;
+  color: white;
+}
