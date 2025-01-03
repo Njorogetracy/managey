@@ -32,15 +32,46 @@ const SignUpForm = () => {
     }
 
     /** Handles form submit for Signup page */
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     try {
+    //         await axios.post("/dj-rest-auth/registration/", signUpData);
+    //         setShowModal(true);
+    //     } catch (err) {
+    //         setErrors(err.response?.data);
+    //     }
+    // };
+    /** Handles form submit for Signup page */
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            await axios.post("/dj-rest-auth/registration/", signUpData);
-            setShowModal(true);
-        } catch (err) {
-            setErrors(err.response?.data);
-        }
+      event.preventDefault();
+
+      const newErrors = {};
+      if (!username.trim()) {
+        newErrors.username = ["Username is required"];
+      }
+      if (!password1) {
+        newErrors.password1 = ["Password is required"];
+      }
+      if (!password2) {
+        newErrors.password2 = ["Please confirm your password"];
+      }
+      if (password1 !== password2) {
+        newErrors.password2 = ["Passwords do not match"];
+      }
+
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+
+      try {
+        await axios.post("/dj-rest-auth/registration/", signUpData);
+        setShowModal(true);
+      } catch (err) {
+        setErrors(err.response?.data || {});
+      }
     };
+
 
 
     /**Handle modal close */
@@ -85,7 +116,7 @@ const SignUpForm = () => {
                     name="username"
                     value={username}
                     onChange={handleChange}
-                    className="rounded-pill"
+                    className={`rounded-pill ${errors.username ? "is-invalid" : ""}`}
                   />
                 </Form.Group>
                 {errors.username?.map((message, idx) => (
@@ -102,7 +133,7 @@ const SignUpForm = () => {
                     name="password1"
                     value={password1}
                     onChange={handleChange}
-                    className="rounded-pill"
+                    className={`rounded-pill ${errors.username ? "is-invalid" : ""}`}
                   />
                 </Form.Group>
                 {errors.password1?.map((message, idx) => (
@@ -119,7 +150,7 @@ const SignUpForm = () => {
                     name="password2"
                     value={password2}
                     onChange={handleChange}
-                    className="rounded-pill"
+                    className={`rounded-pill ${errors.username ? "is-invalid" : ""}`}
                   />
                 </Form.Group>
                 {errors.password2?.map((message, idx) => (
@@ -128,7 +159,12 @@ const SignUpForm = () => {
                   </Alert>
                 ))}
     
-                <Button variant="primary" type="submit" className="w-100 rounded-pill py-2">
+                <Button 
+                  variant="primary" 
+                  type="submit" 
+                  className="w-100 rounded-pill py-2"
+                  disabled={Object.keys(errors).length > 0}
+                >
                   Sign Up
                 </Button>
     
