@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Select from 'react-select';
-import axios from 'axios';
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Select from "react-select";
+import axios from "axios";
 import styles from "../../styles/TaskCreateEditForm.css";
-import btnStyles from '../../styles/Button.module.css';
-import { Form, Col, Button, Alert, Row, Container } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
-import { axiosReq } from '../../api/axiosDefaults';
+import btnStyles from "../../styles/Button.module.css";
+import { Form, Col, Button, Alert, Row, Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import { axiosReq } from "../../api/axiosDefaults";
 
 function TaskCreateForm() {
   const [taskData, setTaskData] = useState({
@@ -21,7 +21,8 @@ function TaskCreateForm() {
     due_date: "",
   });
 
-  const { title, description, priority, state, attachment, due_date } = taskData;
+  const { title, description, priority, state, attachment, due_date } =
+    taskData;
   const navigate = useNavigate();
   const location = useLocation();
   const [users, setUsers] = useState([]);
@@ -31,9 +32,21 @@ function TaskCreateForm() {
 
   /** Priority and State options */
   const priorityOptions = [
-    { value: 'Low', label: 'Low', icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#FFD43B" }} /> },
-    { value: 'Medium', label: 'Medium', icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#e2763c" }} /> },
-    { value: 'High', label: 'High', icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#ee1111" }} /> },
+    {
+      value: "Low",
+      label: "Low",
+      icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#FFD43B" }} />,
+    },
+    {
+      value: "Medium",
+      label: "Medium",
+      icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#e2763c" }} />,
+    },
+    {
+      value: "High",
+      label: "High",
+      icon: <FontAwesomeIcon icon={faCircle} style={{ color: "#ee1111" }} />,
+    },
   ];
 
   const stateOptions = [
@@ -45,8 +58,9 @@ function TaskCreateForm() {
 
   /** Fetch profiles for user assignment */
   useEffect(() => {
-    axios.get(`/profiles/`)
-      .then(response => {
+    axios
+      .get(`/profiles/`)
+      .then((response) => {
         const profiles = response.data.results || [];
         setUsers(profiles);
       })
@@ -65,7 +79,9 @@ function TaskCreateForm() {
 
   /** Handle assigned users change */
   const handleChangeUser = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => parseInt(option.value, 10));
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) =>
+      parseInt(option.value, 10)
+    );
     setAssignedUser(selectedOptions);
   };
 
@@ -88,7 +104,7 @@ function TaskCreateForm() {
 
   /** Redirect to previous page */
   const handleGoBack = () => {
-    navigate(location.state?.from || '/');
+    navigate(location.state?.from || "/");
   };
 
   /** Handle form submission */
@@ -98,31 +114,40 @@ function TaskCreateForm() {
 
     /** Validation */
     let validationErrors = {};
-    if (!title) validationErrors.title = ['Title is required.'];
-    if (!description) validationErrors.description = ['Description is required.'];
-    if (assignedUser.length === 0) validationErrors.assigned_users = ['At least one assigned user is required.'];
-    if (!priority) validationErrors.priority = ['Priority must be selected.'];
-    if (!state) validationErrors.state = ['Task state must be selected.'];
-    if (!due_date) validationErrors.due_date = ['Due date is required.'];
+    if (!title) validationErrors.title = ["Title is required."];
+    if (!description)
+      validationErrors.description = ["Description is required."];
+    if (assignedUser.length === 0)
+      validationErrors.assigned_users = [
+        "At least one assigned user is required.",
+      ];
+    if (!priority) validationErrors.priority = ["Priority must be selected."];
+    if (!state) validationErrors.state = ["Task state must be selected."];
+    if (!due_date) validationErrors.due_date = ["Due date is required."];
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('priority', priority.value);
-    formData.append('state', state);
-    formData.append('attachment', attachment);
-    formData.append('due_date', due_date);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("priority", priority.value);
+    formData.append("state", state);
+    formData.append("attachment", attachment);
+    formData.append("due_date", due_date);
     assignedUser.forEach((userId) => {
-      formData.append('assigned_users', userId);
+      formData.append("assigned_users", userId);
     });
 
     try {
-      await axiosReq.post('/tasks/', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-      toast.success("Task created successfully", { position: 'top-right', autoClose: 3000 });
+      await axiosReq.post("/tasks/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      toast.success("Task created successfully", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       navigate(`/tasks/`);
     } catch (err) {
       if (err.response?.status !== 401) {
@@ -173,24 +198,28 @@ function TaskCreateForm() {
 
             <Form.Group className="mb-4">
               <Form.Label>Assigned Users</Form.Label>
-              <Form.Control
-                as="select"
-                multiple
-                aria-label="assigned_user"
-                onChange={handleChangeUser}
-                className={`${styles.InputField}`}
-              >
-                <option disabled value="">
-                  Assign Task
-                </option>
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.owner}
-                  </option>
-                ))}
-              </Form.Control>
+              <Select
+                isMulti
+                value={users.filter((user) => assignedUser.includes(user.id))}
+                onChange={(selectedOptions) =>
+                  setAssignedUser(selectedOptions.map((option) => option.id))
+                }
+                options={users.map((user) => ({
+                  label: user.owner,
+                  value: user.id,
+                }))}
+                placeholder="Select users to assign"
+                classNamePrefix="react-select"
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    padding: "5px",
+                    borderRadius: "10px",
+                  }),
+                }}
+              />
               {errors.assigned_users?.map((message, idx) => (
-                <Alert key={idx} variant="danger" className="mt-2">
+                <Alert key={idx} variant="danger">
                   {message}
                 </Alert>
               ))}
@@ -202,8 +231,27 @@ function TaskCreateForm() {
                 value={priority}
                 onChange={handlePriorityChange}
                 options={priorityOptions}
+                formatOptionLabel={(option) => (
+                  <div className="d-flex align-items-center">
+                    {option.icon} <span className="ms-2">{option.label}</span>
+                  </div>
+                )}
                 className="react-select-container"
                 placeholder="Select priority"
+                classNamePrefix="react-select"
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    borderRadius: "8px",
+                    padding: "4px",
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: state.isFocused ? "#f0f8ff" : "white",
+                  }),
+                }}
               />
               {errors.priority?.map((message, idx) => (
                 <Alert key={idx} variant="danger" className="mt-2">

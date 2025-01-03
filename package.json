@@ -19,7 +19,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.28.1",
     "react-scripts": "5.0.1",
-    "react-select": "^5.8.0",
+    "react-select": "^5.9.0",
     "react-toastify": "^10.0.5",
     "serve": "^14.2.3",
     "web-vitals": "^2.1.4"
