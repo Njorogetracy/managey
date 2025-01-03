@@ -23,21 +23,28 @@ export const ProfileDataProvider = ({ children }) => {
   */
     useEffect(() => {
         const handleMount = async () => {
-            if (currentUser) {
-                try {
-                    const { data } = await axiosReq.get("/profiles/?ordering=tasks_count");
-                    setProfileData((prevState) => ({
-                        ...prevState,
-                        listProfiles: data,
-                    }));
-                } catch (error) {
-                    console.error("Error fetching profile data", error);
-                }
+          if (currentUser) {
+            try {
+              const { data } = await axiosReq.get("/profiles/?ordering=tasks_count");
+              setProfileData((prevState) => ({
+                ...prevState,
+                listProfiles: data,
+              }));
+            } catch (error) {
+              if (error.response?.status === 403) {
+                console.warn("403 Forbidden: You may not be authorized to access profiles.");
+                toast.error("You are not authorized to access this resource.");
+              } else {
+                console.error("Error fetching profile data", error);
+              }
             }
+          }
         };
-
+      
         handleMount();
-    }, [currentUser]); 
+      }, [currentUser]);
+      
+      
     // useEffect(() => {
     //     const handleMount = async () => {
     //         try {
