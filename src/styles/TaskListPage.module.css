@@ -1,77 +1,55 @@
-.listpage {
-    padding-top: 20px;
+.listPage {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.taskcard {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px #f5f5f5;
-    transition: box-shadow 0.3s ease;
-    position: relative;
-    text-decoration: none;
+.taskContainer {
+  margin-top: 20px;
 }
 
-.taskcard:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.taskItem {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
-.cardheader {
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 1.5rem; /* Adjusted font size for better responsiveness */
-    font-weight: 500;
-    padding: 10px 15px;
+.taskItem:hover {
+  transform: translateY(-5px);
 }
 
-.cardbody {
-    padding: 15px;
-    background-color: #fafafa;
-}
-
-.task-card-button {
-    text-align: left;
-    width: 100%;
-    padding: 0;
-    color: #007bff;
-}
-
-.task-card-button:hover {
-    text-decoration: none;
-}
-
-.text-center {
-    margin-top: 20px;
-}
-
-.SearchBar input {
-    border-radius: 20px;
-    color: #242a3d;
-    padding-left: 40px;
-    margin-bottom: 16px;
+.SearchBar {
+  width: 100%;
+  margin: 15px 0;
+  display: flex;
 }
 
 .SearchIcon {
-    position: absolute;
-    font-size: 1.2rem;
-    padding: 9px;
-    padding-left: 15px;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
 }
 
-.SearchIcon:hover {
-    cursor: default;
-    color: #cfced3;
+.BackToTopButton {
+  right: 20px;
+  bottom: 40px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-@media (max-width: 768px) {
-    .cardheader {
-        font-size: 1.2rem;
-    }
-
-    .cardbody {
-        padding: 10px;
-    }
-
-    .listpage {
-        padding: 10px; /* Adjusted padding for mobile view */
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
