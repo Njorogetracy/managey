@@ -52,25 +52,8 @@ const NavBar = () => {
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fa-solid fa-sign-out-alt"></i> Logout
       </NavLink>
-      {/* <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
+      <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
         <Avatar src={currentUser?.profile_image} text={currentUser?.username} height={40} />
-      </NavLink> */}
-      <NavLink
-        className={styles.NavLink}
-        to={
-          currentUser?.profile_id ? `/profiles/${currentUser.profile_id}` : "/"
-        }
-        onClick={() => {
-          if (!currentUser?.profile_id) {
-            toast.error("Your profile ID is missing. Please try reloading.");
-          }
-        }}
-      >
-        <Avatar
-          src={currentUser?.profile_image}
-          text={currentUser?.username}
-          height={40}
-        />
       </NavLink>
     </>
   );

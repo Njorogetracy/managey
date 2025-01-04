@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCurrentUser } from "./contexts/CurrentUserContext";
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/Profile.module.css';
 

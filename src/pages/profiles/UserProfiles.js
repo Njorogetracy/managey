@@ -60,7 +60,7 @@ function UserProfiles() {
                     {profileData.results.length > 0 ? (
                         profileData.results.map((profile) => (
                             <Profile
-                                key={profile.id}
+                                key={profile.id} {...profile}
                                 id={profile.id}
                                 image={profile.image}
                                 owner={profile.owner}

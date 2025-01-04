@@ -27,6 +27,7 @@ const ProfileEditForm = () => {
   useEffect(() => {
     const handleMount = async () => {
       if (currentUser?.profile_id?.toString() === id) {
+        console.log("Current User ID:", currentUser?.profile_id, "URL ID:", id);
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
           const { bio, image } = data;

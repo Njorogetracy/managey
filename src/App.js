@@ -45,6 +45,7 @@ function App() {
           <Route exact path="/tasks/create" element={<TaskCreateForm />} />
           <Route exact path="/tasks/:id" element={<TaskPage />} />
           <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
+          <Route exact path="/profiles" element={<UserProfiles message="Oops! It seems there are no users by that name" />} />
           <Route exact path="/profiles/:id" element={<ProfilePage />} />
           <Route
             exact
@@ -60,13 +61,6 @@ function App() {
             exact
             path="/profiles/:id/edit"
             element={<ProfileEditForm />}
-          />
-          <Route
-            exact
-            path="/profiles"
-            element={
-              <UserProfiles message="Oops! It seems there are no users by that name" />
-            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
