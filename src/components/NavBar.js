@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { removeTokenTimestamp } from "../utils/utils";
 
 const NavBar = () => {
-  const currentUser = useCurrentUser();
+  const { currentUser, isLoadingUser } = useCurrentUser(); 
   const setCurrentUser = useSetCurrentUser();
   const { expanded, setExpanded, ref } = useClicksOutside();
 
