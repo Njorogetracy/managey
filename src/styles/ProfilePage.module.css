@@ -1,18 +1,78 @@
 .ProfileImage {
-    object-fit: cover;
-    height: 120px;
-    width: 120px;
-    margin: 4px;
+  object-fit: cover;
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.ProfileImage:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
 .hideHorizontalRule {
   display: none;
 }
 
-  
-  @media screen and (max-width: 991px) {
-    .ProfileImage {
-      width: 250px;
-      height: 250px;
-    }
+.bioContainer {
+  font-size: 1.1rem;
+  margin: 15px 0;
+  color: #555;
+}
+
+.profileTitle {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.profileSection {
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.createTaskButton {
+  background-color: #4caf50;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.createTaskButton:hover {
+  background-color: #45a049;
+}
+
+.scrollToTopButton {
+  border-radius: 50px;
+  padding: 10px 20px;
+}
+
+.backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+}
+
+@media screen and (max-width: 991px) {
+  .ProfileImage {
+    width: 200px;
+    height: 200px;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .bioContainer {
+    text-align: center;
+  }
+
+  .profileTitle {
+    font-size: 1.5rem;
+  }
+}

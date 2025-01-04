@@ -34,13 +34,13 @@ const UserPasswordForm = () => {
 
     /**Redirect users to previous page */
     const handleGoBack = () => {
-        navigate(location.state?.from || '/')
+        navigate(location.state?.from || '/profiles')
     }
 
     /**Validate user is owner, otherwise redirect to homepage */
     useEffect(() => {
         if (currentUser?.pk?.toString() !== id) {
-            navigate("/");
+            navigate("/tasks");
         }
     }, [currentUser, navigate, id]);
 

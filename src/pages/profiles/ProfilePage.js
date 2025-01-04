@@ -39,18 +39,6 @@ function ProfilePage() {
   const navigate = useNavigate();
   const currentUser = useCurrentUser();
 
-  // useEffect(() => {
-  //   console.log("Current User Context:", currentUser);
-  //   if (!id) {
-  //     console.log("Current User:", currentUser);
-  //     if (currentUser?.profile_id) {
-  //       navigate(`/profiles/${currentUser.profile_id}`);
-  //     } else {
-  //       navigate("/tasks");
-  //     }
-  //   }
-  // }, [id, currentUser, navigate]);
-
   /**handle scroll */
   const handleScroll = () => {
     if (window.scrollY > 300) {
@@ -72,59 +60,6 @@ function ProfilePage() {
 
   /** Fetch all data for profile, tasks and
   assigned to tasks from the API */
-
-  // useEffect(() => {
-  //     const fetchData = async () => {
-  //         try {
-  //             const [
-  //                 { data: pageProfile },
-  //                 { data: taskData },
-  //                 { data: tasksAssignedByCurrentUser }
-  //             ] = await Promise.all([
-  //                 axiosReq.get(`/profiles/${id}/`),
-  //                 axiosReq.get(`/tasks/?owner__profile=${id}`),
-  //                 axiosReq.get(`/tasks/?assigned_users=${id}`),
-  //             ])
-  //             setProfileData((prevState) => ({
-  //                 ...prevState,
-  //                 pageProfile: { results: [pageProfile] },
-  //             }));
-  //             setProfileTasks(taskData);
-  //             setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
-  //             setHasLoaded(true);
-  //         } catch (error) {
-  //             // console.log(error);
-  //         }
-  //     };
-  //     fetchData();
-  // }, [id, setProfileData]);
-  // useEffect(() => {
-  //   if (id) {
-  //     const fetchData = async () => {
-  //       try {
-  //         const [
-  //           { data: pageProfile },
-  //           { data: taskData },
-  //           { data: tasksAssignedByCurrentUser },
-  //         ] = await Promise.all([
-  //           axiosReq.get(`/profiles/${id}/`),
-  //           axiosReq.get(`/tasks/?owner__profile=${id}`),
-  //           axiosReq.get(`/tasks/?assigned_users=${id}`),
-  //         ]);
-  //         setProfileData((prevState) => ({
-  //           ...prevState,
-  //           pageProfile: { results: [pageProfile] },
-  //         }));
-  //         setProfileTasks(taskData);
-  //         setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
-  //         setHasLoaded(true);
-  //       } catch (error) {
-  //         console.error("Error fetching profile data:", error);
-  //       }
-  //     };
-  //     fetchData();
-  //   }
-  // }, [id, setProfileData]);
   useEffect(() => {
     console.log("Profile ID from URL:", id);
     if (!id || id === "undefined") {
@@ -132,11 +67,11 @@ function ProfilePage() {
       if (currentUser?.profile_id) {
         navigate(`/profiles/${currentUser.profile_id}`);
       } else {
-        navigate("/tasks"); 
+        navigate("/tasks");
       }
       return;
     }
-  
+
     const fetchData = async () => {
       try {
         const [
@@ -159,30 +94,31 @@ function ProfilePage() {
         console.error("Error fetching profile data:", error);
       }
     };
-  
+
     fetchData();
-  }, [id, currentUser, navigate, setProfileData]);  
+  }, [id, currentUser, navigate, setProfileData]);
 
   const mainProfile = (
     <>
-      <Row className="px-3 text-center align-items-center">
-        <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-lg-left">
-          <div className="d-flex flex-column align-items-center align-items-md-start">
+      <Row className="px-3 text-center align-items-center profileSection">
+        <Col xs={12} sm={4} className="d-flex justify-content-center">
+          <div className="d-flex flex-column align-items-center">
             <Avatar
               src={profile?.image}
-              height={150}
+              className="ProfileImage"
               roundedCircle
-              className="img-fluid mb-2"
             />
-            <h3 className="mb-0">{profile?.owner}</h3>
+            <h3 className="profileTitle">{profile?.owner}</h3>
           </div>
         </Col>
-        <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-center">
-          {profile?.bio && <p>{profile.bio}</p>}
+        <Col xs={12} sm={8} className="bioContainer text-center">
+          {profile?.bio ? <p>{profile.bio}</p> : <p>No bio available.</p>}
         </Col>
-        <Col xs={12} sm={4} md={4} lg={4} xl={4} className="text-right">
-          {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
-        </Col>
+        {profile?.is_owner && (
+          <Col xs={12} className="text-center mt-3">
+            <ProfileEditDropdown id={profile?.id} />
+          </Col>
+        )}
       </Row>
     </>
   );
@@ -208,9 +144,9 @@ function ProfilePage() {
         <Container className="text-center my-5">
           {currentUser?.username === profile?.owner ? (
             <>
-              <p>You have not created any tasks.</p>
+              <p>You have not created any tasks yet.</p>
               <Button
-                variant="primary"
+                className="createTaskButton"
                 onClick={() => navigate("/tasks/create")}
               >
                 Create Task
@@ -219,12 +155,11 @@ function ProfilePage() {
           ) : (
             <Asset
               src={NoResults}
-              message={`No results found, ${profile?.owner} has not created any tasks.`}
+              message={`No tasks found. ${profile?.owner} has not created any tasks.`}
             />
           )}
         </Container>
       )}
-      <hr className={styles.hideHorizontalRule} />
     </>
   );
 
