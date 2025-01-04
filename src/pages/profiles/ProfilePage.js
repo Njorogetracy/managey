@@ -39,17 +39,17 @@ function ProfilePage() {
   const navigate = useNavigate();
   const currentUser = useCurrentUser();
 
-  useEffect(() => {
-    console.log("Current User Context:", currentUser);
-    if (!id) {
-      console.log("Current User:", currentUser);
-      if (currentUser?.profile_id) {
-        navigate(`/profiles/${currentUser.profile_id}`);
-      } else {
-        navigate("/tasks");
-      }
-    }
-  }, [id, currentUser, navigate]);
+  // useEffect(() => {
+  //   console.log("Current User Context:", currentUser);
+  //   if (!id) {
+  //     console.log("Current User:", currentUser);
+  //     if (currentUser?.profile_id) {
+  //       navigate(`/profiles/${currentUser.profile_id}`);
+  //     } else {
+  //       navigate("/tasks");
+  //     }
+  //   }
+  // }, [id, currentUser, navigate]);
 
   /**handle scroll */
   const handleScroll = () => {
@@ -98,33 +98,70 @@ function ProfilePage() {
   //     };
   //     fetchData();
   // }, [id, setProfileData]);
+  // useEffect(() => {
+  //   if (id) {
+  //     const fetchData = async () => {
+  //       try {
+  //         const [
+  //           { data: pageProfile },
+  //           { data: taskData },
+  //           { data: tasksAssignedByCurrentUser },
+  //         ] = await Promise.all([
+  //           axiosReq.get(`/profiles/${id}/`),
+  //           axiosReq.get(`/tasks/?owner__profile=${id}`),
+  //           axiosReq.get(`/tasks/?assigned_users=${id}`),
+  //         ]);
+  //         setProfileData((prevState) => ({
+  //           ...prevState,
+  //           pageProfile: { results: [pageProfile] },
+  //         }));
+  //         setProfileTasks(taskData);
+  //         setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
+  //         setHasLoaded(true);
+  //       } catch (error) {
+  //         console.error("Error fetching profile data:", error);
+  //       }
+  //     };
+  //     fetchData();
+  //   }
+  // }, [id, setProfileData]);
   useEffect(() => {
-    if (id) {
-      const fetchData = async () => {
-        try {
-          const [
-            { data: pageProfile },
-            { data: taskData },
-            { data: tasksAssignedByCurrentUser },
-          ] = await Promise.all([
-            axiosReq.get(`/profiles/${id}/`),
-            axiosReq.get(`/tasks/?owner__profile=${id}`),
-            axiosReq.get(`/tasks/?assigned_users=${id}`),
-          ]);
-          setProfileData((prevState) => ({
-            ...prevState,
-            pageProfile: { results: [pageProfile] },
-          }));
-          setProfileTasks(taskData);
-          setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
-          setHasLoaded(true);
-        } catch (error) {
-          console.error("Error fetching profile data:", error);
-        }
-      };
-      fetchData();
+    console.log("Profile ID from URL:", id);
+    if (!id || id === "undefined") {
+      console.log("Redirecting to the current user's profile");
+      if (currentUser?.profile_id) {
+        navigate(`/profiles/${currentUser.profile_id}`);
+      } else {
+        navigate("/tasks"); 
+      }
+      return;
     }
-  }, [id, setProfileData]);
+  
+    const fetchData = async () => {
+      try {
+        const [
+          { data: pageProfile },
+          { data: taskData },
+          { data: tasksAssignedByCurrentUser },
+        ] = await Promise.all([
+          axiosReq.get(`/profiles/${id}/`),
+          axiosReq.get(`/tasks/?owner__profile=${id}`),
+          axiosReq.get(`/tasks/?assigned_users=${id}`),
+        ]);
+        setProfileData((prevState) => ({
+          ...prevState,
+          pageProfile: { results: [pageProfile] },
+        }));
+        setProfileTasks(taskData);
+        setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
+        setHasLoaded(true);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [id, currentUser, navigate, setProfileData]);  
 
   const mainProfile = (
     <>

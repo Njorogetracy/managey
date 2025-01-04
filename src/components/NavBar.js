@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { removeTokenTimestamp } from "../utils/utils";
 
 const NavBar = () => {
-  const currentUser = useCurrentUser(); 
+  const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const { expanded, setExpanded, ref } = useClicksOutside();
 
@@ -52,9 +52,22 @@ const NavBar = () => {
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fa-solid fa-sign-out-alt"></i> Logout
       </NavLink>
-      <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
-      console.log("Current User Profile ID:", currentUser?.profile_id);
+      {/* <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
         <Avatar src={currentUser?.profile_image} text={currentUser?.username} height={40} />
+      </NavLink> */}
+      <NavLink
+        className={styles.NavLink}
+        to={
+          currentUser?.profile_id
+            ? `/profiles/${currentUser.profile_id}`
+            : "/profiles"
+        }
+      >
+        <Avatar
+          src={currentUser?.profile_image}
+          text={currentUser?.username || ""}
+          height={40}
+        />
       </NavLink>
     </>
   );
