@@ -39,7 +39,7 @@ const UserPasswordForm = () => {
 
     /**Validate user is owner, otherwise redirect to homepage */
     useEffect(() => {
-        if (currentUser?.profile_id?.toString() !== id) {
+        if (currentUser?.pk?.toString() !== id) {
             navigate("/");
         }
     }, [currentUser, navigate, id]);

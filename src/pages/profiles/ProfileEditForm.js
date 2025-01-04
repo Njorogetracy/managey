@@ -50,9 +50,10 @@ const ProfileEditForm = () => {
 
   // Handle change to profiledata
   const handleChange = (e) => {
-    setProfileData({
+    setProfileData((prevData) => ({
+      ...prevData,
       [e.target.name]: e.target.value,
-    })
+    }));
   }
 
   const handleSubmit = async (event) => {

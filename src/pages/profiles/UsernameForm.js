@@ -21,7 +21,7 @@ const UsernameForm = () => {
 
     /**Fetch currrent user username */
     useEffect(() => {
-        if (currentUser?.profile_id?.toString() === id) {
+        if (currentUser?.pk?.toString() === id) {
             setUsername(currentUser.username);
         } else {
             navigate('/')
