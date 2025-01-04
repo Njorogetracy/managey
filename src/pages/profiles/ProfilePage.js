@@ -23,9 +23,9 @@ import styles from "../../styles/ProfilePage.module.css";
  * the assigned users tasks
  */
 function ProfilePage() {
-  const [hasLoaded, setHasLoaded] = useState(false);
   const { id } = useParams();
   console.log("Profile ID from URL:", id);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const setProfileData = useSetProfileData();
   const [profileTasks, setProfileTasks] = useState({ results: [], next: null });
   const { pageProfile = { results: [] } } = useProfileData();
