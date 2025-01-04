@@ -31,7 +31,7 @@ const ProfileEditForm = () => {
       }
   
       console.log("Current User ID:", currentUser?.profile_id, "URL ID:", id);
-      if (currentUser?.profile_id?.toString() === id) {
+      if (currentUser?.pk?.toString() === id) {
         console.log("Current User ID:", currentUser?.profile_id, "URL ID:", id);
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
