@@ -43,7 +43,9 @@ export const ProfileDataProvider = ({ children }) => {
           }
         };
       
-        handleMount();
+        if (currentUser) {
+          handleMount();
+        }
       }, [currentUser]);
       
       

@@ -46,7 +46,7 @@ const ProfileEditForm = () => {
       }
     }
     handleMount();
-  }, [currentUser, navigate, id])
+  }, [currentUser, id, navigate])
 
   // Handle change to profiledata
   const handleChange = (e) => {

@@ -13,6 +13,8 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+    console.log("Current User:", currentUser);
+    console.log("Profile ID in Current User:", currentUser?.profile_id);
     const navigate = useNavigate();
 
     /*
