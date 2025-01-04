@@ -26,6 +26,11 @@ const ProfileEditForm = () => {
 
   useEffect(() => {
     const handleMount = async () => {
+      if (!currentUser) {
+        return;
+      }
+  
+      console.log("Current User ID:", currentUser?.profile_id, "URL ID:", id);
       if (currentUser?.profile_id?.toString() === id) {
         console.log("Current User ID:", currentUser?.profile_id, "URL ID:", id);
         try {
@@ -34,10 +39,10 @@ const ProfileEditForm = () => {
           setProfileData({ bio, image })
         } catch (error) {
           // console.log(error)
-          navigate('/')
+          navigate('/tasks')
         }
       } else {
-        navigate('/')
+        navigate('/tasks')
       }
     }
     handleMount();
