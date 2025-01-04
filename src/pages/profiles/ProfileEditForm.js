@@ -67,6 +67,7 @@ const ProfileEditForm = () => {
     try {
       const { data } = await axiosReq.put(`/profiles/${id}/`, formData);
       setProfileData(data)
+      navigate(`/profiles/${id}`);
     } catch (err) {
       // console.log(err);
       setErrors(err.response?.data);
@@ -91,10 +92,10 @@ const ProfileEditForm = () => {
           {message}
         </Alert>
       ))}
-      <Button className={`${btnStyles.Button} ${btnStyles.Secondary}`} onClick={() => navigate('/')}>
+      <Button className={`${btnStyles.Button} ${btnStyles.Secondary}`} onClick={() => navigate('/tasks')}>
         Cancel
       </Button>
-      <Button className={btnStyles.Button} type="submit" onClick={() => navigate(`/profiles/${id}`)} >Save</Button>
+      <Button className={btnStyles.Button} type="submit" >Save</Button>
     </>
   );
 
