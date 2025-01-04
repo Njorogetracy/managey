@@ -30,7 +30,7 @@ export const CurrentUserProvider = ({ children }) => {
                 console.log("Before setCurrentUser:", currentUser);
                 setCurrentUser({
                     ...data,
-                    profile_id: data.profile_id || data.id,
+                    profile_id: data.profile_id || data.pk,
                   });
                 console.log("After setCurrentUser:", data);  
             } catch (error) {
