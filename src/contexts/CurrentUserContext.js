@@ -24,7 +24,10 @@ export const CurrentUserProvider = ({ children }) => {
                 `Token ${localStorage.getItem('authToken')}`;
             try {
                 const { data } = await axiosRes.get("/dj-rest-auth/user/")
-                setCurrentUser(data)
+                setCurrentUser({
+                    ...data,
+                    profile_id: data.profile_id || data.id,
+                  });
             } catch (error) {
                 // console.log(error)
             }

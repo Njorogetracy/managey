@@ -25,6 +25,7 @@ import styles from "../../styles/ProfilePage.module.css";
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const { id } = useParams();
+  console.log("Profile ID from URL:", id);
   const setProfileData = useSetProfileData();
   const [profileTasks, setProfileTasks] = useState({ results: [], next: null });
   const { pageProfile = { results: [] } } = useProfileData();
@@ -38,6 +39,7 @@ function ProfilePage() {
   const currentUser = useCurrentUser();
 
   useEffect(() => {
+    console.log("Current User Context:", currentUser);
     if (!id) {
       console.log("Current User:", currentUser);
       if (currentUser?.profile_id) {
@@ -117,7 +119,6 @@ function ProfilePage() {
           setHasLoaded(true);
         } catch (error) {
           console.error("Error fetching profile data:", error);
-          toast.error("Unable to load profile. Please try again.");
         }
       };
       fetchData();
