@@ -32,6 +32,12 @@ function ProfilePage() {
     const navigate = useNavigate();
     const currentUser = useCurrentUser();
 
+    useEffect(() => {
+        if (!id) {
+          navigate("/profiles");
+        }
+      }, [id, navigate]);
+
     /**handle scroll */
     const handleScroll = () => {
         if (window.scrollY > 300) {

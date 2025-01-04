@@ -68,7 +68,7 @@ function TasksList({ filter = "" }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               type="text"
-              placeholder="Search tasks"
+              placeholder="Search user"
               className="me-2"
             />
             <Button variant="primary" onClick={() => setQuery('')}>
