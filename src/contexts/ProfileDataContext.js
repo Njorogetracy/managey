@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCurrentUser } from "./CurrentUserContext";
 import { axiosReq } from "../api/axiosDefaults";
+import { toast } from "react-toastify";
 
 const ProfileDataContext = createContext();
 const SetProfileDataContext = createContext();

@@ -13,7 +13,6 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
-    const [isLoadingUser, setIsLoadingUser] = useState(true)
     const navigate = useNavigate();
 
     /*
@@ -31,9 +30,7 @@ export const CurrentUserProvider = ({ children }) => {
                   });
             } catch (error) {
                 // console.log(error)
-            } finally {
-                setIsLoadingUser(false);
-            }
+            } 
         }
     };
 
@@ -121,7 +118,7 @@ export const CurrentUserProvider = ({ children }) => {
     }, [navigate])
 
     return (
-        <CurrentUserContext.Provider value={{ currentUser, isLoadingUser }}>
+        <CurrentUserContext.Provider value={currentUser}>
             <SetCurrentUserContext.Provider value={setCurrentUser}>
                 {children}
             </SetCurrentUserContext.Provider>
