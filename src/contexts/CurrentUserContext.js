@@ -27,58 +27,32 @@ export const CurrentUserProvider = ({ children }) => {
             try {
                 const { data } = await axiosRes.get("/dj-rest-auth/user/")
                 console.log("User API Response:", data);
+                console.log("Before setCurrentUser:", currentUser);
                 setCurrentUser({
                     ...data,
                     profile_id: data.profile_id || data.id,
                   });
+                console.log("After setCurrentUser:", data);  
             } catch (error) {
                 // console.log(error)
             } 
         }
     };
 
-    // const handleMount = async () => {
-    //     try {
-    //         const { data } = await axiosRes.get("/dj-rest-auth/user/")
-    //         console.log("data", data)
-    //         setCurrentUser(data)
-    //     } catch (error) {
-    //         // console.log(error)
-    //     }
-    // };
-
     useEffect(() => {
         handleMount()
     }, []);
+
+    useEffect(() => {
+        console.log("CurrentUser state changed:", currentUser);
+    }, [currentUser]);
+      
 
     /* 
     Handles access tokens
     Redirects user to login page if refreshing of token fails
   */
     useMemo(() => {
-        // axiosReq.interceptors.request.use(
-        //     async (config) => {
-        //         if (shouldRefreshToken){
-        //             try {
-        //                 await axios.post("/dj-rest-auth/token/refresh/");
-        //             } catch (err) {
-        //                 setCurrentUser((prevCurrentUser) => {
-        //                     if (prevCurrentUser) {
-        //                         navigate("/login");
-        //                     }
-        //                     return null;
-        //                 });
-        //                 removeTokenTimestamp()
-        //                 return config;
-        //             }
-        //         }
-                
-        //         return config;
-        //     },
-        //     (err) => {
-        //         return Promise.reject(err);
-        //     }
-        // )
         axiosReq.interceptors.request.use(
             async (config) => {
               if (shouldRefreshToken()) {
