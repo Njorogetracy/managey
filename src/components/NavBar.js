@@ -3,7 +3,10 @@ import { NavLink } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import managey from "../assets/managey.png";
 import styles from "../styles/NavBar.module.css";
-import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
+import {
+  useCurrentUser,
+  useSetCurrentUser,
+} from "../contexts/CurrentUserContext";
 import Avatar from "./Avatar";
 import axios from "axios";
 import useClicksOutside from "../hooks/useClicksOutside";
@@ -34,10 +37,6 @@ const NavBar = () => {
     }
   };
 
-  const profileLink = currentUser?.profile_id
-    ? `/profiles/${currentUser.profile_id}`
-    : "/profiles";
-
   // navigation links for logged-in users
   const loggedInIcons = (
     <>
@@ -56,8 +55,22 @@ const NavBar = () => {
       {/* <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
         <Avatar src={currentUser?.profile_image} text={currentUser?.username} height={40} />
       </NavLink> */}
-      <NavLink className={styles.NavLink} to={profileLink}>
-        <Avatar src={currentUser?.profile_image} text={currentUser?.username || "Profile"} height={40} />
+      <NavLink
+        className={styles.NavLink}
+        to={
+          currentUser?.profile_id ? `/profiles/${currentUser.profile_id}` : "/"
+        }
+        onClick={() => {
+          if (!currentUser?.profile_id) {
+            toast.error("Your profile ID is missing. Please try reloading.");
+          }
+        }}
+      >
+        <Avatar
+          src={currentUser?.profile_image}
+          text={currentUser?.username}
+          height={40}
+        />
       </NavLink>
     </>
   );
@@ -75,11 +88,21 @@ const NavBar = () => {
   );
 
   return (
-    <Navbar expanded={expanded} className={`${styles.NavBar} shadow-sm`} expand="md" fixed="top">
+    <Navbar
+      expanded={expanded}
+      className={`${styles.NavBar} shadow-sm`}
+      expand="md"
+      fixed="top"
+    >
       <Container>
         <NavLink to={currentUser ? "/tasks/" : "/"}>
           <Navbar.Brand className={styles.Brand}>
-            <img src={managey} alt="Managey Logo" height="50" className={styles.BrandLogo} />
+            <img
+              src={managey}
+              alt="Managey Logo"
+              height="50"
+              className={styles.BrandLogo}
+            />
             <span className={styles.BrandText}>Managey</span>
           </Navbar.Brand>
         </NavLink>
@@ -89,7 +112,9 @@ const NavBar = () => {
           aria-controls="basic-navbar-nav"
         />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto text-center">{currentUser ? loggedInIcons : loggedOutIcons}</Nav>
+          <Nav className="ms-auto text-center">
+            {currentUser ? loggedInIcons : loggedOutIcons}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

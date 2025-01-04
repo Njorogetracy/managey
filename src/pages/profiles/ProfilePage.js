@@ -34,9 +34,14 @@ function ProfilePage() {
 
     useEffect(() => {
         if (!id) {
-          navigate("/profiles");
+          // If no ID is found, navigate to the logged-in user's profile or home page
+          if (currentUser?.profile_id) {
+            navigate(`/profiles/${currentUser.profile_id}`);
+          } else {
+            navigate("/");
+          }
         }
-      }, [id, navigate]);
+      }, [id, currentUser, navigate]);      
 
     /**handle scroll */
     const handleScroll = () => {

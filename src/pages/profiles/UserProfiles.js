@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { axiosReq } from '../../api/axiosDefaults';
 import listStyles from '../../styles/TaskListPage.module.css';
 import { Form, Container } from 'react-bootstrap';
@@ -8,27 +8,26 @@ import NoResults from '../../assets/no-results.png';
 import Profile from './Profile';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
-/**Funvtion handles fetching all user profiles and user data */
+/**Function handles fetching all user profiles and user data */
 function UserProfiles() {
-    const [profileData, setProfileData] = useState({ results: [] })
+    const [profileData, setProfileData] = useState({ results: [] });
     const [searchUser, setSearchUser] = useState("");
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
     const currentUser = useCurrentUser();
 
-
     /**Fetch all user profiles */
     useEffect(() => {
         const fetchProfiles = async () => {
             try {
-                const { data } = await axiosReq.get(`/profiles/?search=${searchUser}`)
-                setProfileData(data)
-                setHasLoaded(true)
+                const { data } = await axiosReq.get(`/profiles/?search=${searchUser}`);
+                setProfileData(data);
+                setHasLoaded(true);
             } catch (error) {
-                console.error(error)
+                console.error(error);
                 setProfileData([]);
             }
-        }
+        };
         setHasLoaded(false);
         const timer = setTimeout(() => {
             fetchProfiles();
@@ -36,9 +35,7 @@ function UserProfiles() {
         return () => {
             clearTimeout(timer);
         };
-    }, [searchUser, pathname])
-
-    const filteredProfiles = profileData.results.filter(profile => profile.owner !== currentUser?.username);
+    }, [searchUser, pathname]);
 
     return (
         <div>
@@ -56,21 +53,19 @@ function UserProfiles() {
                     aria-label="Search bar"
                 />
             </Form>
-            {/* Display list of user profiles */}
 
+            {/* Display list of user profiles */}
             {hasLoaded ? (
                 <>
-                    {filteredProfiles.length > 0 ? (
-                        filteredProfiles.map(profile => (
+                    {profileData.results.length > 0 ? (
+                        profileData.results.map((profile) => (
                             <Profile
-                                    key={profile.id}
-                                    {...profileData}
-                                    setProfileData={setProfileData}
-                                    id={profile.id}
-                                    image={profile.image}
-                                    owner={profile.owner}
-                                    imageSize={55}
-                                />
+                                key={profile.id}
+                                id={profile.id}
+                                image={profile.image}
+                                owner={profile.owner}
+                                imageSize={55}
+                            />
                         ))
                     ) : (
                         <Container className="text-center my-5">
@@ -83,9 +78,8 @@ function UserProfiles() {
                     <Asset spinner />
                 </Container>
             )}
-
         </div>
-    )
+    );
 }
 
-export default UserProfiles
+export default UserProfiles;
