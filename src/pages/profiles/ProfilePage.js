@@ -25,6 +25,7 @@ import styles from "../../styles/ProfilePage.module.css";
 function ProfilePage() {
   const { id } = useParams();
   console.log("Profile ID from URL:", id);
+  console.log("URL Params:", useParams());
   const [hasLoaded, setHasLoaded] = useState(false);
   const setProfileData = useSetProfileData();
   const [profileTasks, setProfileTasks] = useState({ results: [], next: null });
