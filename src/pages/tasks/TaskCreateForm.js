@@ -143,8 +143,7 @@ function TaskCreateForm() {
     try {
       await axiosReq.post("/tasks/", formData, {
         headers: { "Content-Type": "multipart/form-data",
-          "X-CSRFToken": getCsrfToken(),
-         },
+        },
       });
       toast.success("Task created successfully", {
         position: "top-right",

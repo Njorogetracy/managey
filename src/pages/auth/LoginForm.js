@@ -44,6 +44,7 @@ function LoginForm() {
     
       try {
         const { data } = await axios.post("/dj-rest-auth/login/", loginData);
+        document.cookie.includes("csrftoken") || alert("CSRF token not set yet");
         if (data.key) {
           localStorage.setItem("authToken", data.key);
           axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
