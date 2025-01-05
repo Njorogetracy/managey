@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
 
   // If user is not logged in, redirect to login page
   if (!currentUser) {
-    return <Navigate to="/login" state={{ from: location }}/>;
+    return <Navigate to="/login"/>;
   }
 
   return children;
