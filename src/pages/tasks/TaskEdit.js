@@ -174,7 +174,9 @@ function TaskEdit() {
 
     try {
       await axiosReq.put(`/tasks/${id}/`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data",
+          "X-CSRFToken": getCsrfToken(),
+         },
       });
       toast.success("Task updated successfully", {
         position: "top-right",
