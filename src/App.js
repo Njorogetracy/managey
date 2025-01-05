@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
+import PrivateRoute from "./components/PrivateRoute"; 
 import { Container } from "react-bootstrap";
 import SignUpForm from "./pages/auth/SignUpForm";
 import LoginForm from "./pages/auth/LoginForm";
@@ -31,36 +32,82 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/login" element={<LoginForm />} />
-          {!currentUser && (
-            <>
-              <Route exact path="/signup" element={<SignUpForm />} />
-              <Route exact path="/login" element={<LoginForm />} />
-            </>
-          )}
-          <Route exact path="/tasks" element={
-            <TasksList
-              message='No results found adjust search keyword'
-              filter={`owner__username=${profile_id}&`}
-            />} />
-          <Route exact path="/tasks/create" element={<TaskCreateForm />} />
-          <Route exact path="/tasks/:id" element={<TaskPage />} />
-          <Route exact path="/tasks/:id/edit" element={<TaskEdit />} />
-          <Route exact path="/profiles" element={<UserProfiles message="Oops! It seems there are no users by that name" />} />
-          <Route exact path="/profiles/:id" element={<ProfilePage />} />
+
+          {/* Protected Routes */}
           <Route
-            exact
+            path="/tasks"
+            element={
+              <PrivateRoute>
+                <TasksList
+                  message="No results found adjust search keyword"
+                  filter={`owner__username=${profile_id}&`}
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/tasks/create"
+            element={
+              <PrivateRoute>
+                <TaskCreateForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/tasks/:id"
+            element={
+              <PrivateRoute>
+                <TaskPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/tasks/:id/edit"
+            element={
+              <PrivateRoute>
+                <TaskEdit />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profiles"
+            element={
+              <PrivateRoute>
+                <UserProfiles message="Oops! It seems there are no users by that name" />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profiles/:id"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/profiles/:id/edit/username"
-            element={<UsernameForm />}
+            element={
+              <PrivateRoute>
+                <UsernameForm />
+              </PrivateRoute>
+            }
           />
           <Route
-            exact
             path="/profiles/:id/edit/password"
-            element={<UserPasswordForm />}
+            element={
+              <PrivateRoute>
+                <UserPasswordForm />
+              </PrivateRoute>
+            }
           />
           <Route
-            exact
             path="/profiles/:id/edit"
-            element={<ProfileEditForm />}
+            element={
+              <PrivateRoute>
+                <ProfileEditForm />
+              </PrivateRoute>
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

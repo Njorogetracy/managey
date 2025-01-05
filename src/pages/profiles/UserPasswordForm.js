@@ -34,7 +34,7 @@ const UserPasswordForm = () => {
 
     /**Redirect users to previous page */
     const handleGoBack = () => {
-        navigate(location.state?.from || '/profiles')
+        navigate(location.state?.from || '/tasks')
     }
 
     /**Validate user is owner, otherwise redirect to homepage */
@@ -52,7 +52,7 @@ const UserPasswordForm = () => {
                 position: 'top-right',
                 autoClose: 3000,
             });
-            navigate("/");
+            navigate("/tasks");
         } catch (err) {
             // console.log(err);
             setErrors(err.response?.data);
