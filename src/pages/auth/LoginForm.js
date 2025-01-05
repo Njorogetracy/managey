@@ -13,18 +13,6 @@ import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserCon
 import { toast } from "react-toastify";
 import { setTokenTimestamp } from "../../utils/utils";
 
-const silentRequest = async (config) => {
-  try {
-    const response = await axios(config);
-    return response;
-  } catch (error) {
-    if (error.response?.status !== 400) {
-      console.error(error);
-    }
-    return Promise.reject(error); 
-  }
-};
-
 /**Handles user login */
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
@@ -47,62 +35,22 @@ function LoginForm() {
             [e.target.name]: e.target.value,
         });
     }
-
-    /** Handles form submit for Login page */ 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const { data } = await axios.post('/dj-rest-auth/login/', loginData);
-    //         if (data.key) {
-    //             localStorage.setItem('authToken', data.key);
-    //             axios.defaults.headers.common['Authorization'] = `Token ${data.key}`;
-
-    //             const userRes = await axios.get('/dj-rest-auth/user/');
-    //             setCurrentUser(userRes.data);
-                
-    //             setTokenTimestamp(data);
-    //             toast.success("Login successful", {
-    //                 position: 'top-right',
-    //                 autoClose: 3000,
-    //             });
-    //             navigate('/tasks');
-    //         } else {
-    //             throw new Error('No authentication token received');
-    //         }
-    //     } catch (err) {
-    //         console.error('Login error:', err);
-    //         setErrors(err.response?.data || {});
-    //         toast.error(err.response?.data?.non_field_errors?.[0] || "Login failed. Please try again.");        
-    //     }
-    // };
     
     /** Handles form submit for Login page */
     const handleSubmit = async (e) => {
       e.preventDefault();
-
-      // Client-side validation
-      if (!username.trim() || !password.trim()) {
-        setErrors({
-          username: !username.trim() ? ["Username is required."] : [],
-          password: !password.trim() ? ["Password is required."] : [],
-        });
-        toast.error("Please fill in all required fields.");
-        return;
-      }
-
+    
+      // Client-side validation (keep this part as is)
+    
       try {
-        const { data } = await silentRequest({
-          method: "POST",
-          url: "/dj-rest-auth/login/",
-          data: loginData,
-        });
+        const { data } = await axios.post("/dj-rest-auth/login/", loginData);
         if (data.key) {
           localStorage.setItem("authToken", data.key);
           axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
-
+    
           const userRes = await axios.get("/dj-rest-auth/user/");
           setCurrentUser(userRes.data);
-
+    
           setTokenTimestamp(data);
           toast.success("Login successful", {
             position: "top-right",
@@ -113,17 +61,13 @@ function LoginForm() {
           throw new Error("No authentication token received");
         }
       } catch (err) {
-        if (process.env.NODE_ENV === "development") {
-          console.log("%cLogin failed: 400 Bad Request", "color: orange; font-weight: bold");
-        }
-
         setErrors(err.response?.data || {});
         toast.error(
           err.response?.data?.non_field_errors?.[0] ||
             "Login failed. Please check your username and password."
         );
       }
-    };
+    };    
 
 
     // Redirect if user is already logged in

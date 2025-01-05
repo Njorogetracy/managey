@@ -24,17 +24,17 @@ function TasksList({ filter = "" }) {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const { data } = await axiosReq.get(`/tasks/?${filter}search=${query}`);
+        const { data } = await axiosReq.get(`/tasks/?${filter}&ordering=-created_at`);
         setTasks(data);
         setHasLoaded(true);
       } catch (error) {
-        console.error("Error fetching tasks", error);
+        // console.error("Error fetching tasks", error);
       }
     };
     setHasLoaded(false);
     const timer = setTimeout(() => {
       fetchTasks();
-    }, 500); // Reduced delay for faster feedback
+    }, 500);
     return () => clearTimeout(timer);
   }, [filter, query, pathname]);
 
@@ -60,21 +60,7 @@ function TasksList({ filter = "" }) {
     <Container className={`${listStyles.listPage} py-4`}>
       <Row className="justify-content-between align-items-center">
         <Col md={6}>
-          <h2 className="text-primary">Welcome, {currentUser?.username}!</h2>
-        </Col>
-        <Col md={6}>
-          <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
-            <Form.Control
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              type="text"
-              placeholder="Search user"
-              className="me-2"
-            />
-            <Button variant="primary" onClick={() => setQuery('')}>
-              Clear
-            </Button>
-          </Form>
+          <h2 className="text-primary">Welcome {currentUser?.username}</h2>
         </Col>
       </Row>
 

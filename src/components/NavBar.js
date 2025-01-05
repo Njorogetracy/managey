@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import managey from "../assets/managey.png";
 import styles from "../styles/NavBar.module.css";
@@ -16,6 +16,7 @@ import { removeTokenTimestamp } from "../utils/utils";
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
+  const navigate = useNavigate();
   const { expanded, setExpanded, ref } = useClicksOutside();
 
   /**Handles user logout and redirects to landing page */
@@ -24,10 +25,13 @@ const NavBar = () => {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       removeTokenTimestamp();
+      localStorage.removeItem('authToken');
+    delete axios.defaults.headers.common['Authorization'];
       toast.success("Logout successful", {
         position: "top-right",
         autoClose: 3000,
       });
+      navigate("/signup"); 
     } catch (error) {
       console.error(error);
       toast.error("Logout failed. Please try again.", {
@@ -52,9 +56,6 @@ const NavBar = () => {
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fa-solid fa-sign-out-alt"></i> Logout
       </NavLink>
-      {/* <NavLink className={styles.NavLink} to={`/profiles/${currentUser?.profile_id}`}>
-        <Avatar src={currentUser?.profile_image} text={currentUser?.username} height={40} />
-      </NavLink> */}
       <NavLink
         className={styles.NavLink}
         to={

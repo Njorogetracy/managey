@@ -27,7 +27,6 @@ export const ProfileDataProvider = ({ children }) => {
           if (currentUser) {
             try {
               const { data } = await axiosReq.get("/profiles/?ordering=tasks_count");
-              console.log("Profiles fetched:", data.results);
               setProfileData((prevState) => ({
                 ...prevState,
                 listProfiles: data,
@@ -47,26 +46,6 @@ export const ProfileDataProvider = ({ children }) => {
           handleMount();
         }
       }, [currentUser]);
-      
-      
-    // useEffect(() => {
-    //     const handleMount = async () => {
-    //         try {
-    //             const { data } = await axiosReq.get(
-    //                 "/profiles/?ordering=tasks_count"
-    //             );
-    //             setProfileData((prevState) => ({
-    //                 ...prevState,
-    //                 listProfiles: data,
-    //             }));
-    //         } catch (error) {
-    //             // console.log(error);
-    //         }
-    //     };
-
-    //     handleMount();
-    // }, [currentUser]);
-
 
     return (
         <ProfileDataContext.Provider value={profileData}>

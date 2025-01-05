@@ -104,7 +104,7 @@ function TaskCreateForm() {
 
   /** Redirect to previous page */
   const handleGoBack = () => {
-    navigate(location.state?.from || "/");
+    navigate(location.state?.from || "/tasks/");
   };
 
   /** Handle form submission */

@@ -24,8 +24,6 @@ import styles from "../../styles/ProfilePage.module.css";
  */
 function ProfilePage() {
   const { id } = useParams();
-  console.log("Profile ID from URL:", id);
-  console.log("URL Params:", useParams());
   const [hasLoaded, setHasLoaded] = useState(false);
   const setProfileData = useSetProfileData();
   const [profileTasks, setProfileTasks] = useState({ results: [], next: null });
@@ -61,9 +59,8 @@ function ProfilePage() {
   /** Fetch all data for profile, tasks and
   assigned to tasks from the API */
   useEffect(() => {
-    console.log("Profile ID from URL:", id);
     if (!id || id === "undefined") {
-      console.log("Redirecting to the current user's profile");
+      // console.log("Redirecting to the current user's profile");
       if (currentUser?.profile_id) {
         navigate(`/profiles/${currentUser.profile_id}`);
       } else {
@@ -91,7 +88,7 @@ function ProfilePage() {
         setTasksAssignedByCurrentUser(tasksAssignedByCurrentUser);
         setHasLoaded(true);
       } catch (error) {
-        console.error("Error fetching profile data:", error);
+        // console.error("Error fetching profile data:", error);
       }
     };
 

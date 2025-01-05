@@ -10,7 +10,7 @@ function LandingPage() {
         <Col className="p-4">
           <h1 className="mb-4 display-4 text-primary font-weight-bold">Welcome to Managey</h1>
           <p className="mb-4 text-muted fs-5">
-            Organize your tasks efficiently with our powerful task management tool.
+            Organize your tasks efficiently with our task management tool.
           </p>
           <div className="d-flex justify-content-center gap-3">
             <Link to="/login">

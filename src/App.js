@@ -40,7 +40,6 @@ function App() {
               <PrivateRoute>
                 <TasksList
                   message="No results found adjust search keyword"
-                  filter={`owner__username=${profile_id}&`}
                 />
               </PrivateRoute>
             }

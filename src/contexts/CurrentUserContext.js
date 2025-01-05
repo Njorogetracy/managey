@@ -13,8 +13,6 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
-    console.log("Current User:", currentUser);
-    console.log("Profile ID in Current User:", currentUser?.profile_id);
     const navigate = useNavigate();
 
     /*
@@ -26,13 +24,10 @@ export const CurrentUserProvider = ({ children }) => {
                 `Token ${localStorage.getItem('authToken')}`;
             try {
                 const { data } = await axiosRes.get("/dj-rest-auth/user/")
-                console.log("User API Response:", data);
-                console.log("Before setCurrentUser:", currentUser);
                 setCurrentUser({
                     ...data,
                     profile_id: data.profile_id || data.pk,
-                  });
-                console.log("After setCurrentUser:", data);  
+                  }); 
             } catch (error) {
                 // console.log(error)
             } 
@@ -42,10 +37,6 @@ export const CurrentUserProvider = ({ children }) => {
     useEffect(() => {
         handleMount()
     }, []);
-
-    useEffect(() => {
-        console.log("CurrentUser state changed:", currentUser);
-    }, [currentUser]);
       
 
     /* 

@@ -32,16 +32,6 @@ const SignUpForm = () => {
     }
 
     /** Handles form submit for Signup page */
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     try {
-    //         await axios.post("/dj-rest-auth/registration/", signUpData);
-    //         setShowModal(true);
-    //     } catch (err) {
-    //         setErrors(err.response?.data);
-    //     }
-    // };
-    /** Handles form submit for Signup page */
     const handleSubmit = async (event) => {
       event.preventDefault();
 

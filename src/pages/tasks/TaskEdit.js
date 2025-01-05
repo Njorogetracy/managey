@@ -87,7 +87,7 @@ function TaskEdit() {
         setAssignedUsers(assigned_users.map((user) => user.id));
       } catch (error) {
         toast.error("Error loading task data.");
-        navigate("/");
+        navigate("/tasks");
       }
     };
 
@@ -116,11 +116,10 @@ function TaskEdit() {
 
   /** Handle assigned users change */
   const handleChangeUser = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, (option) =>
-      parseInt(option.value, 10)
-    );
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) => parseInt(option.value, 10));
     setAssignedUsers(selectedOptions);
   };
+  
 
   /** Handle priority and state selection */
   const handlePriorityChange = (selectedOption) =>
@@ -224,14 +223,23 @@ function TaskEdit() {
 
       <Form.Group className="mb-4">
         <Form.Label>Assigned Users</Form.Label>
-        <Form.Control as="select" multiple onChange={handleChangeUser}>
+        <Form.Control
+          as="select"
+          multiple
+          onChange={handleChangeUser}
+          value={assignedUsers}
+        >
           {users.map((user) => (
-            <option key={user.id} value={user.id} selected={assignedUsers.includes(user.id)}>
+            <option key={user.id} value={user.id}>
               {user.owner}
             </option>
           ))}
         </Form.Control>
-        {errors.assigned_users?.map((message, idx) => <Alert key={idx} variant='danger'>{message}</Alert>)}
+        {errors.assigned_users?.map((message, idx) => (
+          <Alert key={idx} variant="danger">
+            {message}
+          </Alert>
+        ))}
       </Form.Group>
 
       <Form.Group className="mb-4">
