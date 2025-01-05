@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Base Axios configurations
 axios.defaults.baseURL = 'https://manageydrf-8a469d59154b.herokuapp.com/';
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 axios.defaults.withCredentials = true;
@@ -17,17 +16,19 @@ export const axiosRes = axios.create({
 
 // Function to get CSRF token from cookies
 const getCSRFToken = () => {
-  const csrfCookie = document.cookie.split('; ').find((row) => row.startsWith('csrftoken'));
-  return csrfCookie ? csrfCookie.split('=')[1] : null;
+  const csrfToken = document.cookie.split("; ")
+    .find(row => row.startsWith("csrftoken"))
+    ?.split("=")[1];
+  return csrfToken;
 };
 
-// Interceptor to include CSRF token in requests
+// Add CSRF token to request headers if available
 axiosReq.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken');
   const csrfToken = getCSRFToken();
-  const authToken = localStorage.getItem('authToken');
-
-  if (authToken) {
-    config.headers['Authorization'] = `Token ${authToken}`;
+  
+  if (token) {
+    config.headers['Authorization'] = `Token ${token}`;
   }
 
   if (csrfToken) {
@@ -40,11 +41,11 @@ axiosReq.interceptors.request.use((config) => {
 });
 
 axiosRes.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken');
   const csrfToken = getCSRFToken();
-  const authToken = localStorage.getItem('authToken'); 
-
-  if (authToken) {
-    config.headers['Authorization'] = `Token ${authToken}`;
+  
+  if (token) {
+    config.headers['Authorization'] = `Token ${token}`;
   }
 
   if (csrfToken) {

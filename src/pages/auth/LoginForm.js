@@ -40,7 +40,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
       e.preventDefault();
     
-      // Client-side validation (keep this part as is)
+      // Client-side validation
     
       try {
         const { data } = await axios.post("/dj-rest-auth/login/", loginData);
