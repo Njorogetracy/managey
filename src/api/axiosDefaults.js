@@ -14,27 +14,11 @@ export const axiosRes = axios.create({
   withCredentials: true,
 });
 
-// Function to get CSRF token from cookies
-const getCSRFToken = () => {
-  const csrfToken = document.cookie.split("; ")
-    .find(row => row.startsWith("csrftoken"))
-    ?.split("=")[1];
-  return csrfToken;
-};
-
-// Add CSRF token to request headers if available
 axiosReq.interceptors.request.use((config) => {
   const token = localStorage.getItem('authToken');
-  const csrfToken = getCSRFToken();
-  
   if (token) {
     config.headers['Authorization'] = `Token ${token}`;
   }
-
-  if (csrfToken) {
-    config.headers['X-CSRFToken'] = csrfToken;
-  }
-
   return config;
 }, (error) => {
   return Promise.reject(error);
@@ -42,16 +26,9 @@ axiosReq.interceptors.request.use((config) => {
 
 axiosRes.interceptors.request.use((config) => {
   const token = localStorage.getItem('authToken');
-  const csrfToken = getCSRFToken();
-  
   if (token) {
     config.headers['Authorization'] = `Token ${token}`;
   }
-
-  if (csrfToken) {
-    config.headers['X-CSRFToken'] = csrfToken;
-  }
-
   return config;
 }, (error) => {
   return Promise.reject(error);
