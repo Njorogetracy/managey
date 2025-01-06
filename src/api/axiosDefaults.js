@@ -9,10 +9,9 @@ const getCsrfToken = () => {
   const name = "csrftoken";
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) {
-    return parts.pop().split(";").shift();
-  }
-  return null;
+  const token = parts.length === 2 ? parts.pop().split(";").shift() : null;
+  console.log("CSRF Token:", token);
+  return token;
 };
 
 export const axiosReq = axios.create();
@@ -23,7 +22,7 @@ axiosReq.interceptors.request.use(
   (config) => {
     const csrfToken = getCsrfToken();
     if (csrfToken) {
-      config.headers["X-CSRFToken"] = csrfToken; // Add CSRF token to headers
+      config.headers["X-CSRFToken"] = csrfToken;
     } else {
       console.warn("CSRF token missing.");
     }
