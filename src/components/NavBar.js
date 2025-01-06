@@ -26,6 +26,8 @@ const NavBar = () => {
       setCurrentUser(null);
       removeTokenTimestamp();
       localStorage.removeItem('authToken');
+      localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     delete axios.defaults.headers.common['Authorization'];
       toast.success("Logout successful", {
         position: "top-right",
