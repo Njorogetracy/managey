@@ -6,10 +6,13 @@ axios.defaults.withCredentials = true;
 
 // Function to get CSRF token from cookies
 const getCsrfToken = () => {
-  const csrfToken = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("csrftoken="));
-  return csrfToken ? csrfToken.split("=")[1] : null;
+  const name = "csrftoken";
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop().split(";").shift();
+  }
+  return null;
 };
 
 export const axiosReq = axios.create();
@@ -19,19 +22,18 @@ export const axiosRes = axios.create();
 axiosReq.interceptors.request.use(
   (config) => {
     const csrfToken = getCsrfToken();
-    const authToken = localStorage.getItem("authToken");
+    if (csrfToken) {
+      config.headers["X-CSRFToken"] = csrfToken; // Add CSRF token to headers
+    } else {
+      console.warn("CSRF token missing.");
+    }
 
-    if (!csrfToken) {
-        console.error("CSRF token is missing.");
-      } else {
-        config.headers["X-CSRFToken"] = csrfToken;
-      }
-  
-      if (authToken) {
-        config.headers["Authorization"] = `Token ${authToken}`;
-      }
-  
-      return config;
-    },
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      config.headers["Authorization"] = `Token ${authToken}`;
+    }
+
+    return config;
+  },
   (error) => Promise.reject(error)
 );
