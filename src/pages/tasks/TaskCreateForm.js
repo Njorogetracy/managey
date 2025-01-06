@@ -110,6 +110,14 @@ function TaskCreateForm() {
   /** Handle form submission */
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+
+    // Fetch CSRF token before submission
+    await axios.get("/set-csrf-token/").then(() => {
+      console.log("CSRF token set successfully");
+    }).catch((err) => {
+      console.error("Failed to set CSRF token", err);
+    });
+
     const formData = new FormData();
 
     /** Validation */
