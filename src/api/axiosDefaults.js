@@ -21,14 +21,17 @@ axiosReq.interceptors.request.use(
     const csrfToken = getCsrfToken();
     const authToken = localStorage.getItem("authToken");
 
-    if (csrfToken) {
-      config.headers["X-CSRFToken"] = csrfToken;
-    }
-    if (authToken) {
-      config.headers["Authorization"] = `Token ${authToken}`;
-    }
-
-    return config;
-  },
+    if (!csrfToken) {
+        console.error("CSRF token is missing.");
+      } else {
+        config.headers["X-CSRFToken"] = csrfToken;
+      }
+  
+      if (authToken) {
+        config.headers["Authorization"] = `Token ${authToken}`;
+      }
+  
+      return config;
+    },
   (error) => Promise.reject(error)
 );
