@@ -36,7 +36,7 @@ function TasksList({ filter = "" }) {
       fetchTasks();
     }, 500);
     return () => clearTimeout(timer);
-  }, [filter, query, pathname]);
+  }, [filter, query, pathname, currentUser]);
 
   /** Scroll handling */
   useEffect(() => {
