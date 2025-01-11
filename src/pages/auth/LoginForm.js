@@ -41,34 +41,43 @@ function LoginForm() {
       e.preventDefault();
     
       // Client-side validation
-    
+
       try {
-        const { data } = await axios.post("/dj-rest-auth/login/", loginData);
-        document.cookie.includes("csrftoken") || alert("CSRF token not set yet");
-        if (data.key) {
-          localStorage.setItem("authToken", data.key);
-          axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
-    
-          const userRes = await axios.get("/dj-rest-auth/user/");
-          setCurrentUser(userRes.data);
-    
-          setTokenTimestamp(data);
-          toast.success("Login successful", {
-            position: "top-right",
-            autoClose: 3000,
-          });
-          navigate("/tasks");
-        } else {
-          throw new Error("No authentication token received");
-        }
+        const {data} = await axios.post("/dj-rest-auth/login", loginData)
+        setCurrentUser(data.user);
+        setTokenTimestamp(data);
+        navigate('/tasks/')
       } catch (err) {
-        setErrors(err.response?.data || {});
-        toast.error(
-          err.response?.data?.non_field_errors?.[0] ||
-            "Login failed. Please check your username and password."
-        );
+        setErrors(err.response?.data)
       }
-    };    
+    }
+    //   try {
+    //     const { data } = await axios.post("/dj-rest-auth/login/", loginData);
+    //     setCurrentUser(data.user)
+    //     if (data.key) {
+    //       localStorage.setItem("authToken", data.key);
+    //       axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
+    
+    //       const userRes = await axios.get("/dj-rest-auth/user/");
+    //       setCurrentUser(userRes.data);
+    
+    //       setTokenTimestamp(data);
+    //       toast.success("Login successful", {
+    //         position: "top-right",
+    //         autoClose: 3000,
+    //       });
+    //       navigate("/tasks");
+    //     } else {
+    //       throw new Error("No authentication token received");
+    //     }
+    //   } catch (err) {
+    //     setErrors(err.response?.data || {});
+    //     toast.error(
+    //       err.response?.data?.non_field_errors?.[0] ||
+    //         "Login failed. Please check your username and password."
+    //     );
+    //   }
+    // };    
 
 
     // Redirect if user is already logged in

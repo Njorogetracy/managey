@@ -14,14 +14,14 @@ export const fetchMoreData = async (resource, setResource) => {
             }, prevResource.results),
         }));
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 }
 
 export const setTokenTimestamp = (data) => {
     if (data?.refresh_token) {
       try {
-        const refreshTokenTimestamp = jwtDecode(data.refresh_token).exp;
+        const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
         localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
       } catch (error) {
         console.error('Error decoding refresh token:', error);
