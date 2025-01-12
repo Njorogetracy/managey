@@ -17,12 +17,8 @@ import { setTokenTimestamp } from "../../utils/utils";
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
     const currentUser = useCurrentUser();
-
-    const [loginData, setLoginData] = useState({
-        username: '',
-        password: '',
-    });
-    const { username, password } = loginData;
+    const [loginData, setLoginData] = useState({username: '', password: ''});
+    const { username = '', password = '' } = loginData || {};
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
@@ -37,53 +33,31 @@ function LoginForm() {
     }
     
     /** Handles form submit for Login page */
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      // Client-side validation
-
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+  
       try {
-        const {data} = await axios.post("/dj-rest-auth/login", loginData)
+        const { data } = await axios.post("/dj-rest-auth/login/", loginData);
         setCurrentUser(data.user);
         setTokenTimestamp(data);
-        navigate('/tasks/')
+        toast.success("Login successful", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        navigate('/tasks');
       } catch (err) {
-        setErrors(err.response?.data)
+        setErrors(err.response?.data);
+        toast.error(
+          err.response?.data?.non_field_errors?.[0] ||
+          "Login failed. Please check your username and password."
+        );
       }
-    }
-    //   try {
-    //     const { data } = await axios.post("/dj-rest-auth/login/", loginData);
-    //     setCurrentUser(data.user)
-    //     if (data.key) {
-    //       localStorage.setItem("authToken", data.key);
-    //       axios.defaults.headers.common["Authorization"] = `Token ${data.key}`;
-    
-    //       const userRes = await axios.get("/dj-rest-auth/user/");
-    //       setCurrentUser(userRes.data);
-    
-    //       setTokenTimestamp(data);
-    //       toast.success("Login successful", {
-    //         position: "top-right",
-    //         autoClose: 3000,
-    //       });
-    //       navigate("/tasks");
-    //     } else {
-    //       throw new Error("No authentication token received");
-    //     }
-    //   } catch (err) {
-    //     setErrors(err.response?.data || {});
-    //     toast.error(
-    //       err.response?.data?.non_field_errors?.[0] ||
-    //         "Login failed. Please check your username and password."
-    //     );
-    //   }
-    // };    
-
+    };
 
     // Redirect if user is already logged in
     useEffect(() => {
         if (currentUser) {
-          navigate('/tasks/');
+          navigate('/tasks');
         }
       }, [currentUser, navigate]);
 
@@ -98,9 +72,10 @@ function LoginForm() {
                   <Form.Label className="text-start">Username</Form.Label>
                   <Form.Control
                     type="text"
+                    required
                     placeholder="Enter your username"
                     name="username"
-                    value={username}
+                    value={username || ""}
                     onChange={handleChange}
                     className="rounded-pill"
                   />
@@ -115,9 +90,10 @@ function LoginForm() {
                   <Form.Label className="text-start">Password</Form.Label>
                   <Form.Control
                     type="password"
+                    required
                     placeholder="Enter your password"
                     name="password"
-                    value={password}
+                    value={password || ""}
                     onChange={handleChange}
                     className="rounded-pill"
                   />

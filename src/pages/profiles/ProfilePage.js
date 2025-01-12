@@ -60,7 +60,6 @@ function ProfilePage() {
   assigned to tasks from the API */
   useEffect(() => {
     if (!id || id === "undefined") {
-      // console.log("Redirecting to the current user's profile");
       if (currentUser?.profile_id) {
         navigate(`/profiles/${currentUser.profile_id}`);
       } else {

@@ -62,8 +62,6 @@ const SignUpForm = () => {
       }
     };
 
-
-
     /**Handle modal close */
     const handleCloseModal = () => {
         setShowModal(false);

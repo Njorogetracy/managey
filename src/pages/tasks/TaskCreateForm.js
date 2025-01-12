@@ -111,13 +111,6 @@ function TaskCreateForm() {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
 
-    // Fetch CSRF token before submission
-    await axios.get("/set-csrf-token/").then(() => {
-      console.log("CSRF token set successfully");
-    }).catch((err) => {
-      console.error("Failed to set CSRF token", err);
-    });
-
     const formData = new FormData();
 
     /** Validation */
@@ -149,10 +142,7 @@ function TaskCreateForm() {
     });
 
     try {
-      await axiosReq.post("/tasks/", formData, {
-        headers: { "Content-Type": "multipart/form-data",
-        },
-      });
+      await axiosReq.post("/tasks/");
       toast.success("Task created successfully", {
         position: "top-right",
         autoClose: 3000,

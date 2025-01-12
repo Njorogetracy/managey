@@ -127,13 +127,11 @@ const Task = (props) => {
           Details: <span>{description}</span>
         </Card.Text>
         <div className={cardStyles.attachmentContainer}>
-          <Link to={`/tasks/${id}`} target="_blank" rel="noopener noreferrer">
             <Card.Img
               src={attachment}
               alt={title}
               className={cardStyles.attachment}
             />
-          </Link>
         </div>
         <Card.Text className={cardStyles.timestamps}>
           <small className={cardStyles.mute}>Updated at: {updated_at}</small>
