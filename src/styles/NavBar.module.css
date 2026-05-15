@@ -1,33 +1,56 @@
 .NavBar {
-  background: linear-gradient(135deg, rgba(0, 123, 255, 0.5), rgba(0, 86, 179, 0.5));
-  padding: 10px 20px;
-  border-radius: 0 0 10px 10px;
-  color: white;
+  /* Vibrant indigo → purple → coral gradient. More personality than the
+     old translucent blue. */
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    #7c3aed 55%,
+    var(--accent) 110%
+  );
+  padding: 14px 24px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
 }
 
-.NavLink {
-  margin: 0 10px;
-  padding: 10px 15px;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 500;
+/* Use !important to override Bootstrap's .nav-link default color. The
+   indigo gradient washes out anything less saturated than pure white. */
+.NavLink,
+.NavLink:visited {
+  margin: 0 6px;
+  padding: 10px 16px;
+  color: #ffffff !important;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
-  border-radius: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .NavLink:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #f1f1f1;
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff !important;
+  transform: translateY(-1px);
 }
 
 .Active {
-  background-color: rgba(255, 255, 255, 0.25);
-  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.28);
+  color: #ffffff !important;
+  font-weight: 700;
 }
 
 .NavLink i {
-  margin-right: 8px;
+  color: #ffffff;
+  font-size: 1.1rem;
+  /* Stronger shadow + slight glow so icons stay legible on any gradient stop */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
 }
 
 .Brand {
@@ -41,22 +64,26 @@
 }
 
 .BrandText {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 .Avatar {
-  border: 2px solid white;
+  border: 2px solid rgba(255, 255, 255, 0.85);
   border-radius: 50%;
-  transition: transform 0.3s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease;
 }
 
 .Avatar:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
+  border-color: #ffffff;
   cursor: pointer;
 }
 
 .shadow-sm {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }

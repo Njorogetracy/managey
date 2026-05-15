@@ -1,5 +1,31 @@
+.Wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .Avatar {
-    border-radius: 50%;
-    margin-top: 0px 8px 0px 8px;
-    object-fit: cover;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Fallback when no image — initial on a primary-tinted circle */
+.Fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0;
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.Label {
+  color: inherit;
 }
