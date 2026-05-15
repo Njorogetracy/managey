@@ -3,68 +3,83 @@ import { Dropdown } from 'react-bootstrap';
 import dropStyles from '../styles/DropDown.module.css';
 import { useNavigate } from 'react-router-dom';
 
-/**This reusable component handles the delete and edit icons */
+/**Reusable three-dots trigger — circular hit area with hover state */
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
-  <i
-    className="fa-solid fa-ellipsis-vertical"
+  <span
     ref={ref}
+    className={dropStyles.Trigger}
+    role="button"
+    tabIndex={0}
+    aria-label="more actions"
     onClick={(e) => {
       e.preventDefault();
       onClick(e);
     }}
-  />
+  >
+    <i className="fa-solid fa-ellipsis-vertical" />
+  </span>
 ));
-ThreeDots.displayName = 'ThreeDots'; 
+ThreeDots.displayName = 'ThreeDots';
 
 /**Functional component for the dropdown with edit and delete options */
-export const DropDown = ({handleEdit, handleDelete}) => {
+export const DropDown = ({ handleEdit, handleDelete }) => {
   return (
-    <Dropdown className='ml-auto' drop='left'>
-      <Dropdown.Toggle as={ThreeDots} >
-      </Dropdown.Toggle>
-      <Dropdown.Menu className='text-center' popperConfig={{ strategy: "fixed" }}>
-        <Dropdown.Item className={dropStyles.DropdownItem}
+    <Dropdown align="end">
+      <Dropdown.Toggle as={ThreeDots} />
+      <Dropdown.Menu
+        className={dropStyles.Menu}
+        popperConfig={{ strategy: "fixed" }}
+      >
+        <Dropdown.Item
+          className={dropStyles.DropdownItem}
           onClick={handleEdit}
-          aria-label='edit'
+          aria-label="edit"
         >
-          <i className="fa-solid fa-pen-to-square"></i>
+          <i className="fa-solid fa-pen-to-square" />
+          <span>Edit</span>
         </Dropdown.Item>
-        <Dropdown.Item className={dropStyles.DropdownItem}
+        <Dropdown.Item
+          className={`${dropStyles.DropdownItem} ${dropStyles.Delete}`}
           onClick={handleDelete}
-          aria-label='delete'
+          aria-label="delete"
         >
-          <i className="fa-solid fa-trash"></i>
+          <i className="fa-solid fa-trash" />
+          <span>Delete</span>
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-  )
+  );
 };
 
 export function ProfileEditDropdown({ id }) {
   const navigate = useNavigate();
   return (
-    <Dropdown className='ml-auto' drop='left'>
+    <Dropdown align="end">
       <Dropdown.Toggle as={ThreeDots} />
-      <Dropdown.Menu>
+      <Dropdown.Menu className={dropStyles.Menu}>
         <Dropdown.Item
+          className={dropStyles.DropdownItem}
           onClick={() => navigate(`/profiles/${id}/edit`)}
           aria-label="edit-profile"
         >
-          <i className="fas fa-edit" /> edit profile
+          <i className="fas fa-edit" />
+          <span>Edit profile</span>
         </Dropdown.Item>
         <Dropdown.Item
+          className={dropStyles.DropdownItem}
           onClick={() => navigate(`/profiles/${id}/edit/username`)}
           aria-label="edit-username"
         >
           <i className="far fa-id-card" />
-          change username
+          <span>Change username</span>
         </Dropdown.Item>
         <Dropdown.Item
+          className={dropStyles.DropdownItem}
           onClick={() => navigate(`/profiles/${id}/edit/password`)}
           aria-label="edit-password"
         >
           <i className="fas fa-key" />
-          change password
+          <span>Change password</span>
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

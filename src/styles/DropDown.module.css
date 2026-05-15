@@ -1,11 +1,72 @@
+/* Three-dots trigger icon */
+.Trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.Trigger:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+/* Dropdown menu — clean popover styling */
+.Menu {
+  min-width: 140px;
+  padding: 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--bg-card);
+}
+
 .DropdownItem {
-    display: inline-block;
-    max-width: 50%;
-    padding: 0px;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px 12px !important;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.DropdownItem i {
+  width: 14px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.DropdownItem:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.DropdownItem:hover i {
+  color: var(--primary-dark);
+}
+
+.DropdownItem.Delete:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.DropdownItem.Delete:hover i {
+  color: #dc2626;
 }
 
 .Absolute {
-    position: absolute;
-    right: 0;
-    z-index: 99;
+  position: absolute;
+  right: 0;
+  z-index: 99;
 }
