@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Image, InputGroup } from 'react-bootstrap';
+import { Button, InputGroup } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import styles from '../../styles/CommentCreate.module.css';
-import Avatar from '../../components/Avatar';
 import { axiosRes } from '../../api/axiosDefaults';
 
 /**The functions to handle add comments
@@ -40,8 +39,9 @@ function CommentCreateForm(props) {
                 ],
             }));
             setContent("");
+            toast.success("Comment posted");
         } catch (error) {
-            // console.log(error.response.data)
+            toast.error("Failed to post comment");
         }
     }
 

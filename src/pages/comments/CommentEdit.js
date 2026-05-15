@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import styles from '../../styles/CommentCreate.module.css';
 import { axiosRes } from '../../api/axiosDefaults';
 
@@ -32,12 +33,10 @@ function CommentEdit({ setComments, setEditComment, id, content, }) {
                         : comment;
                 }),
             }));
+            toast.success("Comment updated");
             setEditComment(false);
         } catch (error) {
-            // console.log(error.response.message)
-            if (error.response) {
-                console.error(error.response.data);
-            }
+            toast.error("Failed to update comment");
         }
     }
 
@@ -64,7 +63,7 @@ function CommentEdit({ setComments, setEditComment, id, content, }) {
                 <Button
                     className={`${styles.Button} btn d-block ms-auto`}
                     type='submit'
-                    disabled={!content || !content.trim()}
+                    disabled={!commentContent || !commentContent.trim()}
                 >
                     Save
                 </Button>
