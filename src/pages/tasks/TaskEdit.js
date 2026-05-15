@@ -3,12 +3,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { axiosReq } from "../../api/axiosDefaults";
 import axios from "axios";
-import styles from "../../styles/TaskCreateEditForm.css";
+import "../../styles/TaskCreateEditForm.css";
 import btnStyles from "../../styles/Button.module.css";
 import { Form, Col, Button, Alert, Row, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import Avatar from "../../components/Avatar";
 
 /**Handles task editing */
 function TaskEdit() {
@@ -31,8 +32,7 @@ function TaskEdit() {
     due_date: "",
   });
 
-  const { title, description, priority, state, attachment, due_date } =
-    taskData;
+  const { title, description, priority, state, due_date } = taskData;
 
   /** Priority and State options */
   const priorityOptions = [
@@ -84,7 +84,10 @@ function TaskEdit() {
           assigned_users,
           attachment,
         });
-        setAssignedUsers(assigned_users.map((user) => user.id));
+        const ids = (assigned_users || []).map((user) =>
+          typeof user === "object" ? user.id : user
+        );
+        setAssignedUsers(ids);
       } catch (error) {
         toast.error("Error loading task data.");
         navigate("/tasks");
@@ -106,6 +109,17 @@ function TaskEdit() {
       });
   }, []);
 
+  /** Build assigned-user options from fetched profiles */
+  const userOptions = users.map((user) => ({
+    value: user.id,
+    label: user.owner,
+    image: user.image,
+  }));
+
+  const selectedUserOptions = userOptions.filter((opt) =>
+    assignedUsers.includes(opt.value)
+  );
+
   /** Handle form input changes */
   const handleFormChange = (e) => {
     setTaskData({
@@ -114,12 +128,17 @@ function TaskEdit() {
     });
   };
 
-  /** Handle assigned users change */
-  const handleChangeUser = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, (option) => parseInt(option.value, 10));
-    setAssignedUsers(selectedOptions);
+  /** Handle assigned users change (react-select multi) */
+  const handleChangeUser = (selected) => {
+    setAssignedUsers((selected || []).map((opt) => opt.value));
   };
-  
+
+  const formatUserOption = (option) => (
+    <div className="d-flex align-items-center">
+      <Avatar src={option.image} text={option.label} height={24} />
+      <span className="ms-2">{option.label}</span>
+    </div>
+  );
 
   /** Handle priority and state selection */
   const handlePriorityChange = (selectedOption) =>
@@ -174,8 +193,7 @@ function TaskEdit() {
 
     try {
       await axiosReq.put(`/tasks/${id}/`, formData, {
-        headers: { "Content-Type": "multipart/form-data",
-         },
+        headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Task updated successfully", {
         position: "top-right",
@@ -187,145 +205,188 @@ function TaskEdit() {
     }
   };
 
-  /** Task form fields */
-  const textFields = (
-    <div className="text-center">
-      <Form.Group className="mb-4">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          placeholder="Enter a descriptive title"
-          name="title"
-          value={title}
-          onChange={handleFormChange}
-        />
-        {errors.title?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <Form.Group className="mb-4">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          placeholder="Describe the task"
-          as="textarea"
-          rows={4}
-          name="description"
-          value={description}
-          onChange={handleFormChange}
-        />
-        {errors.description?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <Form.Group className="mb-4">
-        <Form.Label>Assigned Users</Form.Label>
-        <Form.Control
-          as="select"
-          multiple
-          onChange={handleChangeUser}
-          value={assignedUsers}
-        >
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.owner}
-            </option>
-          ))}
-        </Form.Control>
-        {errors.assigned_users?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <Form.Group className="mb-4">
-        <Form.Label>Priority</Form.Label>
-        <Select
-          value={priority}
-          onChange={handlePriorityChange}
-          options={priorityOptions}
-          placeholder="Select priority"
-        />
-        {errors.priority?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <Form.Group className="mb-4">
-        <Form.Label>State</Form.Label>
-        <Select
-          value={state}
-          onChange={handleStateChange}
-          options={stateOptions}
-          placeholder="Select state"
-        />
-        {errors.state?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <Form.Group className="mb-4">
-        <Form.Label>Due Date</Form.Label>
-        <Form.Control
-          type="datetime-local"
-          name="due_date"
-          value={due_date}
-          onChange={handleFormChange}
-          min={new Date().toISOString().slice(0, 16)}
-        />
-        {errors.due_date?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <Form.Group className="mb-4">
-        <Form.Label>Attachment</Form.Label>
-        <Form.Control
-          type="file"
-          ref={imageInput}
-          onChange={handleChangeImage}
-        />
-        {errors.attachment?.map((message, idx) => (
-          <Alert key={idx} variant="danger">
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
-
-      <div className="d-flex justify-content-between">
-        <Button className={`${btnStyles.Button}`} type="submit">
-          Save
-        </Button>
-        <Button
-          className={`${btnStyles.Button} ${btnStyles.Secondary}`}
-          onClick={handleGoBack}
-        >
-          Cancel
-        </Button>
-      </div>
-    </div>
-  );
-
   return (
-    <Row>
-      <Col className="col-sm-8 mx-auto" md={8} lg={6}>
-        <Container className={`${styles.Form} shadow p-5 rounded`}>
-          <h2 className="text-center text-primary mb-4">Edit Task</h2>
-          <Form onSubmit={handleSubmitForm}>{textFields}</Form>
-        </Container>
-      </Col>
-    </Row>
+    <Container fluid className="PageWrapper">
+      <Row className="justify-content-center">
+        <Col xs={12} md={11} lg={10} xl={9}>
+          <div className="Form">
+            <div className="FormHeader">
+              <h2 className="FormTitle">Edit Task</h2>
+              <p className="FormSubtitle">
+                Update the details below and save your changes.
+              </p>
+            </div>
+
+            <Form onSubmit={handleSubmitForm} encType="multipart/form-data">
+              <div className="FormBody">
+                <Row>
+                  <Col xs={12} md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Title</Form.Label>
+                      <Form.Control
+                        placeholder="Enter a descriptive title"
+                        name="title"
+                        value={title}
+                        onChange={handleFormChange}
+                        className="InputField"
+                      />
+                      {errors.title?.map((message, idx) => (
+                        <Alert key={idx} variant="danger" className="mt-1 py-1">
+                          {message}
+                        </Alert>
+                      ))}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        placeholder="Describe the task in detail"
+                        as="textarea"
+                        rows={3}
+                        name="description"
+                        value={description}
+                        onChange={handleFormChange}
+                        className="InputField"
+                      />
+                      {errors.description?.map((message, idx) => (
+                        <Alert key={idx} variant="danger" className="mt-1 py-1">
+                          {message}
+                        </Alert>
+                      ))}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Assigned Users</Form.Label>
+                      <Select
+                        isMulti
+                        value={selectedUserOptions}
+                        onChange={handleChangeUser}
+                        options={userOptions}
+                        formatOptionLabel={formatUserOption}
+                        placeholder="Choose people to assign…"
+                        classNamePrefix="react-select"
+                        menuPortalTarget={document.body}
+                        menuPosition="fixed"
+                        aria-label="assigned_user"
+                        closeMenuOnSelect={false}
+                        noOptionsMessage={() => "No users available"}
+                      />
+                      {errors.assigned_users?.map((message, idx) => (
+                        <Alert key={idx} variant="danger" className="mt-1 py-1">
+                          {message}
+                        </Alert>
+                      ))}
+                    </Form.Group>
+                  </Col>
+
+                  <Col xs={12} md={6}>
+                    <Row>
+                      <Col xs={12} sm={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Priority</Form.Label>
+                          <Select
+                            value={priority}
+                            onChange={handlePriorityChange}
+                            options={priorityOptions}
+                            formatOptionLabel={(option) => (
+                              <div className="d-flex align-items-center">
+                                {option.icon}{" "}
+                                <span className="ms-2">{option.label}</span>
+                              </div>
+                            )}
+                            className="react-select-container"
+                            placeholder="Select priority"
+                            classNamePrefix="react-select"
+                            menuPortalTarget={document.body}
+                            menuPosition="fixed"
+                          />
+                          {errors.priority?.map((message, idx) => (
+                            <Alert
+                              key={idx}
+                              variant="danger"
+                              className="mt-1 py-1"
+                            >
+                              {message}
+                            </Alert>
+                          ))}
+                        </Form.Group>
+                      </Col>
+                      <Col xs={12} sm={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>State</Form.Label>
+                          <Select
+                            value={state}
+                            onChange={handleStateChange}
+                            options={stateOptions}
+                            placeholder="Select state"
+                            classNamePrefix="react-select"
+                            menuPortalTarget={document.body}
+                            menuPosition="fixed"
+                          />
+                          {errors.state?.map((message, idx) => (
+                            <Alert
+                              key={idx}
+                              variant="danger"
+                              className="mt-1 py-1"
+                            >
+                              {message}
+                            </Alert>
+                          ))}
+                        </Form.Group>
+                      </Col>
+                    </Row>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Due Date</Form.Label>
+                      <Form.Control
+                        type="datetime-local"
+                        name="due_date"
+                        value={due_date}
+                        onChange={handleFormChange}
+                        className="InputField"
+                        min={new Date().toISOString().slice(0, 16)}
+                      />
+                      {errors.due_date?.map((message, idx) => (
+                        <Alert key={idx} variant="danger" className="mt-1 py-1">
+                          {message}
+                        </Alert>
+                      ))}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Attachment</Form.Label>
+                      <Form.Control
+                        type="file"
+                        ref={imageInput}
+                        onChange={handleChangeImage}
+                      />
+                      {errors.attachment?.map((message, idx) => (
+                        <Alert key={idx} variant="danger" className="mt-1 py-1">
+                          {message}
+                        </Alert>
+                      ))}
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+
+              <div className="FormFooter">
+                <Button
+                  className={btnStyles.ButtonSecondary}
+                  type="button"
+                  onClick={handleGoBack}
+                >
+                  Cancel
+                </Button>
+                <Button className={btnStyles.Button} type="submit">
+                  Save Changes
+                </Button>
+              </div>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

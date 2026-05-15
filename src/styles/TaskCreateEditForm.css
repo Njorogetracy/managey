@@ -1,35 +1,356 @@
+/* Task create/edit form — premium card with gradient banner and refined controls */
+
+.PageWrapper {
+  padding: 32px 16px 48px;
+  position: relative;
+}
+
+/* Soft ambient backdrop behind the card */
+.PageWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 100%);
+  height: 220px;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(99, 102, 241, 0.12),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
 .Form {
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
 }
 
-.InputField {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 1rem;
+/* Gradient banner header — gives the card a strong identity */
+.FormHeader {
+  position: relative;
+  padding: 28px 36px 24px;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    #7c3aed 50%,
+    var(--accent) 100%
+  );
+  color: #ffffff;
+  overflow: hidden;
 }
 
-.InputField:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+.FormHeader::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -40px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.18),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.FormHeader::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -60px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.1),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.FormTitle {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.75rem;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.FormSubtitle {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Form body — where the inputs live */
+.FormBody {
+  padding: 28px 36px 8px;
+}
+
+/* Labels — sentence case, matches the rest of the site's typography */
+.Form label,
+.Form .form-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.005em;
+}
+
+/* All input controls — consistent rounded style with smooth focus */
+.InputField,
+.Form .form-control,
+.Form .form-select {
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  background-color: #f9fafb;
+  color: var(--text-primary);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.InputField::placeholder,
+.Form .form-control::placeholder {
+  color: #9ca3af;
+}
+
+.InputField:hover,
+.Form .form-control:hover,
+.Form .form-select:hover {
+  border-color: #c7d2fe;
+}
+
+.InputField:focus,
+.Form .form-control:focus,
+.Form .form-select:focus {
+  border-color: var(--primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+  outline: none;
+}
+
+/* Multi-select for assigned users — compact, scrollable, items have spacing */
+.Form select[multiple],
+.AssignSelect {
+  min-height: 96px;
+  max-height: 96px;
+  padding: 6px 8px;
+}
+
+.Form select[multiple] option,
+.AssignSelect option {
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 2px;
+}
+
+.Form select[multiple] option:checked,
+.AssignSelect option:checked {
+  background: linear-gradient(0deg, var(--primary), var(--primary));
+  color: #ffffff;
+}
+
+/* File input — dashed dropzone-style */
+.Form input[type="file"] {
+  background-color: #f9fafb;
+  border: 1.5px dashed #c7d2fe;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.Form input[type="file"]:hover {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.Form input[type="file"]::file-selector-button {
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.Form input[type="file"]::file-selector-button:hover {
+  background-color: var(--primary-dark);
 }
 
 .Alert {
-  margin-top: 5px;
-  font-size: 0.9rem;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  border-radius: var(--radius-md);
+  padding: 4px 10px;
 }
 
-.Button {
-  padding: 12px;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  width: 45%;
+/* Footer — subtle tinted bar holds the action buttons */
+.FormFooter {
+  padding: 18px 36px 24px;
+  background-color: #f9fafb;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
-.ButtonSecondary {
-  background-color: #6c757d;
-  color: white;
+.Form .btn,
+.Form button {
+  font-family: var(--font-display);
+  font-weight: 600;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  letter-spacing: 0.01em;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.Form .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* react-select — match the input style precisely */
+.Form .react-select__control {
+  border: 1.5px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  background-color: #f9fafb !important;
+  min-height: 42px !important;
+  padding: 0 4px !important;
+  font-size: 0.95rem !important;
+  box-shadow: none !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    background-color 0.18s ease !important;
+}
+
+.Form .react-select__control:hover {
+  border-color: #c7d2fe !important;
+}
+
+.Form .react-select__control--is-focused {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15) !important;
+  background-color: #ffffff !important;
+}
+
+.Form .react-select__placeholder {
+  color: #9ca3af !important;
+}
+
+.Form .react-select__indicator-separator {
+  background-color: var(--border-subtle) !important;
+}
+
+/* Menus are portaled to <body> so they aren't clipped by the card.
+   Selectors below are global (not scoped to .Form) on purpose. */
+.react-select__menu-portal {
+  z-index: 9999 !important;
+}
+
+.react-select__menu {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--border-subtle) !important;
+  overflow: hidden !important;
+  margin-top: 4px !important;
+}
+
+.react-select__option {
+  font-size: 0.9rem !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+}
+
+.react-select__option--is-focused {
+  background-color: var(--primary-light) !important;
+  color: var(--primary-dark) !important;
+}
+
+.react-select__option--is-selected {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+/* Multi-value chips (Assigned Users) — pill-shaped, branded */
+.Form .react-select__multi-value {
+  background-color: var(--primary-light) !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 1px 4px 1px 2px !important;
+  margin: 2px 4px 2px 0 !important;
+}
+
+.Form .react-select__multi-value__label {
+  color: var(--primary-dark) !important;
+  font-weight: 500 !important;
+  font-size: 0.85rem !important;
+  padding: 0 6px !important;
+}
+
+.Form .react-select__multi-value__remove {
+  color: var(--primary) !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 0 4px !important;
+  cursor: pointer !important;
+}
+
+.Form .react-select__multi-value__remove:hover {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+/* Slightly taller control when chips are inside */
+.Form .react-select--is-multi .react-select__control {
+  min-height: 46px !important;
+  padding: 2px 4px !important;
+}
+
+@media (max-width: 768px) {
+  .PageWrapper {
+    padding: 16px 8px 32px;
+  }
+
+  .FormHeader {
+    padding: 22px 22px 18px;
+  }
+
+  .FormTitle {
+    font-size: 1.4rem;
+  }
+
+  .FormBody {
+    padding: 22px 22px 4px;
+  }
+
+  .FormFooter {
+    padding: 16px 22px 18px;
+  }
 }
