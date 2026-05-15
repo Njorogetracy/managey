@@ -1,55 +1,133 @@
-.ProfileImage {
-  object-fit: cover;
-  height: 160px;
-  width: 160px;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 10px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+/* Profile header — vibrant card with gradient backdrop, ringed avatar, stats */
+.profileHeader {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--primary);
+  overflow: hidden;
 }
 
-.ProfileImage:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+/* Soft gradient backdrop fills empty space and ties header to brand */
+.profileHeaderBackdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.06) 50%,
+    rgba(244, 114, 182, 0.1) 100%
+  );
+  pointer-events: none;
+}
+
+.profileIdentity {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Ring around avatar — echoes brand gradient, adds polish */
+.avatarRing {
+  flex-shrink: 0;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: inline-flex;
+}
+
+.avatarRing :global(img),
+.avatarRing :global(span) {
+  border: 3px solid var(--bg-card);
+}
+
+.profileNameBlock {
+  flex: 1;
+  min-width: 0;
+}
+
+.profileTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.65rem;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.profileBio {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0 0 10px 0;
+  line-height: 1.45;
+}
+
+/* Stat chips — quick at-a-glance counts, fills the empty right side */
+.profileStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.statChip {
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  background-color: var(--primary-light, rgba(99, 102, 241, 0.1));
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.statChip strong {
+  color: var(--primary);
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.profileActions {
+  position: relative;
+  flex-shrink: 0;
 }
 
 .hideHorizontalRule {
   display: none;
 }
 
-.bioContainer {
-  font-size: 1.1rem;
-  margin: 15px 0;
-  color: #555;
-}
-
-.profileTitle {
-  font-weight: bold;
-  font-size: 1.8rem;
-  color: #333;
-}
-
-.profileSection {
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 20px;
-  margin-bottom: 30px;
-}
-
 .createTaskButton {
-  background-color: #4caf50;
+  background-color: var(--primary);
   color: white;
+  font-family: var(--font-display);
   font-size: 1rem;
-  padding: 10px 20px;
-  border-radius: 30px;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  border: none;
+  transition: background-color 0.18s ease, transform 0.18s ease;
 }
 
 .createTaskButton:hover {
-  background-color: #45a049;
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
 .scrollToTopButton {
-  border-radius: 50px;
+  border-radius: var(--radius-pill);
   padding: 10px 20px;
 }
 
@@ -60,19 +138,32 @@
   z-index: 99;
 }
 
-@media screen and (max-width: 991px) {
-  .ProfileImage {
-    width: 200px;
-    height: 200px;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .bioContainer {
+  .profileHeader {
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .profileIdentity {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profileNameBlock {
     text-align: center;
   }
 
   .profileTitle {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .profileStats {
+    justify-content: center;
+  }
+
+  .profileActions {
+    align-self: center;
   }
 }

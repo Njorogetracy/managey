@@ -95,28 +95,34 @@ function ProfilePage() {
   }, [id, currentUser, navigate, setProfileData]);
 
   const mainProfile = (
-    <>
-      <Row className="px-3 text-center align-items-center profileSection">
-        <Col xs={12} sm={4} className="d-flex justify-content-center">
-          <div className="d-flex flex-column align-items-center">
-            <Avatar
-              src={profile?.image}
-              className="ProfileImage"
-              roundedCircle
-            />
-            <h3 className="profileTitle">{profile?.owner}</h3>
+    <div className={styles.profileHeader}>
+      <div className={styles.profileHeaderBackdrop} aria-hidden="true" />
+      <div className={styles.profileIdentity}>
+        <div className={styles.avatarRing}>
+          <Avatar src={profile?.image} text={profile?.owner} height={88} />
+        </div>
+        <div className={styles.profileNameBlock}>
+          <h2 className={styles.profileTitle}>{profile?.owner}</h2>
+          <p className={styles.profileBio}>
+            {profile?.bio || "No bio yet — this user hasn't shared anything."}
+          </p>
+          <div className={styles.profileStats}>
+            <span className={styles.statChip}>
+              <strong>{profileTasks.results.length}</strong> tasks created
+            </span>
+            <span className={styles.statChip}>
+              <strong>{tasksAssignedByCurrentUser.results.length}</strong>{" "}
+              assigned
+            </span>
           </div>
-        </Col>
-        <Col xs={12} sm={8} className="bioContainer text-center">
-          {profile?.bio ? <p>{profile.bio}</p> : <p>No bio available.</p>}
-        </Col>
-        {profile?.is_owner && (
-          <Col xs={12} className="text-center mt-3">
-            <ProfileEditDropdown id={profile?.id} />
-          </Col>
-        )}
-      </Row>
-    </>
+        </div>
+      </div>
+      {profile?.is_owner && (
+        <div className={styles.profileActions}>
+          <ProfileEditDropdown id={profile?.id} />
+        </div>
+      )}
+    </div>
   );
 
   const mainProfileTasks = (
