@@ -1,47 +1,66 @@
-/* Comment.module.css */
+/* Comment thread item — compact card with avatar header */
 .Comment {
-    position: relative;
-    max-height: 300px;
-    overflow-y: auto;
+  position: relative;
 }
 
 .HorizontalRule {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-    margin: 10px 0;
+  display: none;
 }
 
 .Card {
-    background-color: #f5f5f5;
-    border: none;
-    border-radius: none;
-    margin-bottom: 15px;
+  background-color: #f9fafb;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  padding-right: 44px;
+  margin: 10px 0;
+  position: relative;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
 
+/* Three-dots sits in the top-right of the comment card */
+.DropdownWrapper {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}
+
+.Card:hover {
+  border-color: #c7d2fe;
+  background-color: #ffffff;
 }
 
 .ProfileLink {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 10px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 6px 0;
 }
 
 .Owner {
-    font-weight: bold;
-    color: black;
-    margin-right: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
 }
 
 .Date {
-    font-weight: lighter;
-    color: gray;
-    margin-right: 8px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
 }
 
 .CommentBody {
-    padding: 10px;
+  padding: 0;
 }
 
 .Content {
-    margin-bottom: 0;
+  margin-bottom: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
 }

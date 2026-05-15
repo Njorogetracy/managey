@@ -75,7 +75,12 @@ const Comment = (props) => {
         )}
       </Card.Body>
       {is_owner && !editComment && (
-        <DropDown  handleEdit={() => setEditComment(true)} handleDelete={handleDelete} />
+        <div className={styles.DropdownWrapper}>
+          <DropDown
+            handleEdit={() => setEditComment(true)}
+            handleDelete={handleDelete}
+          />
+        </div>
       )}
     </Card>
   </div>

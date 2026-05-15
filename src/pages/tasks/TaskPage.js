@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import Task from './Task';
@@ -40,22 +39,33 @@ function Taskpage() {
         handleMount();
     }, [id])
 
+    const commentsCount = comments.results.length;
+
     return (
-        <Row className={`${styles.Form}`}>
-            <Col>
-                <Task {...task.results[0]} setTasks={setTask} taskPage />
-                <Container >
-                    {currentUser ? (
-                        <CommentCreateForm
-                            profile_id={currentUser.profile_id}
-                            profileImage={profile_image}
-                            task={id}
-                            setTask={setTask}
-                            setComments={setComments}
-                        />
-                    ) : comments.results.length ? (
-                        <div>Comments</div>
-                    ) : null}
+        <div className={styles.TaskPageWrapper}>
+            <Task {...task.results[0]} setTasks={setTask} taskPage />
+
+            <div className={styles.CommentsPanel}>
+                <div className={styles.CommentsHeader}>
+                    <h3 className={styles.CommentsTitle}>Comments</h3>
+                    <span className={styles.CommentCount}>
+                        {commentsCount} {commentsCount === 1 ? "comment" : "comments"}
+                    </span>
+                </div>
+
+                {currentUser && (
+                    <CommentCreateForm
+                        profile_id={currentUser.profile_id}
+                        profileImage={profile_image}
+                        profile_image={profile_image}
+                        owner={currentUser.username}
+                        task={id}
+                        setTask={setTask}
+                        setComments={setComments}
+                    />
+                )}
+
+                <div className={styles.CommentsThread}>
                     {comments.results.length ? (
                         <InfiniteScroll
                             dataLength={comments.results.length}
@@ -72,14 +82,16 @@ function Taskpage() {
                                 />
                             ))}
                         </InfiniteScroll>
-                    ) : currentUser ? (
-                        <span>No comments</span>
                     ) : (
-                        <span>No comments...</span>
+                        <span className={styles.EmptyState}>
+                            {currentUser
+                                ? "No comments yet — be the first to say something."
+                                : "No comments yet."}
+                        </span>
                     )}
-                </Container>
-            </Col>
-        </Row>
+                </div>
+            </div>
+        </div>
     );
 }
 

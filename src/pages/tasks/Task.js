@@ -1,6 +1,6 @@
 import React from "react";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { Card, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import cardStyles from "../../styles/Task.module.css";
 import Avatar from "../../components/Avatar";
@@ -8,7 +8,25 @@ import { DropDown } from "../../components/DropDown";
 import { axiosRes } from "../../api/axiosDefaults";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDay,
+  faComments,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+
+// Map backend state values to the matching badge class from Task.module.css.
+const STATE_CLASS = {
+  "Not-started": cardStyles.stateNotStarted,
+  "To-do": cardStyles.stateTodo,
+  "In-progress": cardStyles.stateInProgress,
+  "Completed": cardStyles.stateCompleted,
+};
+
+const PRIORITY_CLASS = {
+  Low: cardStyles.priorityLow,
+  Medium: cardStyles.priorityMedium,
+  High: cardStyles.priorityHigh,
+};
 
 /**the function returns the created task
  * users can view the task
@@ -33,20 +51,6 @@ const Task = (props) => {
     comments_count,
     taskPage,
   } = props;
-
-  /**Priority option colors */
-  const getPriorityColor = () => {
-    switch (priority) {
-      case "Low":
-        return "#FFD43B";
-      case "Medium":
-        return "#e2763c";
-      case "High":
-        return "#ee1111";
-      default:
-        return "#000000";
-    }
-  };
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
@@ -73,7 +77,11 @@ const Task = (props) => {
 
   /**Returns task with all fields populated by the backend. The tasks can be updated and deleted */
   return (
-    <Card className={cardStyles.taskcard}>
+    <Card
+      className={`${cardStyles.taskcard} ${
+        taskPage ? cardStyles.taskcardExpanded : ""
+      }`}
+    >
       <Card.Body className="align-items-center justify-content-between">
         <div className={cardStyles.headerContainer}>
           <Link
@@ -95,51 +103,48 @@ const Task = (props) => {
         </Card.Text>
         <div className={cardStyles.taskowner}>
           <Link to={`/profiles/${profile_id}`} className={cardStyles.links}>
-            <Avatar src={profile_image} height={55} />
+            <Avatar src={profile_image} height={44} text={owner} />
             <span className={cardStyles.ownername}>{owner}</span>
           </Link>
         </div>
-        <div className={cardStyles.assigned}>
-          {assigned_users_usernames ? (
-            <Link
-              to={`/profiles/${assigned_users_usernames}`}
-              className={cardStyles.links}
-            >
-              Assigned to: {assigned_users_usernames}
-            </Link>
-          ) : (
-            <div>Assigned to: {assigned_users_usernames}</div>
+        {assigned_users_usernames && assigned_users_usernames.length > 0 && (
+          <div className={cardStyles.assigned}>
+            <FontAwesomeIcon icon={faUserPlus} />
+            <span>Assigned to {assigned_users_usernames}</span>
+          </div>
+        )}
+        <div className={cardStyles.footer}>
+          <span className={`${cardStyles.state} ${STATE_CLASS[state] || ""}`}>
+            {state}
+          </span>
+          <span
+            className={`${cardStyles.priority} ${PRIORITY_CLASS[priority] || ""}`}
+          >
+            {priority} priority
+          </span>
+          {due_date && (
+            <span className={cardStyles.dueDate}>
+              <FontAwesomeIcon icon={faCalendarDay} /> {due_date}
+            </span>
           )}
         </div>
-        <div className={cardStyles.footer}>
-          <Card.Text className={cardStyles.mute}>Due: {due_date}</Card.Text>
-          <Card.Text className={cardStyles.state}>
-            <small className={cardStyles.mute}>State: {state}</small>
-          </Card.Text>
-          <div className={cardStyles.priority}>
-            <Col style={{ color: getPriorityColor() }}>
-              <FontAwesomeIcon icon={faCircle} /> {priority} priority
-            </Col>
-          </div>
-        </div>
 
-        <Card.Text className={cardStyles.details}>
-          Details: <span>{description}</span>
-        </Card.Text>
-        <div className={cardStyles.attachmentContainer}>
+        {description && (
+          <p className={cardStyles.details}>{description}</p>
+        )}
+        {attachment && !attachment.includes("default_post") && (
+          <div className={cardStyles.attachmentContainer}>
             <Card.Img
               src={attachment}
               alt={title}
               className={cardStyles.attachment}
             />
+          </div>
+        )}
+        <div className={cardStyles.timestamps}>
+          <FontAwesomeIcon icon={faComments} /> {comments_count} &middot;
+          Updated {updated_at}
         </div>
-        <Card.Text className={cardStyles.timestamps}>
-          <small className={cardStyles.mute}>Updated at: {updated_at}</small>
-        </Card.Text>
-        <Card.Text>
-          <i className="fa-solid fa-comments"></i>
-          {comments_count}
-        </Card.Text>
       </Card.Body>
     </Card>
   );

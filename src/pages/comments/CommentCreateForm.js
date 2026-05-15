@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Button, InputGroup } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import styles from '../../styles/CommentCreate.module.css';
 import { axiosRes } from '../../api/axiosDefaults';
+import Avatar from '../../components/Avatar';
 
 /**The functions to handle add comments
- * updates the comment count to task and 
- * displays the comments 
+ * updates the comment count to task and
+ * displays the comments
  */
 function CommentCreateForm(props) {
-    const { task, setTask, setComments, profile_id, profile_image } = props;
+    const { task, setTask, setComments, profile_image, owner } = props;
     const [content, setContent] = useState("");
 
     /**handle change to input field */
@@ -48,28 +48,30 @@ function CommentCreateForm(props) {
 
     /**Returns comment form */
     return (
-        <Form className="mt-2" style={{backgroundColor: '#f5f5f5'}} onSubmit={handleSubmit}>
-            <Form.Group>
-                <InputGroup>
-                    <Form.Control
-                        placeholder='my comment...'
-                        as='textarea'
-                        rows={2}
-                        value={content}
-                        onChange={handleChange}
-                        aria-label='comment box'
-                        className="border-0 flex-grow-1" 
-                        style={{ minWidth: 0, backgroundColor: '#f5f5f5' }}
-                    />
-                </InputGroup>
-            </Form.Group>
-            <Button
-                className={`${styles.Button} btn d-block ms-auto`}
-                type='submit'
-                disabled={!content || !content.trim()}
-            >
-                Post
-            </Button>
+        <Form className={styles.Form} onSubmit={handleSubmit}>
+            <div className={styles.ComposerAvatar}>
+                <Avatar src={profile_image} text={owner} height={36} />
+            </div>
+            <div className={styles.ComposerBody}>
+                <Form.Control
+                    placeholder='Write a comment...'
+                    as='textarea'
+                    rows={2}
+                    value={content}
+                    onChange={handleChange}
+                    aria-label='comment box'
+                    className={styles.ComposerInput}
+                />
+                <div className={styles.ComposerActions}>
+                    <Button
+                        className={styles.Button}
+                        type='submit'
+                        disabled={!content || !content.trim()}
+                    >
+                        Post
+                    </Button>
+                </div>
+            </div>
         </Form>
     )
 }

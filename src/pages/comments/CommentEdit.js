@@ -43,25 +43,26 @@ function CommentEdit({ setComments, setEditComment, id, content, }) {
 
     /**Returns comment form */
     return (
-        <Form className="mt-2" onSubmit={handleSubmit}>
-            <Form.Group className="pr-1">
+        <Form className={styles.EditForm} onSubmit={handleSubmit}>
+            <Form.Group>
                 <Form.Control
                     as='textarea'
                     rows={2}
                     value={commentContent}
                     onChange={handleChange}
+                    className={styles.ComposerInput}
                 />
             </Form.Group>
-            <div className='text-right'>
+            <div className={styles.EditActions}>
                 <Button
-                    className={`${styles.Button} btn d-block ms-auto`}
+                    className={styles.ButtonGhost}
                     type='button'
                     onClick={() => setEditComment(false)}
                 >
                     Cancel
                 </Button>
                 <Button
-                    className={`${styles.Button} btn d-block ms-auto`}
+                    className={styles.Button}
                     type='submit'
                     disabled={!commentContent || !commentContent.trim()}
                 >
