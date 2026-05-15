@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from '../../api/axiosDefaults';
 import listStyles from '../../styles/TaskListPage.module.css';
-import { Form, Container } from 'react-bootstrap';
+import { Form, Container, Row, Col } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import Asset from '../../components/Asset';
 import NoResults from '../../assets/no-results.png';
@@ -12,6 +12,7 @@ import { useCurrentUser } from '../../contexts/CurrentUserContext';
 function UserProfiles() {
     const [profileData, setProfileData] = useState({ results: [] });
     const [searchUser, setSearchUser] = useState("");
+    const [ordering, setOrdering] = useState("-created_at");
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
     const currentUser = useCurrentUser();
@@ -20,39 +21,50 @@ function UserProfiles() {
     useEffect(() => {
         const fetchProfiles = async () => {
             try {
-                const { data } = await axiosReq.get(`/profiles/?search=${searchUser}`);
+                const params = new URLSearchParams();
+                if (searchUser) params.append('search', searchUser);
+                if (ordering) params.append('ordering', ordering);
+                const { data } = await axiosReq.get(`/profiles/?${params.toString()}`);
                 setProfileData(data);
-                setHasLoaded(true);
             } catch (error) {
-                console.error(error);
-                setProfileData([]);
+                setProfileData({ results: [] });
+            } finally {
+                setHasLoaded(true);
             }
         };
         setHasLoaded(false);
-        const timer = setTimeout(() => {
-            fetchProfiles();
-        }, 1000);
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [searchUser, pathname]);
+        // Debounced by 500ms — matches the task search experience
+        const timer = setTimeout(fetchProfiles, 500);
+        return () => clearTimeout(timer);
+    }, [searchUser, ordering, pathname]);
 
     return (
-        <div>
-            {/* Search bar for filtering user profiles */}
-            <Form
-                className={listStyles.SearchBar}
-                onSubmit={(event) => event.preventDefault()}
-            >
-                <Form.Control
-                    value={searchUser}
-                    onChange={(event) => setSearchUser(event.target.value)}
-                    type="text"
-                    className="mr-sm-2"
-                    placeholder="Search users"
-                    aria-label="Search bar"
-                />
-            </Form>
+        <Container className="py-4">
+            <Row className="mb-4 g-2">
+                <Col xs={12} md={8}>
+                    <Form onSubmit={(event) => event.preventDefault()}>
+                        <Form.Control
+                            value={searchUser}
+                            onChange={(event) => setSearchUser(event.target.value)}
+                            type="search"
+                            placeholder="Search users by username"
+                            aria-label="search users"
+                        />
+                    </Form>
+                </Col>
+                <Col xs={12} md={4}>
+                    <Form.Select
+                        value={ordering}
+                        onChange={(event) => setOrdering(event.target.value)}
+                        aria-label="sort users"
+                    >
+                        <option value="-created_at">Recently joined</option>
+                        <option value="created_at">Earliest joined</option>
+                        <option value="-owner__task">Most tasks</option>
+                        <option value="owner__task">Fewest tasks</option>
+                    </Form.Select>
+                </Col>
+            </Row>
 
             {/* Display list of user profiles */}
             {hasLoaded ? (
@@ -78,7 +90,7 @@ function UserProfiles() {
                     <Asset spinner />
                 </Container>
             )}
-        </div>
+        </Container>
     );
 }
 
