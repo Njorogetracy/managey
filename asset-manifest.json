@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/managey/static/css/main.3d701097.css",
+    "main.js": "/managey/static/js/main.01129c30.js",
+    "static/js/206.1ccf866f.chunk.js": "/managey/static/js/206.1ccf866f.chunk.js",
+    "static/media/design.png": "/managey/static/media/design.13eeb577b65645cc8f7c.png",
+    "static/media/managey.png": "/managey/static/media/managey.d9c1d935cfc479399315.png",
+    "index.html": "/managey/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.3d701097.css",
+    "static/js/main.01129c30.js"
+  ]
+}
