@@ -1,9 +1,15 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/LandingPage.module.css";
 
 
 function LandingPage() {
+  const currentUser = useCurrentUser();
+  if (currentUser) {
+    return <Navigate to="/tasks" replace />;
+  }
+
   return (
     <Container fluid className={`vh-100 d-flex justify-content-center align-items-center ${styles.background}`}>
       <Row className="text-center">

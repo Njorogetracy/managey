@@ -50,7 +50,7 @@ function TaskCreateForm() {
   ];
 
   const stateOptions = [
-    { value: "Not started", label: "Not started" },
+    { value: "Not-started", label: "Not started" },
     { value: "To-do", label: "To-do" },
     { value: "In-progress", label: "In-progress" },
     { value: "Completed", label: "Completed" },
@@ -142,7 +142,9 @@ function TaskCreateForm() {
     });
 
     try {
-      await axiosReq.post("/tasks/");
+      await axiosReq.post("/tasks/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       toast.success("Task created successfully", {
         position: "top-right",
         autoClose: 3000,

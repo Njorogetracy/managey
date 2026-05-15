@@ -28,7 +28,7 @@ function Taskpage() {
         const handleMount = async () => {
             try {
                 const [{ data: task }, { data: comments }] = await Promise.all([
-                    axiosReq.get(`/tasks/${id}`),
+                    axiosReq.get(`/tasks/${id}/`),
                     axiosReq.get(`/comments/?task=${id}`)
                 ]);
                 setTask({ results: [task] });

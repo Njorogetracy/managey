@@ -60,14 +60,14 @@ const Task = (props) => {
   /**Handles task deletion */
   const handleDelete = async () => {
     try {
-      await axiosRes.delete(`/tasks/${id}`);
+      await axiosRes.delete(`/tasks/${id}/`);
       toast.success("Task deleted", {
         position: "top-right",
         autoClose: 3000,
       });
-      navigate("/");
+      navigate("/tasks");
     } catch (error) {
-      // console.log(error)
+      toast.error("Failed to delete task");
     }
   };
 

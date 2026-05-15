@@ -54,7 +54,7 @@ function TaskEdit() {
   ];
 
   const stateOptions = [
-    { value: "Not started", label: "Not started" },
+    { value: "Not-started", label: "Not started" },
     { value: "To-do", label: "To-do" },
     { value: "In-progress", label: "In-progress" },
     { value: "Completed", label: "Completed" },
