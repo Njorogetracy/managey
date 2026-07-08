@@ -2,7 +2,7 @@
 
 Managey is an application that enables to organize activities in order to promotee productivity and effeciency. In its current iteration, users can create, view, edit, search, filter and delete tasks. A user can view their tasks as well as tasks assigned to them. Users are also able to comment on tasks in order to followup, ellaborate or find out more about a task. 
 
-You can view the live site here: https://managey-a1b31600d931.herokuapp.com/
+You can view the live site here: https://Njorogetracy.github.io/managey/
 You can view the API repository here: https://github.com/Njorogetracy/managey_drf
 
 # Table of Contents
@@ -344,19 +344,17 @@ The API for this frontend was built using Django Rest Framework. See the reposit
 ## View Test.md
 
 # Deployment
-The Site was deployed using Heroku Hosting Platform.
+The frontend is deployed to **GitHub Pages** and the backend API is deployed separately to **Render** (see the [API repository](https://github.com/Njorogetracy/managey_drf) for backend deployment steps).
 
-## React Deployment 
-- Add a Procfile to the root of the project with the following content: web: serve -s build
-- Add your deployed API URL to the axios requests in the project
-- Run npm run build to create a production build of the project
+## React build configuration
+- The API base URL is read from the `REACT_APP_API_URL` environment variable (see `src/api/axiosDefaults.js`). Set it to the deployed API URL (`https://managey-drf.onrender.com/`) before building for production; it falls back to `http://localhost:8000/` for local development.
+- The app uses `HashRouter` so client-side deep links work on GitHub Pages, which has no SPA fallback. Live URLs therefore include a `#`, e.g. `https://Njorogetracy.github.io/managey/#/tasks`.
 
-## Heroku Deployment 
-- Create a new project on Heroku
-- Connect Github Repo
-- In settings, configure Environment Variables lilke Database URL, Cloudinary URL etc..
-- In Deploy, configure your automatic deploys or not.
-- Deploy App
+## GitHub Pages Deployment
+- Install the `gh-pages` package: `npm install --save-dev gh-pages`.
+- In `package.json`, set `"homepage": "https://Njorogetracy.github.io/managey"` and add the scripts `"predeploy": "npm run build"` and `"deploy": "gh-pages -d build"`.
+- Run `npm run deploy` to build the production bundle and publish it to the `gh-pages` branch.
+- In the GitHub repo settings, set Pages to serve from the `gh-pages` branch.
 
 # Credits
 ## Code Used and Content
